@@ -23,7 +23,7 @@ class Location(SEO):
 
 class Service(SEO):
     name = models.TextField()
-    location = models.ForeignKey(Location, on_delete=models.CASCADE)
+    locations = models.ManyToManyField(Location)
 
     def __str__(self):
         return self.name
@@ -34,12 +34,19 @@ class Service(SEO):
 class Lead(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    zip_code = models.CharField(max_length=10)
     phone_number = models.CharField(max_length=15)
+    message = models.TextField()
+    location = models.ForeignKey(Location, on_delete=models.CASCADE)
     service = models.ForeignKey(Service, on_delete=models.SET_NULL, null=True)
     latitude = models.FloatField(null=True)
     longitude = models.FloatField(null=True)
     date_created = models.DateTimeField()
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name} - {self.service.name}"
+
+    class Meta:
+        db_table = "lead"
 
 class Marketing(models.Model):
     lead = models.ForeignKey(Lead, on_delete=models.SET_NULL)
@@ -53,3 +60,6 @@ class Marketing(models.Model):
     ad_group = models.CharField(max_length=255, blank=True, null=True)
     ad_headline = models.CharField(max_length=255, blank=True, null=True)
     gclid = models.CharField(max_length=255, blank=True, null=True)
+
+    class Meta:
+        db_table = "marketing"
