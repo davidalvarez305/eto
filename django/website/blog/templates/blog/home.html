@@ -1,0 +1,36 @@
+{% extends "blog/base.html" %}
+{% load static %}
+{% block content %}
+<!-- Product List Section: Products Grid -->
+<div class="text-center">
+    <h1 class="text-3xl md:text-4xl font-extrabold mb-3">
+      {{ site_name }}
+    </h1>
+</div>
+<div class="bg-white dark:text-gray-100 dark:bg-gray-900">
+    <div class="container xl:max-w-7xl mx-auto px-4 py-12 lg:px-8 lg:py-12">
+        <!-- Products -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
+        {% for group in groups %}
+            {% for category in group.category_set.all %}
+                <div>
+                <div class="group relative overflow-hidden mb-2">
+                    <img src="{{ category.subcategory_set.first.reviewpost_set.first.product.product_image }}" height="320" width="320" loading="lazy" alt="{{ category.subcategory_set.first.reviewpost_set.first.product.product_image_alt }}">
+                </div>
+                <a href="/{{ category.slug }}/" class="block font-semibold hover:text-gray-500 dark:hover:text-gray-300">
+                    {{ category.name }}
+                </a>
+                <div class="font-medium text-gray-500 dark:text-gray-400">
+                    {{ category.subcategory_set.first.reviewpost_set.first.product.product_price }}
+                </div>
+                </div>
+            {% endfor %}
+        {% endfor %}
+        <!-- END Products -->
+        </div>
+  
+      <hr class="my-10 dark:border-gray-700/50">
+    </div>
+  </div>
+  <!-- END Product List Section: Products Grid -->
+{% endblock %}

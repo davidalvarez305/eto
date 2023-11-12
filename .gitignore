@@ -1,0 +1,11 @@
+*.env
+*.conf
+*.sql
+node_modules
+deploy.sh
+uwsgi_params
+replicate.sh
+download.sh
+test.sh
+output.json
+google.json

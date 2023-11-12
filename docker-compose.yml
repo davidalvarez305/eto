@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  django:
+    build: ./django
+    restart: always
+    depends_on:
+      - postgres
+    image: iamdavidmiguelalvarez/eto:django
+    env_file:
+      - .env
+    volumes:
+    - data:/vol/django
+    ports:
+      - "8000:8000"
+  postgres:
+    build: ./postgres
+    restart: always
+    env_file:
+      - .env
+    image: iamdavidmiguelalvarez/eto:postgres
+    volumes:
+    - data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  data:

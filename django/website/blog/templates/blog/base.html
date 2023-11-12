@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html class="dark" xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+{% load static %}
+{{ google_analytics_id|json_script:"google-analytics-id" }}
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <link rel="preconnect" href="{{ google_analytics_src }}">
+    <script>
+        var googleAnalyticsId = JSON.parse(document.getElementById('google-analytics-id').textContent);
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', googleAnalyticsId);
+    </script>
+    <!-- End Google tag -->
+
+    <!-- Essential Meta Tags -->
+    <meta charset="utf-8">
+    <title>{{ page_title }}</title>
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=1" />
+    <meta name="description" content="{{ meta_description }}">
+
+    <!-- Open Graph -->
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="{{ page_title }}" />
+    <meta property="og:description" content="{{ meta_description }}" />
+    <meta property="og:site_name" content="{{ site_name }}" />
+
+    <!-- Twitter -->
+    <meta name="twitter:title" content="{{ page_title }}" />
+    <meta name="twitter:description" content="{{ meta_description }}" />
+    <meta name="twitter:url" content="{{ page_path }}" />
+
+    <!-- CSS -->
+    <link href="{% static 'blog/main.css' %}" rel="preload" as="style" type="text/css" onload="this.onload=null;this.rel='stylesheet'">
+
+    <!-- Rels -->
+    <link rel="shortcut icon" href="{% static 'media/misc/favicon.ico' %}">
+    <link rel="canonical" href="{{ page_path }}" />
+
+    {% if is_reviewpost == True %}
+    <!-- Rich Structured Data -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org/",
+            "@type": "Product",
+            "name": "{{ review_post.product.product_name }}",
+            "image": "{{ review_post.product.product_image }}",
+            "description": "{{ meta_description }}",
+            "review": {
+              "@type": "Review",
+              "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": {{ review_post.product.product_ratings }}
+              },
+              "author": {
+                "@type": "Person",
+                "name": "David Alvarez"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "South Florida Athletic Club"
+              }
+            },
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": {{ review_post.product.product_ratings }},
+                "reviewCount": {{ review_post.product.product_reviews|cut:',' }}
+            },
+            "offers": {
+                "@type": "Offer",
+                "priceSpecification": {
+                  "@type": "UnitPriceSpecification",
+                  "price": {{ review_post.product.product_price|cut:'$' }},
+                  "priceCurrency": "USD"
+                }
+            }
+        }
+    </script>
+    {% endif %}
+</head>
+
+
+<!-- Page Container -->
+<div id="page-container" class="flex flex-col mx-auto w-full min-h-screen min-w-[320px] bg-gray-100 dark:text-gray-100 dark:bg-gray-900">
+    <!-- Page Header -->
+    <header id="page-header" class="flex flex-none items-center shadow-sm z-1 bg-gray-800">
+      <div class="container xl:max-w-7xl mx-auto px-4 lg:px-8">
+        <div class="flex justify-between py-4">
+          <!-- Left Section -->
+          <div class="flex items-center space-x-2 lg:space-x-6 dark">
+            <!-- Logo -->
+            <a href="/" class="group inline-flex items-center space-x-2 font-bold text-lg tracking-wide text-gray-900 hover:text-gray-600 dark:text-gray-100 dark:hover:text-gray-300">
+                <link rel="preload" as="image" href="{% static 'media/misc/logo.webp' %}" onload="this.onload=null;this.reload=''">
+            </a>
+            <!-- END Logo -->
+  
+            <!-- Desktop Navigation -->
+            <nav class="hidden lg:flex items-center space-x-2">
+            {% for group in groups %}
+            <div class="relative inline-block">
+                <!-- Dropdown Toggle Button -->
+                <div class="dark">
+                  <button
+                    type="button"
+                    id="tk-dropdown-layouts-user"
+                    class="inline-flex justify-center items-center space-x-2 border font-semibold rounded-lg px-3 py-2 leading-5 text-sm border-gray-200 bg-white text-gray-800 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600 dark:focus:ring-opacity-40 dark:active:border-gray-700"
+                    aria-haspopup="true"
+                    aria-expanded="true"
+                  >
+                    <svg class="hi-mini hi-user-circle inline-block w-5 h-5 sm:hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-5.5-2.5a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0zM10 12a5.99 5.99 0 00-4.793 2.39A6.483 6.483 0 0010 16.5a6.483 6.483 0 004.793-2.11A5.99 5.99 0 0010 12z" clip-rule="evenodd"/></svg>
+                    <span class="hidden sm:inline">{{ group.name|title|capfirst }}</span>
+                    <svg class="hi-mini hi-chevron-down w-5 h-5 opacity-40 hidden sm:inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+                  </button>
+                </div>
+                <!-- END Dropdown Toggle Button -->
+    
+                <!-- Dropdown -->
+                <div role="menu" aria-labelledby="tk-dropdown-layouts-user" class="absolute right-0 origin-top-right z-10 mt-2 w-48 shadow-xl rounded-lg dark:shadow-gray-900">
+                  <div class="bg-white rounded-lg dark:bg-gray-800">
+                    {% for category in group.category_set.all %}
+                    <div class="hidden opacity-100 scale-100 p-2.5 space-y-1">
+                      <a role="menuitem" href="/{{ category.slug }}/" class="group text-sm font-medium flex items-center justify-between space-x-2 px-2.5 py-2 rounded-lg text-gray-700 border border-transparent hover:text-blue-800 hover:bg-blue-50 active:border-blue-100 dark:text-gray-200 dark:hover:text-white dark:hover:bg-gray-700/75 dark:active:border-gray-600">
+                        <svg class="flex-none hi-mini hi-user-circle inline-block w-5 h-5 opacity-25 group-hover:opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-5.5-2.5a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0zM10 12a5.99 5.99 0 00-4.793 2.39A6.483 6.483 0 0010 16.5a6.483 6.483 0 004.793-2.11A5.99 5.99 0 0010 12z" clip-rule="evenodd"/></svg>
+                        <span class="grow">{{ category.name }}</span>
+                      </a>
+                    </div>
+                    {% endfor %}
+                  </div>
+                </div>
+                <!-- END Dropdown -->
+              </div>
+            {% endfor %}
+            </nav>
+            <!-- END Desktop Navigation -->
+          </div>
+          <!-- END Left Section -->
+  
+          <!-- Right Section -->
+          <div class="flex items-center space-x-2">
+            <!-- Toggle Mobile Navigation -->
+            <div class="lg:hidden dark">
+              <button type="button" class="inline-flex justify-center items-center space-x-2 border font-semibold rounded-lg px-3 py-2 leading-5 text-sm border-gray-200 bg-white text-gray-800 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600 dark:focus:ring-opacity-40 dark:active:border-gray-700">
+                <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" class="hi-solid hi-menu inline-block w-5 h-5"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
+              </button>
+            </div>
+            <!-- END Toggle Mobile Navigation -->
+          </div>
+          <!-- END Right Section -->
+        </div>
+        <div class="lg:hidden dark hidden">
+          <nav class="flex flex-col space-y-2 py-4 border-t dark:border-gray-700">
+            {% for group in groups %}
+                <p class="group text-sm font-medium flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-800 border border-transparent hover:text-blue-600 hover:bg-blue-50 active:border-blue-100 dark:text-gray-200 dark:hover:text-white dark:hover:bg-gray-700 dark:active:border-gray-600">
+                    {{ group.name }}
+                </p>
+            {% endfor %}
+          </nav>
+        </div>
+        <!-- END Mobile Navigation -->
+      </div>
+    </header>
+    <!-- END Page Header -->
+  
+    <!-- Page Content -->
+    <main id="page-content" class="flex flex-auto flex-col max-w-full">
+  
+      <!-- Page Section -->
+      <div class="container xl:max-w-7xl mx-auto p-4 lg:p-8">
+        {% block content %}{% endblock %}
+      </div>
+      <!-- END Page Section -->
+    </main>
+    <!-- END Page Content -->
+  
+    <!-- Page Footer -->
+    {% include "blog/footer.html" %}
+    <!-- END Page Footer -->
+  </div>
+  <!-- END Page Container -->
+</html>
