@@ -1,10 +1,10 @@
 from django.db import models
 
 class SEO(models.Model):
-    title = models.CharField(max_length=255)
-    meta_description = models.TextField()
+    title = models.CharField(max_length=255, null=True)
+    meta_description = models.TextField(null=True)
     slug = models.SlugField(db_index=True, unique=True)
-    content = models.TextField()
+    content = models.TextField(null=True)
 
     class Meta:
         abstract = True
@@ -49,7 +49,7 @@ class Lead(models.Model):
         db_table = "lead"
 
 class Marketing(models.Model):
-    lead = models.ForeignKey(Lead, on_delete=models.SET_NULL)
+    lead = models.ForeignKey(Lead, on_delete=models.SET_NULL, null=True)
     landing_page = models.CharField(max_length=255)
     referrer = models.CharField(max_length=100, blank=True, null=True)
     keyword = models.CharField(max_length=100, blank=True, null=True)

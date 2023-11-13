@@ -10,7 +10,6 @@ from django.http import HttpResponseBadRequest, JsonResponse
 from django.contrib.auth import authenticate, login, logout
 
 class MyBaseView(View):
-    groups = Group.prefetch_category_set()
     domain = str(os.environ.get('DJANGO_DOMAIN'))
     current_year = date.today().year
     google_analytics_id = str(os.environ.get('GOOGLE_ANALYTICS_ID'))
@@ -18,7 +17,6 @@ class MyBaseView(View):
     context = {
         'domain': domain,
         'current_year': current_year,
-        'groups': groups,
         'google_analytics_id': google_analytics_id,
         'google_analytics_src': "https://www.googletagmanager.com/gtag/js?id=" + google_analytics_id,
         'meta_description': 'Get reviews for all things sports, fitness, outdoors, and everything in between!',
