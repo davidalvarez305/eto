@@ -1,17 +1,20 @@
 import json
 import os
+from pathlib import Path
 import requests
 from oauth2client.client import OAuth2Credentials
 
 
 def get_auth():
-    f = open(str(os.environ.get('SECRETS_FILE')))
+    project_dir = Path(__file__).resolve().parent.parent
+    google_secrets_file = f"{project_dir.parent.parent.parent}/{os.environ.get('GOOGLE_JSON_PATH')}"
+    f = open(google_secrets_file)
     data = json.load(f)
 
     client_id = data['web']['client_id']
     client_secret = data['web']['client_secret']
     token_uri = data['web']['token_uri']
-    refresh_token = str(os.environ.get('REFRESH_TOKEN'))
+    refresh_token = str(os.environ.get('GOOGLE_API_REFRESH_TOKEN'))
 
     params = {
         "client_id": client_id,
@@ -31,7 +34,7 @@ def get_auth():
         refresh_token=refresh_token,
         token_expiry=creds['expires_in'],
         token_uri=token_uri,
-        user_agent=str(os.environ.get('USER_AGENT')),
+        user_agent=str(os.environ.get('GOOGLE_API_USER_AGENT')),
         scopes=creds['scope'],
     )
 

@@ -5,6 +5,8 @@ import os
 from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.db import connection
+
+from .google.gmail import send_mail
 from .models import *
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseBadRequest, JsonResponse
@@ -52,6 +54,7 @@ class ContactView(MyBaseView):
     def post(self, request, *args, **kwargs):
         try:
             data = json.loads(request.body.decode('utf-8'))
+            send_mail(data)
             return JsonResponse({"message": "Request body parsed successfully."})
         except Exception as e:
             print("Error parsing request body:", str(e))
