@@ -39,6 +39,19 @@ class HomeView(MyBaseView):
         context['page_title'] = str(os.environ.get('SITE_NAME'))
         return render(request, self.template_name, context=context)
 
+class LocationView(MyBaseView):
+    template_name = 'blog/home.html'
+
+    def get(self, request, *args, **kwargs):
+        slug = kwargs['location']
+
+        location = get_object_or_404(Location, slug=slug)
+
+        context = self.context
+        context['page_path'] = request.build_absolute_uri()
+        context['page_title'] = str(os.environ.get('SITE_NAME'))
+        return render(request, self.template_name, context=context)
+
 class ServiceLocationView(MyBaseView):
     template_name = 'blog/home.html'
 
