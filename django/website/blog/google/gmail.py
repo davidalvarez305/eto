@@ -26,7 +26,7 @@ def send_mail():
 
         message['To'] = user_two + ", " + user_one
         message['From'] = str(os.environ.get('EMAIL_TWO'))
-        message['Subject'] = "YUH YUH"
+        message['Subject'] = "Mensaje De Contacto"
 
         encoded_message = base64.urlsafe_b64encode(message.as_bytes()).decode()
 
