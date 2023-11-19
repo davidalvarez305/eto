@@ -21,9 +21,19 @@ class Location(SEO):
     class Meta:
         db_table = "location"
 
+class ServiceLocation(SEO):
+    service = models.ForeignKey('Service', on_delete=models.CASCADE)
+    location = models.ForeignKey('Location', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.service.name} - {self.location.name}'
+
+    class Meta:
+        db_table = 'service_locations'
+
 class Service(SEO):
     name = models.TextField()
-    locations = models.ManyToManyField(Location)
+    locations = models.ManyToManyField(Location, through=ServiceLocation)
 
     def __str__(self):
         return self.name
