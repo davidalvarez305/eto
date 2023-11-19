@@ -30,11 +30,25 @@ class MyBaseView(View):
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name, context=self.context)
 
-
 class HomeView(MyBaseView):
     template_name = 'blog/home.html'
 
     def get(self, request, *args, **kwargs):
+        context = self.context
+        context['page_path'] = request.build_absolute_uri()
+        context['page_title'] = str(os.environ.get('SITE_NAME'))
+        return render(request, self.template_name, context=context)
+
+class ServiceLocationView(MyBaseView):
+    template_name = 'blog/home.html'
+
+    def get(self, request, *args, **kwargs):
+        location = kwargs['location']
+        service = kwargs['service']
+
+        service_location = get_object_or_404(ServiceLocation, service__slug=service, location__slug=location)
+        print(service_location.id)
+
         context = self.context
         context['page_path'] = request.build_absolute_uri()
         context['page_title'] = str(os.environ.get('SITE_NAME'))
