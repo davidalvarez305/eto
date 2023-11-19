@@ -16,6 +16,7 @@ class MyBaseView(View):
     domain = str(os.environ.get('DJANGO_DOMAIN'))
     current_year = date.today().year
     google_analytics_id = str(os.environ.get('GOOGLE_ANALYTICS_ID'))
+    phone_number = str(os.environ.get('PHONE_NUMBER'))
 
     context = {
         'domain': domain,
@@ -25,6 +26,7 @@ class MyBaseView(View):
         'meta_description': 'Get reviews for all things sports, fitness, outdoors, and everything in between!',
         'page_title': str(os.environ.get('SITE_NAME')),
         'site_name': str(os.environ.get('SITE_NAME')),
+        'phone_number': '({}) - {} {}'.format(phone_number[:3], phone_number[3:6], phone_number[6:]),
         'is_reviewpost': False,
     }
 
@@ -55,10 +57,10 @@ class ContactView(MyBaseView):
         try:
             data = json.loads(request.body.decode('utf-8'))
             send_mail(data)
-            return JsonResponse({"message": "Request body parsed successfully."})
+            return JsonResponse({ "data": "Contact form received successfully." })
         except Exception as e:
-            print("Error parsing request body:", str(e))
-            return JsonResponse({"error": "Failed to parse request body."}, status=400)
+            print("Error:", str(e))
+            return JsonResponse({ "data": "Failed to parse request body." }, status=400)
 
 class LocationView(MyBaseView):
     template_name = 'blog/home.html'
@@ -86,6 +88,15 @@ class ServiceLocationView(MyBaseView):
         context = self.context
         context['page_path'] = request.build_absolute_uri()
         context['page_title'] = str(os.environ.get('SITE_NAME'))
+        return render(request, self.template_name, context=context)
+
+class PPCLandingPageView(MyBaseView):
+    template_name = 'blog/pressure_washing.html'
+
+    def get(self, request, *args, **kwargs):
+        context = self.context
+        context['page_path'] = request.build_absolute_uri()
+        context['page_title'] = 'Pressure Washing in Miami, FL - ' + str(os.environ.get('SITE_NAME'))
         return render(request, self.template_name, context=context)
 
 def sitemap(request, *args, **kwargs):

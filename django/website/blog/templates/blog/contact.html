@@ -80,7 +80,7 @@
        .then((response) => response.json())
        .then((_) => {
          alert('Contact form submitted!');
-         // contactForm.reset();
+         contactForm.reset();
        })
        .catch(console.error);
    });

@@ -1,0 +1,588 @@
+{% extends "blog/base.html" %}
+{% load static %}
+{% block content %}
+<!-- Hero Content -->
+<div
+    class="container relative mx-auto grid grid-cols-1 gap-16 px-4 py-16 text-center lg:grid-cols-2 lg:px-8 lg:py-32 lg:text-left xl:max-w-7xl">
+    <div class="lg:flex lg:items-center">
+        <div>
+            <h1 class="mb-4 text-4xl font-black text-black dark:text-white">
+                Premium Pressure Washing
+            </h1>
+            <h2 class="text-xl font-medium leading-relaxed text-gray-700 dark:text-gray-300">
+                Get pressure and general cleaning services in your area with just a few clicks. We take care of
+                everything.
+            </h2>
+            <div
+                class="flex flex-col justify-center space-y-2 pb-16 pt-10 sm:flex-row sm:items-center sm:space-x-2 sm:space-y-0">
+                <a href="javascript:void(0)"
+                    class="inline-flex items-center justify-center space-x-2 rounded-lg border border-blue-700 bg-blue-700 px-7 py-3.5 font-semibold leading-6 text-white hover:border-blue-600 hover:bg-blue-600 hover:text-white focus:ring focus:ring-blue-400 focus:ring-opacity-50 active:border-blue-700 active:bg-blue-700 dark:focus:ring-blue-400 dark:focus:ring-opacity-90">
+                    <span>Get A Quote</span>
+                    <svg class="hi-mini hi-arrow-right inline-block h-5 w-5 opacity-50"
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd"
+                            d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="lg:flex lg:items-center lg:justify-center">
+        <div class="relative lg:w-96">
+            <div
+                class="bg-tranparent absolute right-0 top-0 -m-6 h-40 w-40 rounded-full border border-teal-200 dark:border-teal-900 lg:h-96 lg:w-96">
+            </div>
+            <div
+                class="bg-tranparent absolute bottom-0 left-0 -m-6 h-40 w-40 rounded-full border border-indigo-200 dark:border-indigo-900 lg:h-96 lg:w-96">
+            </div>
+            <div
+                class="absolute left-0 top-0 -ml-10 -mt-10 h-36 w-36 rounded-full bg-gradient-to-br from-purple-200 dark:from-purple-800">
+            </div>
+            <div
+                class="absolute bottom-0 right-0 -mb-8 -mr-8 h-24 w-24 rotate-12 rounded-3xl bg-gradient-to-tl from-amber-200 dark:from-orange-900">
+            </div>
+            <div
+                class="absolute right-0 top-0 -mr-8 -mt-10 h-40 w-32 -rotate-6 rounded-3xl bg-gradient-to-bl from-teal-200 dark:from-teal-800">
+            </div>
+            <div
+                class="absolute bottom-0 left-0 -mb-8 -ml-8 h-40 w-32 rotate-12 rounded-3xl bg-gradient-to-tr from-indigo-200 dark:from-indigo-800">
+            </div>
+            <img src="https://cdn.tailkit.com/media/placeholders/photo-MChSQHxGZrQ-800x1000.jpg"
+                class="relative mx-auto rounded-lg shadow-lg" alt="Hero Image" />
+        </div>
+    </div>
+</div>
+<!-- END Hero Content -->
+
+<!-- Features Section: Featured Image Side -->
+<div class="overflow-hidden bg-white dark:bg-gray-900 dark:text-gray-100">
+    <div class="container mx-auto px-4 py-16 lg:px-8 lg:py-32 xl:max-w-7xl">
+        <div class="flex flex-col space-y-20 lg:flex-row lg:items-center lg:space-x-28 lg:space-y-0">
+            <div class="relative mx-auto w-2/3 flex-none lg:w-1/2 xl:w-2/5">
+                <div
+                    class="bg-tranparent absolute right-0 top-0 -m-6 h-40 w-40 rounded-full border border-teal-200 dark:border-teal-900 lg:h-96 lg:w-96">
+                </div>
+                <div
+                    class="bg-tranparent absolute bottom-0 left-0 -m-6 h-40 w-40 rounded-full border border-indigo-200 dark:border-indigo-900 lg:h-96 lg:w-96">
+                </div>
+                <div
+                    class="absolute left-0 top-0 -ml-10 -mt-10 h-36 w-36 rounded-full bg-gradient-to-br from-purple-200 dark:from-purple-800">
+                </div>
+                <div
+                    class="absolute bottom-0 right-0 -mb-8 -mr-8 h-24 w-24 rotate-12 rounded-3xl bg-gradient-to-tl from-amber-200 dark:from-orange-900">
+                </div>
+                <div
+                    class="absolute right-0 top-0 -mr-8 -mt-10 h-40 w-32 -rotate-6 rounded-3xl bg-gradient-to-bl from-teal-200 dark:from-teal-800">
+                </div>
+                <div
+                    class="absolute bottom-0 left-0 -mb-8 -ml-8 h-40 w-32 rotate-12 rounded-3xl bg-gradient-to-tr from-indigo-200 dark:from-indigo-800">
+                </div>
+                <img src="https://cdn.tailkit.com/media/placeholders/photo-xLZ9EP4hJtQ-600x800.jpg"
+                    alt="Preview Feature Image" class="relative mx-auto rounded-lg shadow-xl" />
+            </div>
+            <div class="space-y-10 md:py-12 lg:w-1/2 xl:w-3/5">
+                <!-- Heading -->
+                <div>
+                    <div class="mb-1 text-sm font-bold uppercase tracking-wider text-blue-600 dark:text-blue-500">
+                        A joy to use
+                    </div>
+                    <h2 class="mb-4 text-4xl font-black text-black dark:text-white">
+                        Clean User Interface
+                    </h2>
+                    <h3 class="text-xl font-medium leading-relaxed text-gray-700 dark:text-gray-300">
+                        You will love working with your newly updated and customized
+                        dashboard.
+                    </h3>
+                </div>
+                <!-- END Heading -->
+
+                <!-- Features -->
+                <div class="space-y-8 xl:w-2/3">
+                    <div class="flex space-x-4">
+                        <div class="flex-none text-emerald-500 dark:text-emerald-400">
+                            <svg class="hi-mini hi-check-circle inline-block h-5 w-5" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd"
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="mb-2 text-lg font-semibold">
+                                Sleek and Intuitive Interface
+                            </h4>
+                            <p class="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
+                                Our SaaS platform boasts a sleek and intuitive user interface,
+                                ensuring effortless navigation and a delightful user experience.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex space-x-4">
+                        <div class="flex-none text-emerald-500 dark:text-emerald-400">
+                            <svg class="hi-mini hi-check-circle inline-block h-5 w-5" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd"
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="mb-2 text-lg font-semibold">Customizable Themes</h4>
+                            <p class="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
+                                Stand out from the crowd with our customizable themes. Tailor
+                                the look and feel of your web projects to match your brand
+                                identity or desired aesthetic.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex space-x-4">
+                        <div class="flex-none text-emerald-500 dark:text-emerald-400">
+                            <svg class="hi-mini hi-check-circle inline-block h-5 w-5" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd"
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="mb-2 text-lg font-semibold">Responsive Design</h4>
+                            <p class="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
+                                Your web projects automatically adapt to different screen sizes,
+                                guaranteeing a seamless and consistent user experience whether
+                                accessed from desktops, tablets, or smartphones.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- END Features -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END Features Section: Featured Image Side -->
+
+<!-- Image Overlays Section: Overlay Fade In -->
+<div class="bg-white dark:bg-gray-900 dark:text-gray-100">
+    <div class="container mx-auto space-y-16 px-4 py-16 lg:px-8 lg:py-32 xl:max-w-7xl">
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-8">
+            <!-- Item -->
+            <div class="group relative overflow-hidden rounded-lg bg-blue-900 focus-within:ring-4 focus-within:ring-blue-500 focus-within:ring-opacity-50 focus-within:ring-offset-2 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 focus:ring-offset-2 dark:ring-offset-gray-900"
+                tabindex="0">
+                <img src="https://cdn.tailkit.com/media/placeholders/photo-73F4pKoUkM0-800x600.jpg" alt="Image 1" />
+
+                <!-- Item Overlay -->
+                <div
+                    class="absolute inset-0 flex flex-col items-center justify-center bg-blue-900 bg-opacity-80 opacity-0 transition duration-300 ease-out group-focus-within:opacity-100 group-hover:opacity-100 group-focus:opacity-100">
+                    <div class="text-center">
+                        <h4 class="text-lg font-semibold text-white">Amazing Lakes</h4>
+                        <h5 class="mb-5 text-sm text-white text-opacity-80">
+                            Explore the unknown
+                        </h5>
+                        <a href="javascript:void(0)"
+                            class="inline-flex items-center justify-center space-x-2 rounded-lg border border-blue-600 bg-blue-600 px-3 py-2 text-sm font-semibold leading-5 text-white hover:border-blue-700 hover:bg-blue-700 hover:text-white focus:ring focus:ring-blue-400 focus:ring-opacity-50 active:border-blue-600 active:bg-blue-600">
+                            <span>More Info</span>
+                            <svg class="hi-mini hi-arrow-top-right-on-square inline-block h-4 w-4 opacity-50"
+                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                aria-hidden="true">
+                                <path fill-rule="evenodd"
+                                    d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z"
+                                    clip-rule="evenodd" />
+                                <path fill-rule="evenodd"
+                                    d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <!-- END Item Overlay -->
+            </div>
+            <!-- END Item -->
+
+            <!-- Item -->
+            <div class="group relative overflow-hidden rounded-lg bg-blue-900 focus-within:ring-4 focus-within:ring-blue-500 focus-within:ring-opacity-50 focus-within:ring-offset-2 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 focus:ring-offset-2 dark:ring-offset-gray-900"
+                tabindex="0">
+                <img src="https://cdn.tailkit.com/media/placeholders/photo-Bkci_8qcdvQ-800x600.jpg" alt="Image 2" />
+
+                <!-- Item Overlay -->
+                <div
+                    class="absolute inset-0 flex flex-col items-center justify-center bg-blue-900 bg-opacity-80 opacity-0 transition duration-300 ease-out group-focus-within:opacity-100 group-hover:opacity-100 group-focus:opacity-100">
+                    <div class="text-center">
+                        <h4 class="text-lg font-semibold text-white">Green Forests</h4>
+                        <h5 class="mb-5 text-sm text-white text-opacity-80">
+                            Breath fresh oxygen
+                        </h5>
+                        <a href="javascript:void(0)"
+                            class="inline-flex items-center justify-center space-x-2 rounded-lg border border-blue-600 bg-blue-600 px-3 py-2 text-sm font-semibold leading-5 text-white hover:border-blue-700 hover:bg-blue-700 hover:text-white focus:ring focus:ring-blue-400 focus:ring-opacity-50 active:border-blue-600 active:bg-blue-600">
+                            <span>More Info</span>
+                            <svg class="hi-mini hi-arrow-top-right-on-square inline-block h-4 w-4 opacity-50"
+                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                aria-hidden="true">
+                                <path fill-rule="evenodd"
+                                    d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z"
+                                    clip-rule="evenodd" />
+                                <path fill-rule="evenodd"
+                                    d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <!-- END Item Overlay -->
+            </div>
+            <!-- END Item -->
+
+            <!-- Item -->
+            <div class="group relative overflow-hidden rounded-lg bg-blue-900 focus-within:ring-4 focus-within:ring-blue-500 focus-within:ring-opacity-50 focus-within:ring-offset-2 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 focus:ring-offset-2 dark:ring-offset-gray-900"
+                tabindex="0">
+                <img src="https://cdn.tailkit.com/media/placeholders/photo-Y8lCoTRgHPE-800x600.jpg" alt="Image 3" />
+
+                <!-- Item Overlay -->
+                <div
+                    class="absolute inset-0 flex flex-col items-center justify-center bg-blue-900 bg-opacity-80 opacity-0 transition duration-300 ease-out group-focus-within:opacity-100 group-hover:opacity-100 group-focus:opacity-100">
+                    <div class="text-center">
+                        <h4 class="text-lg font-semibold text-white">Gorgeous Peaks</h4>
+                        <h5 class="mb-5 text-sm text-white text-opacity-80">
+                            Try to reach them
+                        </h5>
+                        <a href="javascript:void(0)"
+                            class="inline-flex items-center justify-center space-x-2 rounded-lg border border-blue-600 bg-blue-600 px-3 py-2 text-sm font-semibold leading-5 text-white hover:border-blue-700 hover:bg-blue-700 hover:text-white focus:ring focus:ring-blue-400 focus:ring-opacity-50 active:border-blue-600 active:bg-blue-600">
+                            <span>More Info</span>
+                            <svg class="hi-mini hi-arrow-top-right-on-square inline-block h-4 w-4 opacity-50"
+                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                aria-hidden="true">
+                                <path fill-rule="evenodd"
+                                    d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z"
+                                    clip-rule="evenodd" />
+                                <path fill-rule="evenodd"
+                                    d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <!-- END Item Overlay -->
+            </div>
+            <!-- END Item -->
+        </div>
+    </div>
+</div>
+<!-- END Image Overlays Section: Overlay Fade In -->
+
+<!-- FAQ Section: Toggleable -->
+<div class="bg-white dark:bg-gray-900 dark:text-gray-100">
+    <div class="container mx-auto space-y-16 px-4 py-16 lg:px-8 lg:py-32 xl:max-w-7xl">
+        <!-- Heading -->
+        <div class="text-center">
+            <div class="mb-1 text-sm font-bold uppercase tracking-wider text-blue-600 dark:text-blue-500">
+                We Answer
+            </div>
+            <h2 class="text-4xl font-black text-black dark:text-white">
+                Frequently Asked Questions
+            </h2>
+        </div>
+        <!-- END Heading -->
+
+        <!-- FAQ -->
+        <div class="mx-auto max-w-2xl divide-y divide-gray-200 dark:divide-gray-700/50">
+            <details class="group">
+                <summary
+                    class="flex cursor-pointer list-none items-center justify-between px-3 py-4 hover:bg-gray-50 group-open:bg-gray-50 dark:hover:bg-gray-800/50 dark:group-open:bg-gray-800/50">
+                    <h4 class="font-semibold">What features are included?</h4>
+                    <div class="opacity-50 transition duration-300 group-open:rotate-180">
+                        <svg class="hi-mini hi-chevron-down inline-block h-5 w-5" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd"
+                                d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                </summary>
+                <p class="px-3 pb-6 pt-3 leading-7 text-gray-600 dark:text-gray-400">
+                    In our template, you'll find an array of features that enhance your
+                    website's functionality. These include a responsive design to ensure
+                    compatibility across devices, customizable widgets to tailor your site
+                    to your preferences, and SEO optimization to boost your online
+                    visibility.
+                </p>
+            </details>
+            <details class="group">
+                <summary
+                    class="flex cursor-pointer list-none items-center justify-between px-3 py-4 hover:bg-gray-50 group-open:bg-gray-50 dark:hover:bg-gray-800/50 dark:group-open:bg-gray-800/50">
+                    <h4 class="font-semibold">Can I use PayPal to pay you?</h4>
+                    <div class="opacity-50 transition duration-300 group-open:rotate-180">
+                        <svg class="hi-mini hi-chevron-down inline-block h-5 w-5" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd"
+                                d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                </summary>
+                <p class="px-3 pb-6 pt-3 leading-7 text-gray-600 dark:text-gray-400">
+                    Certainly! We offer PayPal as a secure and convenient payment option
+                    for your transactions. You can use it to make payments with ease.
+                </p>
+            </details>
+            <details class="group">
+                <summary
+                    class="flex cursor-pointer list-none items-center justify-between px-3 py-4 hover:bg-gray-50 group-open:bg-gray-50 dark:hover:bg-gray-800/50 dark:group-open:bg-gray-800/50">
+                    <h4 class="font-semibold">Do I get access to the community?</h4>
+                    <div class="opacity-50 transition duration-300 group-open:rotate-180">
+                        <svg class="hi-mini hi-chevron-down inline-block h-5 w-5" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd"
+                                d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                </summary>
+                <p class="px-3 pb-6 pt-3 leading-7 text-gray-600 dark:text-gray-400">
+                    Upon purchasing our template, you'll gain access to our thriving
+                    community. Here, you can engage in discussions, seek advice, and
+                    receive support from fellow users and our team.
+                </p>
+            </details>
+            <details class="group">
+                <summary
+                    class="flex cursor-pointer list-none items-center justify-between px-3 py-4 hover:bg-gray-50 group-open:bg-gray-50 dark:hover:bg-gray-800/50 dark:group-open:bg-gray-800/50">
+                    <h4 class="font-semibold">Can I get a refund just in case?</h4>
+                    <div class="opacity-50 transition duration-300 group-open:rotate-180">
+                        <svg class="hi-mini hi-chevron-down inline-block h-5 w-5" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd"
+                                d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                </summary>
+                <p class="px-3 pb-6 pt-3 leading-7 text-gray-600 dark:text-gray-400">
+                    Your satisfaction is our priority. We provide a 7-day money-back
+                    guarantee, giving you peace of mind. If the template doesn't meet your
+                    expectations, you can request a refund within this period.
+                </p>
+            </details>
+            <details class="group">
+                <summary
+                    class="flex cursor-pointer list-none items-center justify-between px-3 py-4 hover:bg-gray-50 group-open:bg-gray-50 dark:hover:bg-gray-800/50 dark:group-open:bg-gray-800/50">
+                    <h4 class="font-semibold">Do you offer email support?</h4>
+                    <div class="opacity-50 transition duration-300 group-open:rotate-180">
+                        <svg class="hi-mini hi-chevron-down inline-block h-5 w-5" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd"
+                                d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                </summary>
+                <p class="px-3 pb-6 pt-3 leading-7 text-gray-600 dark:text-gray-400">
+                    We're committed to assisting you. We offer email support to address
+                    any questions or issues you may encounter while using our template.
+                    Reach out to us, and we'll be happy to help.
+                </p>
+            </details>
+            <details class="group">
+                <summary
+                    class="flex cursor-pointer list-none items-center justify-between px-3 py-4 hover:bg-gray-50 group-open:bg-gray-50 dark:hover:bg-gray-800/50 dark:group-open:bg-gray-800/50">
+                    <h4 class="font-semibold">Are the updates free for life?</h4>
+                    <div class="opacity-50 transition duration-300 group-open:rotate-180">
+                        <svg class="hi-mini hi-chevron-down inline-block h-5 w-5" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd"
+                                d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                </summary>
+                <p class="px-3 pb-6 pt-3 leading-7 text-gray-600 dark:text-gray-400">
+                    As a valued customer, you'll enjoy free updates for the template.
+                    These updates will continue to be available to you as long as you
+                    remain a customer, ensuring your template stays current and relevant.
+                </p>
+            </details>
+        </div>
+        <!-- END FAQ -->
+
+        <!-- Link -->
+        <div class="text-center">
+            <a href="javascript:void(0)"
+                class="inline-flex items-center justify-center space-x-2 rounded-lg border border-gray-200 bg-white px-4 py-2 font-semibold leading-6 text-gray-800 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600 dark:focus:ring-opacity-40 dark:active:border-gray-700">
+                <span>Go to support center</span>
+                <svg class="hi-mini hi-arrow-top-right-on-square inline-block h-5 w-5 opacity-50"
+                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd"
+                        d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z"
+                        clip-rule="evenodd" />
+                    <path fill-rule="evenodd"
+                        d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z"
+                        clip-rule="evenodd" />
+                </svg>
+            </a>
+        </div>
+        <!-- END Link -->
+    </div>
+</div>
+<!-- END FAQ Section: Toggleable -->
+
+<!-- CTA Section: Simple Box Dark -->
+<div class="bg-white dark:bg-gray-900">
+    <div class="container relative mx-auto px-4 py-16 lg:px-8 lg:py-32 xl:max-w-6xl">
+        <div class="absolute inset-0 -mx-2 my-6 overflow-hidden rounded-lg bg-gray-800 lg:my-20">
+            <div class="absolute bottom-0 right-0 top-0 -mr-20 hidden w-1/2 -skew-x-6 bg-gray-700/30 md:block"></div>
+        </div>
+        <div class="relative flex flex-col items-center space-y-8 md:flex-row md:space-y-0">
+            <!-- Heading -->
+            <div class="py-5 text-center md:w-7/12 md:p-5 md:text-left">
+                <h2 class="mb-4 text-4xl font-black text-white">
+                    Join our community today
+                </h2>
+                <h3 class="text-xl leading-relaxed text-gray-300">
+                    Get all the help you need to start building professional websites and
+                    web applications.
+                </h3>
+            </div>
+            <!-- END Heading -->
+
+            <!-- Actions -->
+            <div class="grow md:p-5 md:text-center">
+                <a href="javascript:void(0)"
+                    class="inline-flex items-center justify-center space-x-2 rounded-full border border-blue-700 bg-blue-700 px-8 py-4 font-semibold leading-6 text-white hover:border-blue-600 hover:bg-blue-600 hover:text-white focus:ring focus:ring-blue-400 focus:ring-opacity-50 active:border-blue-700 active:bg-blue-700">
+                    <svg class="hi-mini hi-user-plus inline-block h-5 w-5 opacity-50" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path
+                            d="M11 5a3 3 0 11-6 0 3 3 0 016 0zM2.615 16.428a1.224 1.224 0 01-.569-1.175 6.002 6.002 0 0111.908 0c.058.467-.172.92-.57 1.174A9.953 9.953 0 018 18a9.953 9.953 0 01-5.385-1.572zM16.25 5.75a.75.75 0 00-1.5 0v2h-2a.75.75 0 000 1.5h2v2a.75.75 0 001.5 0v-2h2a.75.75 0 000-1.5h-2v-2z" />
+                    </svg>
+                    <span>Create Account</span>
+                </a>
+            </div>
+            <!-- END Actions -->
+        </div>
+    </div>
+</div>
+<!-- END CTA Section: Simple Box Dark -->
+
+<!-- Features Section: Key Features List -->
+<div class="bg-white dark:bg-gray-900 dark:text-gray-100">
+    <div class="container mx-auto space-y-16 px-4 py-16 lg:px-8 lg:py-32 xl:max-w-7xl">
+        <!-- Heading -->
+        <div class="text-center">
+            <div class="mb-1 text-sm font-bold uppercase tracking-wider text-blue-600 dark:text-blue-500">
+                Great Value for Money
+            </div>
+            <h2 class="mb-4 text-4xl font-black text-black dark:text-white">
+                Tailkit is so flexible
+            </h2>
+            <h3 class="mx-auto text-xl font-medium leading-relaxed text-gray-700 dark:text-gray-300 lg:w-2/3">
+                You have the freedom to use it to design websites and web apps for you
+                and your clients, SaaS or even Open Source projects.
+            </h3>
+        </div>
+        <!-- END Heading -->
+
+        <!-- Features -->
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8 lg:grid-cols-3">
+            <div class="flex items-center space-x-3">
+                <div class="flex flex-none items-center justify-center text-emerald-500 dark:text-emerald-400">
+                    <svg class="hi-mini hi-check-circle inline-block h-5 w-5" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <h4 class="font-semibold">One-time purchase</h4>
+            </div>
+            <div class="flex items-center space-x-3">
+                <div class="flex flex-none items-center justify-center text-emerald-500 dark:text-emerald-400">
+                    <svg class="hi-mini hi-check-circle inline-block h-5 w-5" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <h4 class="font-semibold">You can charge your end users</h4>
+            </div>
+            <div class="flex items-center space-x-3">
+                <div class="flex flex-none items-center justify-center text-emerald-500 dark:text-emerald-400">
+                    <svg class="hi-mini hi-check-circle inline-block h-5 w-5" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <h4 class="font-semibold">You can use it in your courses</h4>
+            </div>
+            <div class="flex items-center space-x-3">
+                <div class="flex flex-none items-center justify-center text-emerald-500 dark:text-emerald-400">
+                    <svg class="hi-mini hi-check-circle inline-block h-5 w-5" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <h4 class="font-semibold">Great for Commercial projects</h4>
+            </div>
+            <div class="flex items-center space-x-3">
+                <div class="flex flex-none items-center justify-center text-emerald-500 dark:text-emerald-400">
+                    <svg class="hi-mini hi-check-circle inline-block h-5 w-5" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <h4 class="font-semibold">Great for Open Source projects</h4>
+            </div>
+            <div class="flex items-center space-x-3">
+                <div class="flex flex-none items-center justify-center text-emerald-500 dark:text-emerald-400">
+                    <svg class="hi-mini hi-check-circle inline-block h-5 w-5" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <h4 class="font-semibold">Great for Personal projects</h4>
+            </div>
+            <div class="flex items-center space-x-3">
+                <div class="flex flex-none items-center justify-center text-emerald-500 dark:text-emerald-400">
+                    <svg class="hi-mini hi-check-circle inline-block h-5 w-5" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <h4 class="font-semibold">Great for learning as well</h4>
+            </div>
+            <div class="flex items-center space-x-3">
+                <div class="flex flex-none items-center justify-center text-emerald-500 dark:text-emerald-400">
+                    <svg class="hi-mini hi-check-circle inline-block h-5 w-5" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <h4 class="font-semibold">Free amazing updates</h4>
+            </div>
+            <div class="flex items-center space-x-3">
+                <div class="flex flex-none items-center justify-center text-emerald-500 dark:text-emerald-400">
+                    <svg class="hi-mini hi-check-circle inline-block h-5 w-5" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <h4 class="font-semibold">Friendly email support</h4>
+            </div>
+        </div>
+        <!-- END Features -->
+    </div>
+</div>
+<!-- END Features Section: Key Features List -->
+{% endblock %}
