@@ -1,0 +1,89 @@
+{% extends "blog/base.html" %}
+{% load static %}
+{% block content %}
+<!-- Contact Section: Simple Boxed -->
+<div class="bg-gray-100 dark:bg-gray-900 dark:text-gray-100">
+    <div class="container mx-auto space-y-16 px-4 py-16 lg:px-8">
+        <!-- Heading -->
+        <div class="text-center">
+            <div class="mb-1 text-sm font-bold uppercase tracking-wider text-blue-600 dark:text-blue-500">
+                Any questions?
+            </div>
+            <h2 class="mb-4 text-4xl font-black text-black dark:text-white">
+                Contact Us
+            </h2>
+            <h3 class="mx-auto text-xl font-medium leading-relaxed text-gray-700 dark:text-gray-300 lg:w-2/3">
+                If you need any further info, feel free to get in touch and we will get
+                back to your as soon as possible.
+            </h3>
+        </div>
+        <!-- END Heading -->
+
+        <!-- Contact Form -->
+        <div class="mx-auto flex w-3/4 max-w-xl flex-col overflow-hidden rounded-lg bg-white shadow-sm dark:bg-gray-800 dark:text-gray-100">
+            <form id="contact-form" class="space-y-6 p-5 md:p-10">
+                {% csrf_token %}
+                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                    <div class="space-y-1">
+                        <label for="first_name" class="font-medium">First Name</label>
+                        <input type="text" id="first_name" name="first_name"
+                            class="block w-full rounded-lg border border-gray-200 px-5 py-3 leading-6 placeholder-gray-500 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 dark:border-gray-600 dark:bg-gray-800 dark:placeholder-gray-400 dark:focus:border-blue-500" />
+                    </div>
+                    <div class="space-y-1">
+                        <label for="last_name" class="font-medium">Last Name</label>
+                        <input type="text" id="last_name" name="last_name"
+                            class="block w-full rounded-lg border border-gray-200 px-5 py-3 leading-6 placeholder-gray-500 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 dark:border-gray-600 dark:bg-gray-800 dark:placeholder-gray-400 dark:focus:border-blue-500" />
+                    </div>
+                </div>
+                <div class="space-y-1">
+                    <label for="email" class="font-medium">Email</label>
+                    <input type="email" id="email" name="email"
+                        class="block w-full rounded-lg border border-gray-200 px-5 py-3 leading-6 placeholder-gray-500 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 dark:border-gray-600 dark:bg-gray-800 dark:placeholder-gray-400 dark:focus:border-blue-500" />
+                </div>
+                <div class="space-y-1">
+                    <label for="message" class="font-medium">Message</label>
+                    <textarea id="message" name="message" rows="6"
+                        class="block w-full rounded-lg border border-gray-200 px-5 py-3 leading-6 placeholder-gray-500 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 dark:border-gray-600 dark:bg-gray-800 dark:placeholder-gray-400 dark:focus:border-blue-500"></textarea>
+                </div>
+                <button type="submit"
+                    class="inline-flex w-full items-center justify-center space-x-2 rounded-lg border border-blue-700 bg-blue-700 px-8 py-4 font-semibold leading-6 text-white hover:border-blue-600 hover:bg-blue-600 hover:text-white focus:ring focus:ring-blue-400 focus:ring-opacity-50 active:border-blue-700 active:bg-blue-700 dark:focus:ring-blue-400 dark:focus:ring-opacity-90">
+                    <svg class="hi-mini hi-paper-airplane inline-block h-5 w-5 opacity-50"
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path
+                            d="M3.105 2.289a.75.75 0 00-.826.95l1.414 4.925A1.5 1.5 0 005.135 9.25h6.115a.75.75 0 010 1.5H5.135a1.5 1.5 0 00-1.442 1.086l-1.414 4.926a.75.75 0 00.826.95 28.896 28.896 0 0015.293-7.154.75.75 0 000-1.115A28.897 28.897 0 003.105 2.289z" />
+                    </svg>
+                    <span>Send Message</span>
+                </button>
+            </form>
+        </div>
+        <!-- END Contact Form -->
+    </div>
+</div>
+
+<script>
+    var contactForm = document.getElementById("contact-form");
+   
+   contactForm.addEventListener("submit", function (e) {
+     e.preventDefault();
+   
+     var { csrfmiddlewaretoken, ...body } = Object.fromEntries(new FormData(e.target).entries());
+
+     fetch('/contact', {
+       headers: {
+         "Content-Type": "application/json",
+         'X-CSRFToken': csrfmiddlewaretoken,
+       },
+       method: "POST",
+       credentials: "include",
+       body: JSON.stringify(body),
+     })
+       .then((response) => response.json())
+       .then((_) => {
+         alert('Contact form submitted!');
+         // contactForm.reset();
+       })
+       .catch(console.error);
+   });
+</script>
+<!-- END Contact Section: Simple Boxed -->
+{% endblock %}

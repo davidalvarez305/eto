@@ -1,4 +1,5 @@
 from datetime import date
+import json
 import math
 import os
 from django.shortcuts import render, get_object_or_404
@@ -38,6 +39,23 @@ class HomeView(MyBaseView):
         context['page_path'] = request.build_absolute_uri()
         context['page_title'] = str(os.environ.get('SITE_NAME'))
         return render(request, self.template_name, context=context)
+
+class ContactView(MyBaseView):
+    template_name = 'blog/contact.html'
+
+    def get(self, request, *args, **kwargs):
+        context = self.context
+        context['page_path'] = request.build_absolute_uri()
+        context['page_title'] = str(os.environ.get('SITE_NAME'))
+        return render(request, self.template_name, context=context)
+
+    def post(self, request, *args, **kwargs):
+        try:
+            data = json.loads(request.body.decode('utf-8'))
+            return JsonResponse({"message": "Request body parsed successfully."})
+        except Exception as e:
+            print("Error parsing request body:", str(e))
+            return JsonResponse({"error": "Failed to parse request body."}, status=400)
 
 class LocationView(MyBaseView):
     template_name = 'blog/home.html'
