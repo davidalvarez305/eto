@@ -46,12 +46,12 @@ function getUserLocation() {
 }
 
 function getUserDeviceInfo() {
-  const { userAgent, language } = navigator;
-  return { userAgent, language };
+  const { userAgent, platform, language } = navigator;
+  return { userAgent, platform, language };
 }
 
 function handleCTAClick(e) {
-  const { userAgent, language } = getUserDeviceInfo();
+  const { userAgent, platform, language } = getUserDeviceInfo();
 
   var clickedButtonId = e.target.id;
   // This set method must be first in order for the getLeadChannel logic to work correctly
@@ -65,6 +65,7 @@ function handleCTAClick(e) {
   qs.set('latitude', latitude);
   qs.set('userAgent', userAgent);
   qs.set('language', language);
+  qs.set('os', platform);
 
   var currentDomain = new URL(window.location.protocol + "//" + window.location.host);
 

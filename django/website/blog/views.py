@@ -6,6 +6,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.db import connection
 
+from .utils import get_client_ip
 from .google.gmail import send_mail
 from .models import *
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -74,7 +75,9 @@ class QuoteView(MyBaseView):
     def post(self, request, *args, **kwargs):
         try:
             data = json.loads(request.body.decode('utf-8'))
+            user_ip = get_client_ip(request)
             print(data)
+            print(user_ip)
             return JsonResponse({ "data": "Contact form received successfully." })
         except Exception as e:
             print("Error:", str(e))
