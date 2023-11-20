@@ -62,6 +62,24 @@ class ContactView(MyBaseView):
             print("Error:", str(e))
             return JsonResponse({ "data": "Failed to parse request body." }, status=400)
 
+class QuoteView(MyBaseView):
+    template_name = 'blog/quote.html'
+
+    def get(self, request, *args, **kwargs):
+        context = self.context
+        context['page_path'] = request.build_absolute_uri()
+        context['page_title'] = str(os.environ.get('SITE_NAME'))
+        return render(request, self.template_name, context=context)
+
+    def post(self, request, *args, **kwargs):
+        try:
+            data = json.loads(request.body.decode('utf-8'))
+            print(data)
+            return JsonResponse({ "data": "Contact form received successfully." })
+        except Exception as e:
+            print("Error:", str(e))
+            return JsonResponse({ "data": "Failed to parse request body." }, status=400)
+
 class LocationView(MyBaseView):
     template_name = 'blog/home.html'
 
