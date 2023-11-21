@@ -2,11 +2,12 @@ from datetime import date
 import json
 import math
 import os
+import httpagentparser
 from django.shortcuts import render
 from django.views import View
 from django.db import connection
 
-from .utils import get_client_ip
+from .utils import get_client_ip, get_device_type
 from .google.gmail import send_mail
 from .models import *
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -44,6 +45,30 @@ class HomeView(MyBaseView):
         context['page_path'] = request.build_absolute_uri()
         context['page_title'] = str(os.environ.get('SITE_NAME'))
         return render(request, self.template_name, context=context)
+    
+class Login(MyBaseView):
+    template_name = 'blog/login.html'
+
+    def get(self, request, *args, **kwargs):
+        context = self.context
+        context['page_path'] = request.build_absolute_uri()
+        context['page_title'] = str(os.environ.get('SITE_NAME'))
+        return render(request, self.template_name, context=context)
+    
+    def post(self, request, *args, **kwargs):
+        form = request.POST.dict()
+        user = authenticate(request=request, username=form.get('username'), password=form.get('password'))
+
+        if user is not None:
+            login(request, user)
+            return JsonResponse({ 'data': 'Success.'}, status=200)
+        else:
+            return JsonResponse({ 'data': 'Authentication failed.'}, status=400)
+        
+class Logout(MyBaseView):
+    def post(self, request, *args, **kwargs):
+        logout(request)
+        return JsonResponse({ 'data': 'Logged out.'}, status=200)
 
 class ContactView(MyBaseView):
     template_name = 'blog/contact.html'
@@ -82,8 +107,13 @@ class QuoteView(MyBaseView):
         try:
             data = json.loads(request.body.decode('utf-8'))
             user_ip = get_client_ip(request)
+            device_data = httpagentparser.detect(data['userAgent'])
+            user_os = device_data['os']['name']
+            device_type = get_device_type(device_data)
             print(data)
             print(user_ip)
+            print(user_os)
+            print(device_type)
             return JsonResponse({ "data": "Contact form received successfully." })
         except Exception as e:
             print("Error:", str(e))
