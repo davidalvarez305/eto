@@ -2,7 +2,7 @@ from datetime import date
 import json
 import math
 import os
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from django.views import View
 from django.db import connection
 
@@ -88,34 +88,6 @@ class QuoteView(MyBaseView):
         except Exception as e:
             print("Error:", str(e))
             return JsonResponse({ "data": "Failed to parse request body." }, status=400)
-
-class LocationView(MyBaseView):
-    template_name = 'blog/home.html'
-
-    def get(self, request, *args, **kwargs):
-        slug = kwargs['location']
-
-        location = get_object_or_404(Location, slug=slug)
-
-        context = self.context
-        context['page_path'] = request.build_absolute_uri()
-        context['page_title'] = str(os.environ.get('SITE_NAME'))
-        return render(request, self.template_name, context=context)
-
-class ServiceLocationView(MyBaseView):
-    template_name = 'blog/home.html'
-
-    def get(self, request, *args, **kwargs):
-        location = kwargs['location']
-        service = kwargs['service']
-
-        service_location = get_object_or_404(ServiceLocation, service__slug=service, location__slug=location)
-        print(service_location.id)
-
-        context = self.context
-        context['page_path'] = request.build_absolute_uri()
-        context['page_title'] = str(os.environ.get('SITE_NAME'))
-        return render(request, self.template_name, context=context)
 
 class PPCLandingPageView(MyBaseView):
     template_name = 'blog/pressure_washing.html'
