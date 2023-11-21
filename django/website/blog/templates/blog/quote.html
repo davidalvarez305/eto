@@ -27,23 +27,23 @@
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
                     <div class="space-y-1">
                         <label for="first_name" class="font-medium">First Name</label>
-                        <input type="text" id="first_name" name="first_name"
+                        <input type="text" id="first_name" name="first_name" required
                             class="block w-full rounded-lg border border-gray-200 px-5 py-3 leading-6 placeholder-gray-500 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 dark:border-gray-600 dark:bg-gray-800 dark:placeholder-gray-400 dark:focus:border-blue-500" />
                     </div>
                     <div class="space-y-1">
                         <label for="last_name" class="font-medium">Last Name</label>
-                        <input type="text" id="last_name" name="last_name"
+                        <input type="text" id="last_name" name="last_name" required
                             class="block w-full rounded-lg border border-gray-200 px-5 py-3 leading-6 placeholder-gray-500 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 dark:border-gray-600 dark:bg-gray-800 dark:placeholder-gray-400 dark:focus:border-blue-500" />
                     </div>
                 </div>
                 <div class="space-y-1">
                     <label for="phone_number" class="font-medium">Phone Number</label>
-                    <input type="tel" id="phone_number" name="phone_number"
+                    <input type="tel" id="phone_number" name="phone_number" required
                         class="block w-full rounded-lg border border-gray-200 px-5 py-3 leading-6 placeholder-gray-500 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 dark:border-gray-600 dark:bg-gray-800 dark:placeholder-gray-400 dark:focus:border-blue-500" />
                 </div>
                 <div class="space-y-1">
                     <label for="service" class="font-medium">Service</label>
-                    <select id="service" name="service"
+                    <select id="service" name="service" required
                         class="block w-full rounded-lg border border-gray-200 px-5 py-3 leading-6 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 dark:border-gray-600 dark:bg-gray-800 dark:focus:border-blue-500">
                         {% for service in services %}
                         <option value="{{ service.id }}">{{ service.name }}</option>
@@ -52,7 +52,7 @@
                 </div>
                 <div class="space-y-1">
                     <label for="location" class="font-medium">City</label>
-                    <select id="location" name="location"
+                    <select id="location" name="location" required
                         class="block w-full rounded-lg border border-gray-200 px-5 py-3 leading-6 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 dark:border-gray-600 dark:bg-gray-800 dark:focus:border-blue-500">
                         {% for location in locations %}
                         <option value="{{ location.id }}">{{ location.name }}</option>
@@ -61,7 +61,7 @@
                 </div>
                 <div class="space-y-1">
                     <label for="message" class="font-medium">Message</label>
-                    <textarea id="message" name="message" rows="6"
+                    <textarea id="message" name="message" rows="6" required
                         class="block w-full rounded-lg border border-gray-200 px-5 py-3 leading-6 placeholder-gray-500 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 dark:border-gray-600 dark:bg-gray-800 dark:placeholder-gray-400 dark:focus:border-blue-500"></textarea>
                 </div>
                 <button type="submit"

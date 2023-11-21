@@ -2,6 +2,7 @@ from datetime import date
 import json
 import math
 import os
+from .forms import QuoteForm
 import httpagentparser
 from django.shortcuts import render
 from django.views import View
@@ -104,20 +105,24 @@ class QuoteView(MyBaseView):
         return render(request, self.template_name, context=context)
 
     def post(self, request, *args, **kwargs):
-        try:
-            data = json.loads(request.body.decode('utf-8'))
-            user_ip = get_client_ip(request)
-            device_data = httpagentparser.detect(data['userAgent'])
-            user_os = device_data['os']['name']
-            device_type = get_device_type(device_data)
-            print(data)
-            print(user_ip)
-            print(user_os)
-            print(device_type)
-            return JsonResponse({ "data": "Contact form received successfully." })
-        except Exception as e:
-            print("Error:", str(e))
-            return JsonResponse({ "data": "Failed to parse request body." }, status=400)
+        data = json.loads(request.body.decode('utf-8'))
+        form = QuoteForm(data)
+        if form.is_valid():
+            try:
+                user_ip = get_client_ip(request)
+                device_data = httpagentparser.detect(data['userAgent'])
+                user_os = device_data['os']['name']
+                device_type = get_device_type(device_data)
+                print(data)
+                print(user_ip)
+                print(user_os)
+                print(device_type)
+                return JsonResponse({ "data": "Contact form received successfully." })
+            except Exception as e:
+                print("Error:", str(e))
+                return JsonResponse({ "data": "Failed to parse request body." }, status=400)
+        else:
+            return JsonResponse({ "data": "Form was not submitted successfully." }, status=400)
 
 class PPCLandingPageView(MyBaseView):
     template_name = 'blog/pressure_washing.html'
