@@ -24,7 +24,6 @@ window.addEventListener("scroll", () => {
   const windowHeight = window.innerHeight;
   const totalHeight = document.body.clientHeight;
   const scrolledPercentage = (scrollY / (totalHeight - windowHeight)) * 100;
-  console.log(scrolledPercentage);
 
   if (scrolledPercentage >= scrollPercentageThreshold) {
     showModal();
