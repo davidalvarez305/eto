@@ -1,18 +1,6 @@
 from django.db import models
 
-class SEO(models.Model):
-    title = models.CharField(max_length=255, null=True)
-    meta_description = models.TextField(null=True)
-    slug = models.SlugField(db_index=True, unique=True)
-    content = models.TextField(null=True)
-
-    class Meta:
-        abstract = True
-
-    def __str__(self):
-        return self.title
-
-class Location(SEO):
+class Location(models.Model):
     name = models.TextField()
 
     def __str__(self):
@@ -21,7 +9,7 @@ class Location(SEO):
     class Meta:
         db_table = "location"
 
-class ServiceLocation(SEO):
+class ServiceLocation(models.Model):
     service = models.ForeignKey('Service', on_delete=models.CASCADE)
     location = models.ForeignKey('Location', on_delete=models.CASCADE)
 
@@ -31,7 +19,7 @@ class ServiceLocation(SEO):
     class Meta:
         db_table = 'service_locations'
 
-class Service(SEO):
+class Service(models.Model):
     name = models.TextField()
     locations = models.ManyToManyField(Location, through=ServiceLocation)
 
