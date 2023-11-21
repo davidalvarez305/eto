@@ -1,5 +1,6 @@
 var startButton = document.getElementById("get-started-button");
 var bottomCTAButton = document.getElementById("bottom-cta-button");
+var popUpModalButton = document.getElementById("pop-up-modal-button");
 
 var qs = new URLSearchParams(window.location.search);
 var latitude = 0.0;
@@ -73,3 +74,4 @@ function handleCTAClick(e) {
 
 startButton.addEventListener("click", handleCTAClick);
 bottomCTAButton.addEventListener("click", handleCTAClick);
+popUpModalButton.addEventListener("click", handleCTAClick);
