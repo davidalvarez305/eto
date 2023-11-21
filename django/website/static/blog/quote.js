@@ -3,7 +3,9 @@ var budget = document.getElementById("budget");
 
 getAQuoteForm.addEventListener("submit", function (e) {
   e.preventDefault();
-  validateForm();
+  const isValid = validateForm();
+
+  if (!isValid) return;
 
   var marketing = Object.fromEntries(new URLSearchParams(window.location.search));
   var data = Object.fromEntries(new FormData(e.target).entries());
@@ -35,6 +37,18 @@ getAQuoteForm.addEventListener("submit", function (e) {
     .catch(console.error);
 });
 
+function validatePhoneNumber(phoneNumberInput) {
+  let isValid = true;
+  const phoneNumber = phoneNumberInput.value.trim();
+
+  const phonePattern = /^[0-9]{10}$/;
+
+  if (!phonePattern.test(phoneNumber)) {
+    isValid = false;
+  }
+
+  return isValid;
+}
 
 function validateForm() {
   let isValid = true;
@@ -53,7 +67,7 @@ function validateForm() {
 
   // Validate phone number
   const phoneNumberInput = document.getElementById('phone_number');
-  if (!phoneNumberInput.value.trim()) {
+  if (!validatePhoneNumber(phoneNumberInput)) {
       isValid = false;
   }
 
