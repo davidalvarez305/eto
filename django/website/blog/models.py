@@ -32,7 +32,7 @@ class Service(models.Model):
 class Lead(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    phone_number = models.CharField(max_length=15)
+    phone_number = models.CharField(max_length=15, unique=True, db_index=True)
     message = models.TextField()
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
     service = models.ForeignKey(Service, on_delete=models.SET_NULL, null=True)
@@ -64,7 +64,7 @@ class Marketing(models.Model):
     button_clicked = models.CharField(max_length=15, blank=True, null=True)
     lead_channel = models.CharField(max_length=15, blank=True, null=True)
     device_type = models.CharField(max_length=15, blank=True, null=True)
-    ip = models.GenericIPAddressField(null=True)
+    ip = models.GenericIPAddressField(blank=True, null=True)
 
     class Meta:
         db_table = "marketing"

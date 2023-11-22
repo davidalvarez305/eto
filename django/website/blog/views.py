@@ -167,3 +167,20 @@ class PPCLandingPageView(MyBaseView):
         context['page_path'] = request.build_absolute_uri()
         context['page_title'] = 'Pressure Washing in Miami, FL - ' + str(os.environ.get('SITE_NAME'))
         return render(request, self.template_name, context=context)
+
+class LeadsView(MyBaseView):
+    template_name = 'blog/leads.html'
+
+    def get(self, request, *args, **kwargs):
+        context = self.context
+
+        leads = Lead.objects.order_by('-date_created')
+        services = Service.objects.all()
+        locations = Location.objects.all()
+
+        context['leads'] = leads
+        context['services'] = services
+        context['locations'] = locations
+        context['page_path'] = request.build_absolute_uri()
+        context['page_title'] = str(os.environ.get('SITE_NAME'))
+        return render(request, self.template_name, context=context)

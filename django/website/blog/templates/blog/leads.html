@@ -1,0 +1,225 @@
+{% extends "blog/base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="min-w-full overflow-x-auto rounded border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
+    <!-- Filter And Search -->
+    <div class="grow border-t border-gray-200 px-5 py-4 dark:border-gray-700">
+        <div class="text-center dark:text-gray-100">
+            <!-- Visible on mobile -->
+            <nav class="flex sm:hidden">
+                <a href="javascript:void(0)"
+                    class="inline-flex items-center justify-center space-x-2 rounded-lg border border-gray-200 bg-white px-4 py-2 font-semibold leading-6 text-gray-800 hover:z-1 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:z-1 focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:z-1 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600 dark:focus:ring-opacity-40 dark:active:border-gray-700">
+                    <svg class="hi-mini hi-chevron-left -mx-1.5 inline-block h-5 w-5" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd"
+                            d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </a>
+                <div class="flex grow items-center justify-center px-2 sm:px-4">
+                    <span>Page <span class="font-semibold">2</span> of
+                        <span class="font-semibold">20</span></span>
+                </div>
+                <a href="javascript:void(0)"
+                    class="inline-flex items-center justify-center space-x-2 rounded-lg border border-gray-200 bg-white px-4 py-2 font-semibold leading-6 text-gray-800 hover:z-1 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:z-1 focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:z-1 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600 dark:focus:ring-opacity-40 dark:active:border-gray-700">
+                    <svg class="hi-mini hi-chevron-right -mx-1.5 inline-block h-5 w-5"
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd"
+                            d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </a>
+            </nav>
+            <!-- END Visible on mobile -->
+
+            <!-- Visible on desktop -->
+            <div class="hidden sm:flex sm:items-center sm:justify-between">
+                <div></div>
+                <nav class="inline-flex gap-2 my-2">
+                    <!-- Select Box -->
+                    <div class="space-y-1">
+                        <label for="service" class="font-medium">Service</label>
+                        <select id="service" name="service" class="block w-full rounded-lg border border-gray-200 px-3 py-2 leading-6 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 dark:border-gray-600 dark:bg-gray-800 dark:focus:border-blue-500">
+                            <option></option>
+                            {% for service in services %}
+                            <option value="{{ service.id }}">{{ service.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <!-- END Select Box -->
+                    <!-- Select Box -->
+                    <div class="space-y-1">
+                        <label for="location" class="font-medium">Location</label>
+                        <select id="location" name="location" class="block w-full rounded-lg border border-gray-200 px-3 py-2 leading-6 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 dark:border-gray-600 dark:bg-gray-800 dark:focus:border-blue-500">
+                            <option></option>
+                            {% for location in locations %}
+                            <option value="{{ location.id }}">{{ location.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <!-- END Select Box -->
+                    <!-- Text Input -->
+                    <div class="space-y-1">
+                        <label for="phone_number" class="font-medium">Phone Search</label>
+                        <input type="tel" id="phone_number" name="phone_number" placeholder="Enter phone #"
+                            class="block w-full rounded-lg border border-gray-200 px-3 py-2 leading-6 placeholder-gray-500 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 dark:border-gray-600 dark:bg-gray-800 dark:placeholder-gray-400 dark:focus:border-blue-500" />
+                    </div>
+                    <!-- END Text Input -->
+                </nav>
+                <!-- END Visible on desktop -->
+            </div>
+        </div>
+        <!-- END Filter And Search -->
+        <!-- Table -->
+        <table class="min-w-full whitespace-nowrap align-middle text-sm">
+            <!-- Table Header -->
+            <thead>
+                <tr>
+                    <th
+                        class="bg-gray-100/75 px-3 py-4 text-center font-semibold text-gray-900 dark:bg-gray-700/25 dark:text-gray-50">
+                        Photo
+                    </th>
+                    <th
+                        class="bg-gray-100/75 px-3 py-4 text-left font-semibold text-gray-900 dark:bg-gray-700/25 dark:text-gray-50">
+                        Name
+                    </th>
+                    <th
+                        class="bg-gray-100/75 px-3 py-4 text-left font-semibold text-gray-900 dark:bg-gray-700/25 dark:text-gray-50">
+                        Phone
+                    </th>
+                    <th
+                        class="bg-gray-100/75 px-3 py-4 text-left font-semibold text-gray-900 dark:bg-gray-700/25 dark:text-gray-50">
+                        Service
+                    </th>
+                    <th
+                        class="bg-gray-100/75 px-3 py-4 text-center font-semibold text-gray-900 dark:bg-gray-700/25 dark:text-gray-50">
+                        Photos
+                    </th>
+                </tr>
+            </thead>
+            <!-- END Table Header -->
+
+            <!-- Table Body -->
+            <tbody>
+                {% for lead in leads %}
+                <tr class="hover:bg-gray-50 dark:hover:bg-gray-900/50">
+                    <td class="p-3 text-center">
+                        <img src="https://cdn.tailkit.com/media/placeholders/avatar-QXevDflbl8A-160x160.jpg"
+                            alt="User Avatar" class="inline-block h-10 w-10 rounded-full" />
+                    </td>
+                    <td class="p-3">
+                        <p class="font-medium">{{ lead.first_name }} {{ lead.last_name }}</p>
+                        <p class="text-gray-500 dark:text-gray-400">{{ lead.location.name }}</p>
+                    </td>
+                    <td class="p-3 text-gray-500 dark:text-gray-400">
+                        {{ lead.phone_number }}
+                    </td>
+                    <td class="p-3">
+                        <div
+                            class="inline-flex rounded-full border border-transparent bg-blue-100 px-2 py-1 text-xs font-semibold leading-4 text-blue-900 dark:border-blue-900 dark:border-opacity-75 dark:bg-blue-700 dark:bg-opacity-10 dark:font-medium dark:text-blue-200">
+                            {{ lead.service.name }}
+                        </div>
+                    </td>
+                    <td class="p-3 text-center">
+                        <button type="button"
+                            class="inline-flex items-center justify-center space-x-2 rounded-lg border border-gray-200 bg-white px-2 py-1 text-sm font-semibold leading-5 text-gray-800 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600 dark:focus:ring-opacity-40 dark:active:border-gray-700">
+                            View
+                        </button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <!-- END Table Body -->
+        </table>
+        <!-- END Table -->
+        <!-- Card Footer -->
+        <div class="grow border-t border-gray-200 px-5 py-4 dark:border-gray-700">
+            <div class="text-center dark:text-gray-100">
+                <!-- Visible on mobile -->
+                <nav class="flex sm:hidden">
+                    <a href="javascript:void(0)"
+                        class="inline-flex items-center justify-center space-x-2 rounded-lg border border-gray-200 bg-white px-4 py-2 font-semibold leading-6 text-gray-800 hover:z-1 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:z-1 focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:z-1 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600 dark:focus:ring-opacity-40 dark:active:border-gray-700">
+                        <svg class="hi-mini hi-chevron-left -mx-1.5 inline-block h-5 w-5"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                            aria-hidden="true">
+                            <path fill-rule="evenodd"
+                                d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                    <div class="flex grow items-center justify-center px-2 sm:px-4">
+                        <span>Page <span class="font-semibold">2</span> of
+                            <span class="font-semibold">20</span></span>
+                    </div>
+                    <a href="javascript:void(0)"
+                        class="inline-flex items-center justify-center space-x-2 rounded-lg border border-gray-200 bg-white px-4 py-2 font-semibold leading-6 text-gray-800 hover:z-1 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:z-1 focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:z-1 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600 dark:focus:ring-opacity-40 dark:active:border-gray-700">
+                        <svg class="hi-mini hi-chevron-right -mx-1.5 inline-block h-5 w-5"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                            aria-hidden="true">
+                            <path fill-rule="evenodd"
+                                d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                </nav>
+                <!-- END Visible on mobile -->
+
+                <!-- Visible on desktop -->
+                <div class="hidden sm:flex sm:items-center sm:justify-between">
+                    <div>
+                        Page <span class="font-semibold">2</span> of
+                        <span class="font-semibold">20</span>
+                    </div>
+                    <nav class="inline-flex">
+                        <a href="javascript:void(0)"
+                            class="-mr-px inline-flex items-center justify-center space-x-2 rounded-l-lg border border-gray-200 bg-white px-4 py-2 font-semibold leading-6 text-gray-800 hover:z-1 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:z-1 focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:z-1 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600 dark:focus:ring-opacity-40 dark:active:border-gray-700">
+                            <svg class="hi-mini hi-chevron-left -mx-1.5 inline-block h-5 w-5"
+                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                aria-hidden="true">
+                                <path fill-rule="evenodd"
+                                    d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                        <a href="javascript:void(0)"
+                            class="-mr-px inline-flex items-center justify-center space-x-2 border border-gray-200 bg-white px-4 py-2 font-semibold leading-6 text-gray-800 hover:z-1 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:z-1 focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:z-1 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600 dark:focus:ring-opacity-40 dark:active:border-gray-700">
+                            1
+                        </a>
+                        <a href="javascript:void(0)"
+                            class="-mr-px inline-flex items-center justify-center space-x-2 border border-gray-200 bg-gray-100 px-4 py-2 font-semibold leading-6 text-gray-800 hover:z-1 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:z-1 focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:z-1 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-gray-700/75 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600 dark:focus:ring-opacity-40 dark:active:border-gray-700">
+                            2
+                        </a>
+                        <a href="javascript:void(0)"
+                            class="-mr-px inline-flex items-center justify-center space-x-2 border border-gray-200 bg-white px-4 py-2 font-semibold leading-6 text-gray-800 hover:z-1 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:z-1 focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:z-1 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600 dark:focus:ring-opacity-40 dark:active:border-gray-700">
+                            3
+                        </a>
+                        <div
+                            class="-mr-px flex items-center justify-center border border-gray-200 bg-white px-4 text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300">
+                            ...
+                        </div>
+                        <a href="javascript:void(0)"
+                            class="-mr-px inline-flex items-center justify-center space-x-2 border border-gray-200 bg-white px-4 py-2 font-semibold leading-6 text-gray-800 hover:z-1 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:z-1 focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:z-1 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600 dark:focus:ring-opacity-40 dark:active:border-gray-700">
+                            19
+                        </a>
+                        <a href="javascript:void(0)"
+                            class="-mr-px inline-flex items-center justify-center space-x-2 border border-gray-200 bg-white px-4 py-2 font-semibold leading-6 text-gray-800 hover:z-1 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:z-1 focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:z-1 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600 dark:focus:ring-opacity-40 dark:active:border-gray-700">
+                            20
+                        </a>
+                        <a href="javascript:void(0)"
+                            class="inline-flex items-center justify-center space-x-2 rounded-r-lg border border-gray-200 bg-white px-4 py-2 font-semibold leading-6 text-gray-800 hover:z-1 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:z-1 focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:z-1 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600 dark:focus:ring-opacity-40 dark:active:border-gray-700">
+                            <svg class="hi-mini hi-chevron-right -mx-1.5 inline-block h-5 w-5"
+                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                aria-hidden="true">
+                                <path fill-rule="evenodd"
+                                    d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                    </nav>
+                    <!-- END Visible on desktop -->
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
