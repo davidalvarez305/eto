@@ -60,7 +60,7 @@ class Marketing(models.Model):
     gclid = models.CharField(max_length=50, blank=True, null=True)
     language = models.CharField(max_length=15, blank=True, null=True)
     os = models.CharField(max_length=25, blank=True, null=True)
-    user_agent = models.CharField(max_length=50, blank=True, null=True)
+    user_agent = models.CharField(max_length=255, blank=True, null=True)
     button_clicked = models.CharField(max_length=15, blank=True, null=True)
     lead_channel = models.CharField(max_length=15, blank=True, null=True)
     device_type = models.CharField(max_length=15, blank=True, null=True)

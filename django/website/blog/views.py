@@ -1,6 +1,5 @@
 from datetime import date
 import json
-import math
 import os
 from .forms import QuoteForm
 import httpagentparser
@@ -13,6 +12,8 @@ from .models import *
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseBadRequest, JsonResponse
 from django.contrib.auth import authenticate, login, logout
+from django.db import transaction
+from django.utils import timezone
 
 class MyBaseView(View):
     domain = str(os.environ.get('DJANGO_DOMAIN'))
@@ -113,42 +114,44 @@ class QuoteView(MyBaseView):
                 user_os = device_data['os']['name']
                 device_type = get_device_type(device_data)
                 
-                location = Location.objects.first(id=data['location'])
-                service = Service.objects.first(id=data['service'])
+                location = Location.objects.get(id=data['location'])
+                service = Service.objects.get(id=data['service'])
 
-                lead = Lead.objects.create(
-                    first_name=form.first_name,
-                    last_name=form.last_name,
-                    phone_number=form.phone_number,
-                    message=form.message,
-                    location=location,
-                    service=service,
-                    latitude=float(data.get('latitude')),
-                    longitude=float(data.get('longitude'))
-                )
+                with transaction.atomic():
+                    lead = Lead.objects.create(
+                        first_name=form.cleaned_data['first_name'],
+                        last_name=form.cleaned_data['last_name'],
+                        phone_number=form.cleaned_data['phone_number'],
+                        message=form.cleaned_data['message'],
+                        location=location,
+                        service=service,
+                        latitude=float(data.get('latitude')),
+                        longitude=float(data.get('longitude')),
+                        date_created=timezone.now()
+                    )
 
-                marketing_instance = Marketing.objects.create(
-                    lead=lead,
-                    landing_page=data.get('landing_page'),
-                    referrer=data.get('referrer'),
-                    keyword = data.get('keyword'),
-                    channel = data.get('channel'),
-                    source = data.get('source'),
-                    medium = data.get('medium'),
-                    ad_campaign = data.get('ad_campaign'),
-                    ad_group = data.get('ad_group'),
-                    ad_headline = data.get('ad_headline'),
-                    gclid = data.get('gclid'),
-                    language = data.get('language'),
-                    os = user_os,
-                    user_agent = data.get('userAgent'),
-                    button_clicked = data.get('button_clicked'),
-                    lead_channel = data.get('lead_channel'),
-                    device_type = device_type,
-                    ip = user_ip
-                )
+                    marketing = Marketing.objects.create(
+                        lead=lead,
+                        landing_page=data.get('landing_page'),
+                        referrer=data.get('referrer'),
+                        keyword = data.get('keyword'),
+                        channel = data.get('channel'),
+                        source = data.get('source'),
+                        medium = data.get('medium'),
+                        ad_campaign = data.get('ad_campaign'),
+                        ad_group = data.get('ad_group'),
+                        ad_headline = data.get('ad_headline'),
+                        gclid = data.get('gclid'),
+                        language = data.get('language'),
+                        os = user_os,
+                        user_agent = data.get('userAgent'),
+                        button_clicked = data.get('button_clicked'),
+                        lead_channel = data.get('lead_channel'),
+                        device_type = device_type,
+                        ip = user_ip
+                    )
 
-                marketing_instance.save()
+                    marketing.save()
                 return JsonResponse({ "data": "Contact form received successfully." }, status=201)
             except Exception as e:
                 print("Error:", str(e))
