@@ -3,8 +3,8 @@ const bottomCTAButton = document.getElementById("bottom-cta-button");
 const popUpModalButton = document.getElementById("pop-up-modal-button");
 
 const qs = new URLSearchParams(window.location.search);
-const latitude = 0.0;
-const longitude = 0.0;
+let latitude = 0.0;
+let longitude = 0.0;
 
 document.addEventListener('DOMContentLoaded', getUserLocation())
 

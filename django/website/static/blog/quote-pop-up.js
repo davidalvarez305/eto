@@ -1,31 +1,31 @@
-// Get references to the modal elements
 const modalOverlay = document.getElementById("modalOverlay");
-// const closeModalButton = document.getElementById("closeModal");
+const modalContent = modalOverlay.querySelector('.bg-white');
+let alreadyPoppedUp = false;
 
-// Set the scroll percentage
 const scrollPercentageThreshold = 50;
 
-// Function to show the modal
 function showModal() {
   modalOverlay.style.display = "flex";
 }
 
-// Function to close the modal
-function closeModal() {
-  modalOverlay.style.display = "none";
-}
+// Hide the modal when clicking outside the modal content
+modalOverlay.addEventListener('click', function (event) {
+  modalOverlay.style.display = 'none';
+  alreadyPoppedUp = true;
+});
 
-// Event listener for the close button
-// closeModalButton.addEventListener("click", closeModal);
+// Prevent clicks inside the modal content from closing the modal
+modalContent.addEventListener('click', function (event) {
+  event.stopPropagation();
+});
 
-// Event listener for scrolling
 window.addEventListener("scroll", () => {
   const scrollY = window.scrollY || window.pageYOffset;
   const windowHeight = window.innerHeight;
   const totalHeight = document.body.clientHeight;
   const scrolledPercentage = (scrollY / (totalHeight - windowHeight)) * 100;
 
-  if (scrolledPercentage >= scrollPercentageThreshold) {
+  if (scrolledPercentage >= scrollPercentageThreshold && !alreadyPoppedUp) {
     showModal();
   }
 });
