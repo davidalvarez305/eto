@@ -8,7 +8,5 @@ urlpatterns = [
     path('contact', views.ContactView.as_view(), name='contact'),
     path('privacy-policy', views.ContactView.as_view(), name='contact'),
     path('about', views.HomeView.as_view(), name='about'),
-    path('sitemap_index.xml', views.sitemap_index, name='sitemap_index'),
-    path('pressure-washing', views.PPCLandingPageView.as_view(), name='pressure_washing'),
-    path('<int:int>/sitemap.xml.gz', views.sitemap, name='sitemap')
+    path('pressure-washing', views.PPCLandingPageView.as_view(), name='pressure_washing')
 ]
