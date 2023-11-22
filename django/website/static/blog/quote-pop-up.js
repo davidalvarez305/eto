@@ -6,6 +6,11 @@ const scrollPercentageThreshold = 50;
 
 function showModal() {
   modalOverlay.style.display = "flex";
+
+   setTimeout(function () {
+    modalOverlay.style.display = 'none';
+    alreadyPoppedUp = true;
+}, 1500);
 }
 
 // Hide the modal when clicking outside the modal content
