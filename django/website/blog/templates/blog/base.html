@@ -36,53 +36,16 @@
   <meta name="twitter:url" content="{{ page_path }}" />
 
   <!-- CSS -->
-  <link href="{% static 'blog/main.css' %}" rel="preload" as="style" type="text/css"
-    onload="this.onload=null;this.rel='stylesheet'">
+  <link href="{% static 'blog/main.css' %}" rel="preload" as="style" type="text/css" onload="this.onload=null;this.rel='stylesheet'">
 
   <!-- Rels -->
   <link rel="shortcut icon" href="{% static 'media/misc/favicon.ico' %}">
   <link rel="canonical" href="{{ page_path }}" />
 
-  {% if is_reviewpost == True %}
-  <!-- Rich Structured Data -->
-  <script type="application/ld+json">
-        {
-            "@context": "https://schema.org/",
-            "@type": "Product",
-            "name": "{{ review_post.product.product_name }}",
-            "image": "{{ review_post.product.product_image }}",
-            "description": "{{ meta_description }}",
-            "review": {
-              "@type": "Review",
-              "reviewRating": {
-                "@type": "Rating",
-                "ratingValue": {{ review_post.product.product_ratings }}
-              },
-              "author": {
-                "@type": "Person",
-                "name": "David Alvarez"
-              },
-              "publisher": {
-                "@type": "Organization",
-                "name": "South Florida Athletic Club"
-              }
-            },
-            "aggregateRating": {
-                "@type": "AggregateRating",
-                "ratingValue": {{ review_post.product.product_ratings }},
-                "reviewCount": {{ review_post.product.product_reviews|cut:',' }}
-            },
-            "offers": {
-                "@type": "Offer",
-                "priceSpecification": {
-                  "@type": "UnitPriceSpecification",
-                  "price": {{ review_post.product.product_price|cut:'$' }},
-                  "priceCurrency": "USD"
-                }
-            }
-        }
-    </script>
+  {% if is_leads %}
+  <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/dark.css">
   {% endif %}
+
 </head>
 
 

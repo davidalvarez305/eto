@@ -30,7 +30,6 @@ class MyBaseView(View):
         'page_title': str(os.environ.get('SITE_NAME')),
         'site_name': str(os.environ.get('SITE_NAME')),
         'phone_number': '({}) - {} {}'.format(phone_number[:3], phone_number[3:6], phone_number[6:]),
-        'is_reviewpost': False,
     }
 
     template_name = 'home.html'
@@ -178,6 +177,7 @@ class LeadsView(MyBaseView):
         services = Service.objects.all()
         locations = Location.objects.all()
 
+        context['is_leads'] = True
         context['leads'] = leads
         context['services'] = services
         context['locations'] = locations
