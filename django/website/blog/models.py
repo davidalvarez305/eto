@@ -48,16 +48,23 @@ class Lead(models.Model):
 
 class Marketing(models.Model):
     lead = models.ForeignKey(Lead, on_delete=models.SET_NULL, null=True)
-    landing_page = models.CharField(max_length=255)
-    referrer = models.CharField(max_length=100, blank=True, null=True)
-    keyword = models.CharField(max_length=100, blank=True, null=True)
-    channel = models.CharField(max_length=100, blank=True, null=True)
-    source = models.CharField(max_length=255, blank=True, null=True)
-    medium = models.CharField(max_length=255, blank=True, null=True)
-    ad_campaign = models.CharField(max_length=255, blank=True, null=True)
-    ad_group = models.CharField(max_length=255, blank=True, null=True)
-    ad_headline = models.CharField(max_length=255, blank=True, null=True)
-    gclid = models.CharField(max_length=255, blank=True, null=True)
+    landing_page = models.CharField(max_length=45)
+    referrer = models.CharField(max_length=255, blank=True, null=True)
+    keyword = models.CharField(max_length=45, blank=True, null=True)
+    channel = models.CharField(max_length=45, blank=True, null=True)
+    source = models.CharField(max_length=45, blank=True, null=True)
+    medium = models.CharField(max_length=45, blank=True, null=True)
+    ad_campaign = models.CharField(max_length=45, blank=True, null=True)
+    ad_group = models.CharField(max_length=45, blank=True, null=True)
+    ad_headline = models.CharField(max_length=45, blank=True, null=True)
+    gclid = models.CharField(max_length=50, blank=True, null=True)
+    language = models.CharField(max_length=15, blank=True, null=True)
+    os = models.CharField(max_length=25, blank=True, null=True)
+    user_agent = models.CharField(max_length=50, blank=True, null=True)
+    button_clicked = models.CharField(max_length=15, blank=True, null=True)
+    lead_channel = models.CharField(max_length=15, blank=True, null=True)
+    device_type = models.CharField(max_length=15, blank=True, null=True)
+    ip = models.GenericIPAddressField(null=True)
 
     class Meta:
         db_table = "marketing"

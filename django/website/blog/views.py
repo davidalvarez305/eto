@@ -109,17 +109,50 @@ class QuoteView(MyBaseView):
         if form.is_valid():
             try:
                 user_ip = get_client_ip(request)
-                device_data = httpagentparser.detect(data['userAgent'])
+                device_data = httpagentparser.detect(data.get('userAgent'))
                 user_os = device_data['os']['name']
                 device_type = get_device_type(device_data)
-                print(data)
-                print(user_ip)
-                print(user_os)
-                print(device_type)
-                return JsonResponse({ "data": "Contact form received successfully." })
+                
+                location = Location.objects.first(id=data['location'])
+                service = Service.objects.first(id=data['service'])
+
+                lead = Lead.objects.create(
+                    first_name=form.first_name,
+                    last_name=form.last_name,
+                    phone_number=form.phone_number,
+                    message=form.message,
+                    location=location,
+                    service=service,
+                    latitude=float(data.get('latitude')),
+                    longitude=float(data.get('longitude'))
+                )
+
+                marketing_instance = Marketing.objects.create(
+                    lead=lead,
+                    landing_page=data.get('landing_page'),
+                    referrer=data.get('referrer'),
+                    keyword = data.get('keyword'),
+                    channel = data.get('channel'),
+                    source = data.get('source'),
+                    medium = data.get('medium'),
+                    ad_campaign = data.get('ad_campaign'),
+                    ad_group = data.get('ad_group'),
+                    ad_headline = data.get('ad_headline'),
+                    gclid = data.get('gclid'),
+                    language = data.get('language'),
+                    os = user_os,
+                    user_agent = data.get('userAgent'),
+                    button_clicked = data.get('button_clicked'),
+                    lead_channel = data.get('lead_channel'),
+                    device_type = device_type,
+                    ip = user_ip
+                )
+
+                marketing_instance.save()
+                return JsonResponse({ "data": "Contact form received successfully." }, status=201)
             except Exception as e:
                 print("Error:", str(e))
-                return JsonResponse({ "data": "Failed to parse request body." }, status=400)
+                return JsonResponse({ "data": "Failed to create lead." }, status=500)
         else:
             return JsonResponse({ "data": "Form was not submitted successfully." }, status=400)
 
