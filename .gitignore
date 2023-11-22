@@ -3,6 +3,7 @@
 *.sql
 node_modules
 deploy.sh
+replicate.sh
 uwsgi_params
 test.sh
 output.json

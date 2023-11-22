@@ -120,4 +120,7 @@
 </div>
 <!-- Modal -->
 <script src="{% static 'blog/quote.js' %}"></script>
+{{ services|json_script:"services" }}
+{{ locations|json_script:"locations" }}
+
 {% endblock %}

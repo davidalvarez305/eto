@@ -1,10 +1,10 @@
-var startButton = document.getElementById("get-started-button");
-var bottomCTAButton = document.getElementById("bottom-cta-button");
-var popUpModalButton = document.getElementById("pop-up-modal-button");
+const startButton = document.getElementById("get-started-button");
+const bottomCTAButton = document.getElementById("bottom-cta-button");
+const popUpModalButton = document.getElementById("pop-up-modal-button");
 
-var qs = new URLSearchParams(window.location.search);
-var latitude = 0.0;
-var longitude = 0.0;
+const qs = new URLSearchParams(window.location.search);
+const latitude = 0.0;
+const longitude = 0.0;
 
 document.addEventListener('DOMContentLoaded', getUserLocation())
 
@@ -54,7 +54,7 @@ function getUserDeviceInfo() {
 function handleCTAClick(e) {
   const { userAgent, language } = getUserDeviceInfo();
 
-  var clickedButtonId = e.target.id;
+  const clickedButtonId = e.target.id;
   // This set method must be first in order for the getLeadChannel logic to work correctly
   // Because it checks that all qs.entries are of length 0 ('meaning organic traffic')
   // It also checks document.referrer to differentiate direct vs organic
@@ -67,7 +67,7 @@ function handleCTAClick(e) {
   qs.set('userAgent', userAgent);
   qs.set('language', language);
 
-  var currentDomain = new URL(window.location.protocol + "//" + window.location.host);
+  const currentDomain = new URL(window.location.protocol + "//" + window.location.host);
 
   window.location.replace(currentDomain.href + "quote?" + qs.toString());
 };

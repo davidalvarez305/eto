@@ -1,5 +1,5 @@
-var getAQuoteForm = document.getElementById("get-a-quote-form");
-var budget = document.getElementById("budget");
+const getAQuoteForm = document.getElementById("get-a-quote-form");
+const budget = document.getElementById("budget");
 
 getAQuoteForm.addEventListener("submit", function (e) {
   e.preventDefault();
@@ -7,10 +7,10 @@ getAQuoteForm.addEventListener("submit", function (e) {
 
   if (!isValid) return;
 
-  var marketing = Object.fromEntries(new URLSearchParams(window.location.search));
-  var data = Object.fromEntries(new FormData(e.target).entries());
+  const marketing = Object.fromEntries(new URLSearchParams(window.location.search));
+  const data = Object.fromEntries(new FormData(e.target).entries());
 
-  var body = {
+  const body = {
     ...marketing,
     ...data,
   };
@@ -28,9 +28,15 @@ getAQuoteForm.addEventListener("submit", function (e) {
     .then((data) => {
       if (data.data) {
         // Send successful lead creation to Google Analytics
-        window.gtag("event", "lead_created", {
-          currency: "USD",
-          budgetAmount: budget.value,
+        const services = JSON.parse(document.getElementById('services').textContent);
+        const locations = JSON.parse(document.getElementById('locations').textContent);
+
+        let service = services.filter((service => service.id === parseInt(body['service'])))[0];
+        let location = locations.filter((location => location.id === parseInt(body['location'])))[0];
+
+        window.gtag('event', 'quote', {
+          'service': service.name,
+          'location': location.name
         });
       }
     })

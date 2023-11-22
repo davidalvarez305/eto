@@ -99,8 +99,8 @@ class QuoteView(MyBaseView):
 
         context['page_path'] = request.build_absolute_uri()
         context['page_title'] = str(os.environ.get('SITE_NAME'))
-        context['services'] = services
-        context['locations'] = locations
+        context['services'] = list(services.values())
+        context['locations'] = list(locations.values())
         return render(request, self.template_name, context=context)
 
     def post(self, request, *args, **kwargs):
