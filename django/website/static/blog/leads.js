@@ -65,12 +65,13 @@ pagination.addEventListener("click", function (e) {
     };
 
     if (chevronValue === "right_chevron") {
-        let maxPagesNum = JSON.parse(document.getElementById('max-leads').textContent);
+        let maxPagesNum = parseInt(JSON.parse(document.getElementById('max-pages').textContent));
         // Make table elements programmatic
         // Get max value
 
         // Index will be -1 because it's a zero based value
-        if (indexOfCurrentlySelectedElement === maxPagesNum - 1) return;
+        const isMaxNumPages = parseInt(pageValues.item(indexOfCurrentlySelectedElement).textContent) === maxPagesNum
+        if (isMaxNumPages) return;
 
         indexOfCurrentlySelectedElement += 1;
 
@@ -78,10 +79,8 @@ pagination.addEventListener("click", function (e) {
         currentlySelectedElement.className = normalClass;
 
         // Re-assignment & switch class
-        currentlySelectedElement = pageValues.item([indexOfCurrentlySelectedElement]);
+        currentlySelectedElement = pageValues.item(indexOfCurrentlySelectedElement);
         currentlySelectedElement.className = selectedClass;
     };
   }
-
-  // Handle clicking on dots
 });
