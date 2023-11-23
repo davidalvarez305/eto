@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 import json
 import os
 from .forms import QuoteForm
@@ -174,15 +174,25 @@ class LeadsView(MyBaseView):
     def get(self, request, *args, **kwargs):
         context = self.context
         params = request.GET.dict()
-        print(params)
 
-        page = params.get('page')
+        # Remove page from querystring
+        page = params.pop('page', None)
         limit_value = 25
 
         if page is None:
             page = 1
 
-        leads = Lead.objects.order_by('-date_created')
+        # Remove date from querystring
+        dates = params.pop('date_filter', None)
+
+        if dates is not None:
+            start_date_str, end_date_str = dates.split(" to ")
+
+            start_date = datetime.strptime(start_date_str, "%Y-%m-%d")
+            end_date = datetime.strptime(end_date_str, "%Y-%m-%d")
+            params['date_created__range'] = [start_date, end_date]
+
+        leads = Lead.objects.filter(**params).order_by('-date_created')
         services = Service.objects.all()
         locations = Location.objects.all()
 
@@ -194,7 +204,7 @@ class LeadsView(MyBaseView):
         context['leads'] = data
         context['max_pages'] = max_pages
         context['min_page'] = page
-        context['num_pages'] = [x for x in range(page + 1, page + 5)]
+        context['num_pages'] = [x for x in range(page + 1, page + 5) if x <= max_pages]
         context['services'] = services
         context['locations'] = locations
         context['page_path'] = request.build_absolute_uri()

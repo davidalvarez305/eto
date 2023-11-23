@@ -84,3 +84,13 @@ pagination.addEventListener("click", function (e) {
     };
   }
 });
+
+// Filtering logic
+const filtersForm = document.getElementById("filters_form");
+
+filtersForm.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const values = Object.fromEntries(new FormData(e.target).entries());
+    console.log(values);
+});
