@@ -8,13 +8,39 @@ let longitude = 0.0;
 
 document.addEventListener('DOMContentLoaded', getUserLocation())
 
+function toTitleCase(str) {
+  return str.replace(/\w\S*/g, function(txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  });
+}
+
+function getHostFromURL() {
+  try {
+    const parsedURL = new URL(document.referrer);
+
+    const host = parsedURL.host;
+
+    return host;
+  } catch (error) {
+    return "";
+  }
+}
+
 function getLeadChannel() {
 
   // No referrer means the user accessed the website directly
   if (document.referrer.length === 0) return "direct";
 
   // If we get to this point, it means that document.referrer is not empty
-  if (qs.entries.length === 0) return "organic";
+  if (qs.entries.length === 0) {
+
+    const host = getHostFromURL();
+
+    qs.set('source', host);
+    qs.set('medium', `${toTitleCase(host)} - SEO`);
+
+    return "organic";
+  }
 
   // Google Ads
   if (qs.get("gclid") !== null) return "paid";
@@ -58,7 +84,7 @@ function handleCTAClick(e) {
   // This set method must be first in order for the getLeadChannel logic to work correctly
   // Because it checks that all qs.entries are of length 0 ('meaning organic traffic')
   // It also checks document.referrer to differentiate direct vs organic
-  qs.set('lead_channel', getLeadChannel());
+  qs.set('channel', getLeadChannel());
   qs.set('referrer', document.referrer);
   qs.set('landing_page', window.location.href);
   qs.set('button_clicked', clickedButtonId);
