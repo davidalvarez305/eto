@@ -14,6 +14,7 @@ from django.http import HttpResponseBadRequest, JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from django.db import transaction
 from django.utils import timezone
+from django.core.paginator import Paginator
 
 class MyBaseView(View):
     domain = str(os.environ.get('DJANGO_DOMAIN'))
@@ -172,13 +173,28 @@ class LeadsView(MyBaseView):
 
     def get(self, request, *args, **kwargs):
         context = self.context
+        params = request.GET.dict()
+        print(params)
+
+        page = params.get('page')
+        limit_value = 25
+
+        if page is None:
+            page = 1
 
         leads = Lead.objects.order_by('-date_created')
         services = Service.objects.all()
         locations = Location.objects.all()
 
+        paginator = Paginator(leads, limit_value)
+        max_pages = paginator.num_pages
+        data = paginator.get_page(page)
+
         context['is_leads'] = True
-        context['leads'] = leads
+        context['leads'] = data
+        context['max_pages'] = max_pages
+        context['min_page'] = page
+        context['num_pages'] = [x for x in range(page + 1, page + 5)]
         context['services'] = services
         context['locations'] = locations
         context['page_path'] = request.build_absolute_uri()
