@@ -181,6 +181,9 @@ class LeadsView(MyBaseView):
 
         if page is None:
             page = 1
+        else:
+            # Transform querystring to int
+            page = int(page)
 
         # Remove date from querystring
         dates = params.pop('date_filter', None)
