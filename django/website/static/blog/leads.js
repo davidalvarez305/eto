@@ -46,6 +46,12 @@ const filtersForm = document.getElementById("filters_form");
 filtersForm.addEventListener("submit", function(e) {
     e.preventDefault();
 
-    const values = Object.fromEntries(new FormData(e.target).entries());
-    console.log(values);
+    let values = {};
+    const entry = Object.fromEntries(new FormData(e.target));
+    for (const [key, value] of Object.entries(entry)) {
+        if (value.length > 0) values[key] = value;
+    }
+
+    const qs = new URLSearchParams(values);
+    window.location.replace("/leads?" + qs.toString());
 });
