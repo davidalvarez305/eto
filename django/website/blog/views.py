@@ -1,20 +1,24 @@
 from datetime import date, datetime
 import json
+import mimetypes
 import os
+import uuid
 from .forms import QuoteForm
 import httpagentparser
 from django.shortcuts import render
 from django.views import View
 
-from .utils import get_client_ip, get_device_type
+from .utils import download_image, get_client_ip, get_device_type, get_exif_data, remove_files_in_directory, resolve_uploads_dir_path, scan_for_viruses, upload_to_s3
 from .google.gmail import send_mail
 from .models import *
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseBadRequest, JsonResponse
+from django.http import HttpResponseBadRequest, JsonResponse, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.db import transaction
 from django.utils import timezone
 from django.core.paginator import Paginator
+from django.views.decorators.csrf import csrf_exempt
+from twilio.twiml.messaging_response import MessagingResponse
 
 class MyBaseView(View):
     domain = str(os.environ.get('DJANGO_DOMAIN'))
@@ -213,3 +217,61 @@ class LeadsView(MyBaseView):
         context['page_path'] = request.build_absolute_uri()
         context['page_title'] = str(os.environ.get('SITE_NAME'))
         return render(request, self.template_name, context=context)
+    
+@csrf_exempt
+def handle_incoming_message(request):
+    try:
+        message_sid = request.POST.get('MessageSid', '')
+        from_number = request.POST.get('From', '')
+        num_media = int(request.POST.get('NumMedia', 0))
+
+        media_files = [(request.POST.get("MediaUrl{}".format(i), ''),
+                        request.POST.get("MediaContentType{}".format(i), ''))
+                    for i in range(0, num_media)]
+        
+        for file in media_files:
+            url, file_extension = file
+            
+            if "image" in file_extension:
+
+                # Resolve image path
+                ext = mimetypes.guess_extension(file_extension)
+                img_file_name = uuid.uuid4()
+                uploads_dir = resolve_uploads_dir_path()
+                image_file_path = uploads_dir + "/" + str(img_file_name) + ext
+
+                # Download image locally
+                download_image(url, image_file_path)
+
+                # Get GPS Info
+                get_exif_data(image_file_path)
+
+                # Scan for viruses
+                # scan_for_viruses(image_file_path)
+        
+        
+                # Upload Image to S3
+                s3_upload_path = f'images/{str(img_file_name)}{ext}'
+                upload_to_s3(local_file_path=image_file_path, bucket_name=os.environ.get('AWS_STORAGE_BUCKET_NAME'), s3_file_name=s3_upload_path)
+                
+                # Save Image to DB
+                adjusted_phone_number = from_number.split("+1")[1]
+                lead = Lead.objects.get(phone_number=adjusted_phone_number)
+                LeadImage.objects.create(
+                    lead=lead,
+                    src=str(img_file_name) + ext
+                )
+                print("Image successfully added to DB.")
+
+                # Respond to text message.
+                response = MessagingResponse()
+                message = 'Thanks for the {} images.'.format(num_media)
+                response.message(body=message, to=from_number, from_=os.getenv('TWILIO_PHONE_NUMBER'))
+                print("Client received response.")
+        
+        return HttpResponse(response, content_type='application/xml')
+    except Exception as err:
+        print(f'ERROR IN TWILIO WEBHOOK: {err}')
+        return HttpResponseBadRequest('Upload failed.')
+    finally:
+        remove_files_in_directory(uploads_dir)

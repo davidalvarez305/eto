@@ -9,5 +9,6 @@ urlpatterns = [
     path('privacy-policy', views.ContactView.as_view(), name='contact'),
     path('about', views.HomeView.as_view(), name='about'),
     path('pressure-washing', views.PPCLandingPageView.as_view(), name='pressure_washing'),
+    path('twillio/images', views.handle_incoming_message, name='twillio_mms'),
     path('leads', views.LeadsView.as_view(), name='leads')
 ]
