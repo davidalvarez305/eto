@@ -55,3 +55,38 @@ filtersForm.addEventListener("submit", function(e) {
     const qs = new URLSearchParams(values);
     window.location.replace("/leads?" + qs.toString());
 });
+
+const buttons = document.querySelectorAll('button[data-lead-id]');
+
+buttons.forEach(button => {
+  const leadId = button.getAttribute('data-lead-id');
+  const photosCount = button.getAttribute('data-lead-photos');
+
+  if (parseInt(photosCount) === 0) {
+    button.disabled = true
+    button.textContent = "";
+  }
+
+  const imagesSlider = document.getElementById('imagesSlider');
+  const imagesModalContainer = document.getElementById('imagesModalContainer');
+  
+  button.addEventListener('click', function() {
+    const photos_dict = JSON.parse(document.getElementById('photos_dict').textContent);
+    const bucket_url = JSON.parse(document.getElementById('bucket_url').textContent);
+    const lead_images = photos_dict[leadId];
+
+    imagesModalContainer.style.display = "";
+    
+    lead_images.forEach(image => {
+      var imgElement = document.createElement('img');
+
+      imgElement.src = bucket_url + image;
+
+      imagesSlider.appendChild(imgElement);
+    });
+  });
+});
+
+const closeModal = document.getElementById('closeModal');
+
+closeModal.addEventListener("click", e => imagesModalContainer.style.display = "none");

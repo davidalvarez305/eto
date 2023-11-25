@@ -47,7 +47,7 @@ class Lead(models.Model):
         db_table = "lead"
 
 class LeadImage(models.Model):
-    lead = models.ForeignKey(Lead, on_delete=models.CASCADE)
+    lead = models.ForeignKey(Lead, on_delete=models.CASCADE, related_name='images')
     src = models.CharField(max_length=45, unique=True)
 
     def __str__(self):

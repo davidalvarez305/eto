@@ -10,13 +10,11 @@
                 <div></div>
                 <form id="filters_form" class="inline-flex gap-2 my-2">
                     <div class="space-y-1">
-                        <button
-                          type="submit"
-                          class="inline-flex items-center justify-center space-x-2 rounded-lg border border-blue-700 bg-blue-700 px-4 py-2 font-semibold leading-6 text-white hover:border-blue-600 hover:bg-blue-600 hover:text-white focus:ring focus:ring-blue-400 focus:ring-opacity-50 active:border-blue-700 active:bg-blue-700 dark:focus:ring-blue-400 dark:focus:ring-opacity-90"
-                        >
-                          Filter
+                        <button type="submit"
+                            class="inline-flex items-center justify-center space-x-2 rounded-lg border border-blue-700 bg-blue-700 px-4 py-2 font-semibold leading-6 text-white hover:border-blue-600 hover:bg-blue-600 hover:text-white focus:ring focus:ring-blue-400 focus:ring-opacity-50 active:border-blue-700 active:bg-blue-700 dark:focus:ring-blue-400 dark:focus:ring-opacity-90">
+                            Filter
                         </button>
-                      </div>
+                    </div>
                     <!-- Select Box -->
                     <div class="space-y-1">
                         <label for="service_id" class="font-medium">Service</label>
@@ -53,7 +51,7 @@
                         <input type="text" id="date_filter" name="date_filter" placeholder="Pick date"
                             class="block w-full rounded-lg border border-gray-200 px-3 py-2 leading-6 placeholder-gray-500 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 dark:border-gray-600 dark:bg-gray-800 dark:placeholder-gray-400 dark:focus:border-blue-500" />
                     </div>
-                </nav>
+                    </nav>
             </div>
         </div>
         <!-- END Filter And Search -->
@@ -108,7 +106,7 @@
                         </div>
                     </td>
                     <td class="p-3 text-center">
-                        <button type="button"
+                        <button data-lead-id="{{ lead.id }}" data-lead-photos="{{ lead.images.count }}" type="button"
                             class="inline-flex items-center justify-center space-x-2 rounded-lg border border-gray-200 bg-white px-2 py-1 text-sm font-semibold leading-5 text-gray-800 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600 dark:focus:ring-opacity-40 dark:active:border-gray-700">
                             View
                         </button>
@@ -130,7 +128,8 @@
                     <nav id="page_navigation" class="inline-flex">
                         <div data-chevron-value="left_chevron"
                             class="hover:cursor-pointer -mr-px inline-flex items-center justify-center space-x-2 rounded-l-lg border border-gray-200 bg-white px-4 py-2 font-semibold leading-6 text-gray-800 hover:z-1 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:z-1 focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:z-1 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600 dark:focus:ring-opacity-40 dark:active:border-gray-700">
-                            <svg data-chevron-value="left_chevron" class="hi-mini hi-chevron-left -mx-1.5 inline-block h-5 w-5"
+                            <svg data-chevron-value="left_chevron"
+                                class="hi-mini hi-chevron-left -mx-1.5 inline-block h-5 w-5"
                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                                 aria-hidden="true">
                                 <path fill-rule="evenodd"
@@ -143,14 +142,15 @@
                             {{ min_page }}
                         </a>
                         {% for page in num_pages %}
-                            <a
-                                class="hover:cursor-pointer -mr-px inline-flex items-center justify-center space-x-2 border border-gray-200 bg-white px-4 py-2 font-semibold leading-6 text-gray-800 hover:z-1 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:z-1 focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:z-1 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600 dark:focus:ring-opacity-40 dark:active:border-gray-700">
-                                {{ page }}
-                            </a>
+                        <a
+                            class="hover:cursor-pointer -mr-px inline-flex items-center justify-center space-x-2 border border-gray-200 bg-white px-4 py-2 font-semibold leading-6 text-gray-800 hover:z-1 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:z-1 focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:z-1 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600 dark:focus:ring-opacity-40 dark:active:border-gray-700">
+                            {{ page }}
+                        </a>
                         {% endfor %}
                         <div data-chevron-value="right_chevron"
                             class="hover:cursor-pointer inline-flex items-center justify-center space-x-2 rounded-r-lg border border-gray-200 bg-white px-4 py-2 font-semibold leading-6 text-gray-800 hover:z-1 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:z-1 focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:z-1 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600 dark:focus:ring-opacity-40 dark:active:border-gray-700">
-                            <svg data-chevron-value="right_chevron" class="hi-mini hi-chevron-right -mx-1.5 inline-block h-5 w-5"
+                            <svg data-chevron-value="right_chevron"
+                                class="hi-mini hi-chevron-right -mx-1.5 inline-block h-5 w-5"
                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                                 aria-hidden="true">
                                 <path fill-rule="evenodd"
@@ -163,13 +163,53 @@
             </div>
         </div>
     </div>
+
+    <!-- Images Slider -->
+    <div id="imagesModalContainer" style="display: none;">
+        <div class="flex items-center justify-center rounded-lg border-2 border-dashed border-gray-300 py-48 dark:border-gray-700">
+        </div>
+        <div tabindex="-1" role="dialog"
+            class="fixed inset-0 z-90 overflow-y-auto overflow-x-hidden bg-gray-900 bg-opacity-75 p-4 backdrop-blur-sm lg:p-8">
+            <div role="document" class="mx-auto flex w-full max-w-md flex-col overflow-hidden rounded-lg bg-white shadow-sm dark:bg-gray-800 dark:text-gray-100">
+                <div class="flex items-center justify-between bg-gray-50 px-5 py-4 dark:bg-gray-700/50">
+                    <div class="flex items-center space-x-2 font-medium"></div>
+                    <div class="-my-4">
+                        <button id="closeModal" type="button"
+                            class="inline-flex items-center justify-center space-x-2 rounded-lg border border-transparent px-3 py-2 text-sm font-semibold leading-5 text-gray-800 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:border-gray-200 active:shadow-none dark:border-transparent dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600 dark:focus:ring-opacity-40 dark:active:border-gray-700">
+                            <svg class="hi-solid hi-x -mx-1 inline-block h-4 w-4" fill="currentColor"
+                                viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div id="imagesSlider" class="grow p-5"></div>
+                <div class="space-x-1 bg-gray-50 px-5 py-4 text-right dark:bg-gray-700/50">
+                    <button type="button" class="inline-flex items-center justify-center space-x-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-semibold leading-5 text-gray-800 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600 dark:focus:ring-opacity-40 dark:active:border-gray-700">
+                        Previous
+                    </button>
+                    <button type="button" class="inline-flex items-center justify-center space-x-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-semibold leading-5 text-gray-800 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600 dark:focus:ring-opacity-40 dark:active:border-gray-700">
+                        Next
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Images Slider -->
+
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="{% static 'blog/leads.js' %}"></script>
-    {{ max_pages|json_script:"max-pages" }}
     <script>
         flatpickr("#date_filter", {
             dateFormat: "Y-m-d",
             mode: "range"
         });
     </script>
+
+    {{ max_pages|json_script:"max-pages" }}
+    {{ photos_dict|json_script:"photos_dict" }}
+    {{ bucket_url|json_script:"bucket_url" }}
+
     {% endblock %}

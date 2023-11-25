@@ -1112,6 +1112,12 @@ select{
   margin-bottom: calc(2rem * var(--tw-space-y-reverse));
 }
 
+.space-x-1 > :not([hidden]) ~ :not([hidden]){
+  --tw-space-x-reverse: 0;
+  margin-right: calc(0.25rem * var(--tw-space-x-reverse));
+  margin-left: calc(0.25rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
 .divide-y > :not([hidden]) ~ :not([hidden]){
   --tw-divide-y-reverse: 0;
   border-top-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));
@@ -1173,8 +1179,16 @@ select{
   border-width: 1px;
 }
 
+.border-2{
+  border-width: 2px;
+}
+
 .border-t{
   border-top-width: 1px;
+}
+
+.border-dashed{
+  border-style: dashed;
 }
 
 .border-blue-50{
@@ -1209,6 +1223,11 @@ select{
 
 .border-transparent{
   border-color: transparent;
+}
+
+.border-gray-300{
+  --tw-border-opacity: 1;
+  border-color: rgb(209 213 219 / var(--tw-border-opacity));
 }
 
 .bg-blue-100{
@@ -1272,6 +1291,11 @@ select{
 .bg-white{
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.bg-gray-50{
+  --tw-bg-opacity: 1;
+  background-color: rgb(249 250 251 / var(--tw-bg-opacity));
 }
 
 .bg-opacity-75{
@@ -1438,6 +1462,11 @@ select{
   padding-bottom: 2rem;
 }
 
+.py-48{
+  padding-top: 12rem;
+  padding-bottom: 12rem;
+}
+
 .pb-1{
   padding-bottom: 0.25rem;
 }
@@ -1476,6 +1505,10 @@ select{
 
 .text-center{
   text-align: center;
+}
+
+.text-right{
+  text-align: right;
 }
 
 .align-middle{
@@ -2039,6 +2072,10 @@ select{
 
 :is(.dark .dark\:bg-transparent){
   background-color: transparent;
+}
+
+:is(.dark .dark\:bg-gray-700\/50){
+  background-color: rgb(55 65 81 / 0.5);
 }
 
 :is(.dark .dark\:bg-opacity-10){

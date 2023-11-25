@@ -214,6 +214,11 @@ class LeadsView(MyBaseView):
         max_pages = paginator.num_pages
         data = paginator.get_page(page)
 
+        photos_dict = {}
+        for lead in leads:
+            if (lead.images.count() > 0):
+                photos_dict[lead.id] = [image.src for image in lead.images.all()]
+        
         context['is_leads'] = True
         context['leads'] = data
         context['max_pages'] = max_pages
@@ -223,6 +228,8 @@ class LeadsView(MyBaseView):
         context['locations'] = locations
         context['page_path'] = request.build_absolute_uri()
         context['page_title'] = str(os.environ.get('SITE_NAME'))
+        context['photos_dict'] = photos_dict
+        context['bucket_url'] = "https://" + os.environ.get('AWS_STORAGE_BUCKET_NAME') + ".s3.amazonaws.com/images/" # I can change this later to pull from CUSTOM DOMAIN
         return render(request, self.template_name, context=context)
     
 @csrf_exempt
