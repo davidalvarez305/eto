@@ -67,15 +67,13 @@ buttons.forEach(button => {
     button.textContent = "";
   }
 
+  const imagesSlider = document.getElementById('imagesSlider');
   const imagesModalContainer = document.getElementById('imagesModalContainer');
   
   button.addEventListener('click', function() {
     const photos_dict = JSON.parse(document.getElementById('photos_dict').textContent);
     const bucket_url = JSON.parse(document.getElementById('bucket_url').textContent);
     const lead_images = photos_dict[leadId];
-
-    const imagesSlider = document.getElementsByClassName('slick-track')[0];
-    console.log(imagesSlider);
 
     imagesModalContainer.style.display = "";
     
