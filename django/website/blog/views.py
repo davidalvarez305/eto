@@ -8,7 +8,7 @@ import httpagentparser
 from django.shortcuts import render
 from django.views import View
 
-from .utils import download_image, get_client_ip, get_device_type, get_exif_data, remove_files_in_directory, resolve_uploads_dir_path, scan_for_viruses, upload_to_s3
+from .utils import download_image, get_client_ip, get_device_type, get_exif_data, remove_files_in_directory, resolve_uploads_dir_path, scan_for_viruses, send_message_with_twilio, upload_to_s3
 from .google.gmail import send_mail
 from .models import *
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -156,6 +156,13 @@ class QuoteView(MyBaseView):
                     )
 
                     marketing.save()
+
+                    # Send client text message letting them know they can upload pictures.
+                    send_message_with_twilio(message=f"""
+                        Hey! Thank you for requesting a quote from Fumero Cleaning Services, LLC.
+                        This is a text message to let you know that you can send pictures through here & we'll attach them to your account!
+                    """, to_phone_number=form.cleaned_data['phone_number'])
+
                 return JsonResponse({ "data": "Contact form received successfully." }, status=201)
             except Exception as e:
                 print("Error:", str(e))
@@ -222,7 +229,7 @@ class LeadsView(MyBaseView):
 def handle_incoming_message(request):
     try:
         message_sid = request.POST.get('MessageSid', '')
-        from_number = request.POST.get('From', '')
+        client_phone_number = request.POST.get('From', '')
         num_media = int(request.POST.get('NumMedia', 0))
 
         media_files = [(request.POST.get("MediaUrl{}".format(i), ''),
@@ -255,7 +262,7 @@ def handle_incoming_message(request):
                 upload_to_s3(local_file_path=image_file_path, bucket_name=os.environ.get('AWS_STORAGE_BUCKET_NAME'), s3_file_name=s3_upload_path)
                 
                 # Save Image to DB
-                adjusted_phone_number = from_number.split("+1")[1]
+                adjusted_phone_number = client_phone_number.split("+1")[1]
                 lead = Lead.objects.get(phone_number=adjusted_phone_number)
                 LeadImage.objects.create(
                     lead=lead,
@@ -263,13 +270,10 @@ def handle_incoming_message(request):
                 )
                 print("Image successfully added to DB.")
 
-                # Respond to text message.
-                response = MessagingResponse()
-                message = 'Thanks for the {} images.'.format(num_media)
-                response.message(body=message, to=from_number, from_=os.getenv('TWILIO_PHONE_NUMBER'))
+                send_message_with_twilio(message='Your {} images have been successfully uploaded!'.format(num_media), to_phone_number=client_phone_number)
                 print("Client received response.")
         
-        return HttpResponse(response, content_type='application/xml')
+        return HttpResponse("", content_type='application/xml')
     except Exception as err:
         print(f'ERROR IN TWILIO WEBHOOK: {err}')
         return HttpResponseBadRequest('Upload failed.')
