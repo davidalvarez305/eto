@@ -67,7 +67,6 @@ buttons.forEach(button => {
     button.textContent = "";
   }
 
-  const imagesSlider = document.getElementById('imagesSlider');
   const imagesModalContainer = document.getElementById('imagesModalContainer');
   
   button.addEventListener('click', function() {
@@ -75,14 +74,19 @@ buttons.forEach(button => {
     const bucket_url = JSON.parse(document.getElementById('bucket_url').textContent);
     const lead_images = photos_dict[leadId];
 
+    const imagesSlider = document.getElementsByClassName('slick-track')[0];
+    console.log(imagesSlider);
+
     imagesModalContainer.style.display = "";
     
     lead_images.forEach(image => {
-      var imgElement = document.createElement('img');
+      const containerDiv = document.createElement('div');
+      const imgElement = document.createElement('img');
 
       imgElement.src = bucket_url + image;
 
-      imagesSlider.appendChild(imgElement);
+      containerDiv.appendChild(imgElement);
+      imagesSlider.appendChild(containerDiv);
     });
   });
 });
@@ -90,3 +94,9 @@ buttons.forEach(button => {
 const closeModal = document.getElementById('closeModal');
 
 closeModal.addEventListener("click", e => imagesModalContainer.style.display = "none");
+
+const sliderPrevious = document.getElementById('sliderPrevious');
+const sliderNext = document.getElementById('sliderNext');
+
+sliderPrevious.addEventListener("click", () => $('#imagesSlider').slick('slickNext'));
+sliderPrevious.addEventListener("click", () => $('#imagesSlider').slick('slickPrev'));
