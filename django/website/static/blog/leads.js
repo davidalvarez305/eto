@@ -86,15 +86,25 @@ buttons.forEach(button => {
       containerDiv.appendChild(imgElement);
       imagesSlider.appendChild(containerDiv);
     });
+
+    $('#imagesSlider').slick({
+      infinite: true,
+      speed: 300,
+      slidesToShow: 1,
+      adaptiveHeight: true,
+    });
   });
 });
 
 const closeModal = document.getElementById('closeModal');
 
-closeModal.addEventListener("click", e => imagesModalContainer.style.display = "none");
+closeModal.addEventListener("click", e => {
+  $('#imagesSlider').slick('unslick');
+  imagesModalContainer.style.display = "none";
+});
 
 const sliderPrevious = document.getElementById('sliderPrevious');
 const sliderNext = document.getElementById('sliderNext');
 
-sliderPrevious.addEventListener("click", () => $('#imagesSlider').slick('slickNext'));
+sliderNext.addEventListener("click", () => $('#imagesSlider').slick('slickNext'));
 sliderPrevious.addEventListener("click", () => $('#imagesSlider').slick('slickPrev'));

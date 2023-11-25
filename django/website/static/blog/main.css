@@ -1046,6 +1046,12 @@ select{
   gap: 1.5rem;
 }
 
+.space-x-1 > :not([hidden]) ~ :not([hidden]){
+  --tw-space-x-reverse: 0;
+  margin-right: calc(0.25rem * var(--tw-space-x-reverse));
+  margin-left: calc(0.25rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
 .space-x-2 > :not([hidden]) ~ :not([hidden]){
   --tw-space-x-reverse: 0;
   margin-right: calc(0.5rem * var(--tw-space-x-reverse));
@@ -1110,12 +1116,6 @@ select{
   --tw-space-y-reverse: 0;
   margin-top: calc(2rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(2rem * var(--tw-space-y-reverse));
-}
-
-.space-x-1 > :not([hidden]) ~ :not([hidden]){
-  --tw-space-x-reverse: 0;
-  margin-right: calc(0.25rem * var(--tw-space-x-reverse));
-  margin-left: calc(0.25rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
 .divide-y > :not([hidden]) ~ :not([hidden]){
@@ -1211,6 +1211,11 @@ select{
   border-color: rgb(229 231 235 / var(--tw-border-opacity));
 }
 
+.border-gray-300{
+  --tw-border-opacity: 1;
+  border-color: rgb(209 213 219 / var(--tw-border-opacity));
+}
+
 .border-indigo-200{
   --tw-border-opacity: 1;
   border-color: rgb(199 210 254 / var(--tw-border-opacity));
@@ -1223,11 +1228,6 @@ select{
 
 .border-transparent{
   border-color: transparent;
-}
-
-.border-gray-300{
-  --tw-border-opacity: 1;
-  border-color: rgb(209 213 219 / var(--tw-border-opacity));
 }
 
 .bg-blue-100{
@@ -1269,6 +1269,11 @@ select{
   background-color: rgb(243 244 246 / 0.75);
 }
 
+.bg-gray-50{
+  --tw-bg-opacity: 1;
+  background-color: rgb(249 250 251 / var(--tw-bg-opacity));
+}
+
 .bg-gray-700\/30{
   background-color: rgb(55 65 81 / 0.3);
 }
@@ -1291,11 +1296,6 @@ select{
 .bg-white{
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-}
-
-.bg-gray-50{
-  --tw-bg-opacity: 1;
-  background-color: rgb(249 250 251 / var(--tw-bg-opacity));
 }
 
 .bg-opacity-75{
@@ -1452,6 +1452,11 @@ select{
   padding-bottom: 1rem;
 }
 
+.py-48{
+  padding-top: 12rem;
+  padding-bottom: 12rem;
+}
+
 .py-5{
   padding-top: 1.25rem;
   padding-bottom: 1.25rem;
@@ -1460,11 +1465,6 @@ select{
 .py-8{
   padding-top: 2rem;
   padding-bottom: 2rem;
-}
-
-.py-48{
-  padding-top: 12rem;
-  padding-bottom: 12rem;
 }
 
 .pb-1{
@@ -2051,6 +2051,10 @@ select{
   background-color: rgb(55 65 81 / 0.25);
 }
 
+:is(.dark .dark\:bg-gray-700\/50){
+  background-color: rgb(55 65 81 / 0.5);
+}
+
 :is(.dark .dark\:bg-gray-700\/75){
   background-color: rgb(55 65 81 / 0.75);
 }
@@ -2072,10 +2076,6 @@ select{
 
 :is(.dark .dark\:bg-transparent){
   background-color: transparent;
-}
-
-:is(.dark .dark\:bg-gray-700\/50){
-  background-color: rgb(55 65 81 / 0.5);
 }
 
 :is(.dark .dark\:bg-opacity-10){
