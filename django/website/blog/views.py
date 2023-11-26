@@ -188,7 +188,7 @@ class LeadsView(MyBaseView):
 
         # Remove page from querystring
         page = params.pop('page', None)
-        limit_value = 25
+        limit_value = 10
 
         if page is None:
             page = 1

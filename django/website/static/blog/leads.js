@@ -1,6 +1,10 @@
 const pagination = document.getElementById("page_navigation");
 const filters = new URLSearchParams();
 
+const clearButton = document.getElementById('clearButton');
+
+clearButton.addEventListener('click', () => window.location.replace("/leads"));
+
 // Currently selected element
 const pageValues = pagination.getElementsByTagName("a");
 let indexOfCurrentlySelectedElement = 0;
