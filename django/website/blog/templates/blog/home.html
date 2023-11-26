@@ -1,36 +1,401 @@
 {% extends "blog/base.html" %}
 {% load static %}
 {% block content %}
-<!-- Product List Section: Products Grid -->
-<div class="text-center">
-    <h1 class="text-3xl md:text-4xl font-extrabold mb-3">
-      {{ site_name }}
-    </h1>
-</div>
-<div class="bg-white dark:text-gray-100 dark:bg-gray-900">
-    <div class="container xl:max-w-7xl mx-auto px-4 py-12 lg:px-8 lg:py-12">
-        <!-- Products -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
-        {% for group in groups %}
-            {% for category in group.category_set.all %}
-                <div>
-                <div class="group relative overflow-hidden mb-2">
-                    <img src="{{ category.subcategory_set.first.reviewpost_set.first.product.product_image }}" height="320" width="320" loading="lazy" alt="{{ category.subcategory_set.first.reviewpost_set.first.product.product_image_alt }}">
+<!-- Hero Section: Image Side with Header Actions -->
+<div class="relative overflow-hidden bg-white dark:bg-gray-900 dark:text-gray-100">
+
+    <!-- Hero Content -->
+    <div
+        class="container relative mx-auto grid grid-cols-1 gap-16 px-4 py-16 text-center lg:grid-cols-2 lg:px-8 lg:py-32 lg:text-left xl:max-w-7xl">
+        <div class="lg:flex lg:items-center">
+            <div>
+                <h1 class="mb-4 text-4xl font-black text-black dark:text-white">
+                    Fumero Cleaning Services
+                </h1>
+                <h2 class="text-xl font-medium leading-relaxed text-gray-700 dark:text-gray-300">
+                    Get pressure and general cleaning services in your area with just a few clicks. We take care of
+                    everything.
+                </h2>
+                <div
+                    class="flex flex-col justify-center space-y-2 pb-16 pt-10 sm:flex-row sm:items-center sm:space-x-2 sm:space-y-0">
+                    <button id="get-started-button" type="button"
+                        class="inline-flex items-center justify-center space-x-2 rounded-lg border border-blue-700 bg-blue-700 px-7 py-3.5 font-semibold leading-6 text-white hover:border-blue-600 hover:bg-blue-600 hover:text-white focus:ring focus:ring-blue-400 focus:ring-opacity-50 active:border-blue-700 active:bg-blue-700 dark:focus:ring-blue-400 dark:focus:ring-opacity-90">
+                        <span>Get A Quote</span>
+                        <svg class="hi-mini hi-arrow-right inline-block h-5 w-5 opacity-50"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                            aria-hidden="true">
+                            <path fill-rule="evenodd"
+                                d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </button>
                 </div>
-                <a href="/{{ category.slug }}/" class="block font-semibold hover:text-gray-500 dark:hover:text-gray-300">
-                    {{ category.name }}
-                </a>
-                <div class="font-medium text-gray-500 dark:text-gray-400">
-                    {{ category.subcategory_set.first.reviewpost_set.first.product.product_price }}
-                </div>
-                </div>
-            {% endfor %}
-        {% endfor %}
-        <!-- END Products -->
+            </div>
         </div>
-  
-      <hr class="my-10 dark:border-gray-700/50">
+        <div class="lg:flex lg:items-center lg:justify-center">
+            <div class="relative lg:w-96">
+                <div
+                    class="bg-tranparent absolute right-0 top-0 -m-6 h-40 w-40 rounded-full border border-teal-200 dark:border-teal-900 lg:h-96 lg:w-96">
+                </div>
+                <div
+                    class="bg-tranparent absolute bottom-0 left-0 -m-6 h-40 w-40 rounded-full border border-indigo-200 dark:border-indigo-900 lg:h-96 lg:w-96">
+                </div>
+                <div
+                    class="absolute left-0 top-0 -ml-10 -mt-10 h-36 w-36 rounded-full bg-gradient-to-br from-purple-200 dark:from-purple-800">
+                </div>
+                <div
+                    class="absolute bottom-0 right-0 -mb-8 -mr-8 h-24 w-24 rotate-12 rounded-3xl bg-gradient-to-tl from-amber-200 dark:from-orange-900">
+                </div>
+                <div
+                    class="absolute right-0 top-0 -mr-8 -mt-10 h-40 w-32 -rotate-6 rounded-3xl bg-gradient-to-bl from-teal-200 dark:from-teal-800">
+                </div>
+                <div
+                    class="absolute bottom-0 left-0 -mb-8 -ml-8 h-40 w-32 rotate-12 rounded-3xl bg-gradient-to-tr from-indigo-200 dark:from-indigo-800">
+                </div>
+                <img src="https://cdn.tailkit.com/media/placeholders/photo-MChSQHxGZrQ-800x1000.jpg"
+                    class="relative mx-auto rounded-lg shadow-lg" alt="Hero Image" />
+            </div>
+        </div>
     </div>
-  </div>
-  <!-- END Product List Section: Products Grid -->
+    <!-- END Hero Content -->
+</div>
+<!-- END Hero Section: Image Side with Header Actions -->
+
+<!-- Features Section: Vertical Cards -->
+<div class="overflow-hidden bg-gray-100 dark:bg-gray-800/50 dark:text-gray-100">
+    <div class="container mx-auto px-4 py-16 lg:px-8 lg:py-32 xl:max-w-7xl">
+        <div class="flex flex-col space-y-12 lg:flex-row lg:items-center lg:space-x-20 lg:space-y-0">
+            <!-- Heading -->
+            <div class="space-y-10 md:py-12 lg:w-5/12 xl:w-5/12">
+                <div>
+                    <div class="mb-1 text-sm font-bold uppercase tracking-wider text-blue-600 dark:text-blue-500">
+                        Local & Family-Owned
+                    </div>
+                    <h2 class="mb-4 text-4xl font-black text-black dark:text-white">
+                        Quality Cleaning Services in Miami
+                    </h2>
+                    <h3 class="text-xl font-medium leading-relaxed text-gray-700 dark:text-gray-300">
+                        We are a family-owned business committed to providing top-notch cleaning services across all of Miami.
+                    </h3>
+                </div>
+            </div>
+            <!-- END Heading -->
+
+            <!-- Features in Cards -->
+            <div class="relative flex-none lg:w-7/12 xl:w-7/12">
+                <div
+                    class="bg-tranparent absolute left-0 top-0 -ml-12 -mt-5 h-40 w-40 rounded-full border border-orange-200 dark:border-orange-900 lg:h-72 lg:w-72">
+                </div>
+                <div
+                    class="bg-tranparent absolute left-0 top-0 -ml-14 -mt-2 h-40 w-40 rounded-full border border-orange-100 dark:border-orange-950 lg:h-72 lg:w-72">
+                </div>
+                <div
+                    class="bg-tranparent absolute bottom-0 right-0 -mb-5 -mr-12 h-40 w-40 rounded-full border border-purple-200 dark:border-purple-900 lg:h-72 lg:w-72">
+                </div>
+                <div
+                    class="bg-tranparent absolute bottom-0 right-0 -mb-2 -mr-14 h-40 w-40 rounded-full border border-purple-100 dark:border-purple-950 lg:h-72 lg:w-72">
+                </div>
+                <div class="relative flex flex-col space-y-6 md:flex-row md:space-x-6 md:space-y-0">
+                    <div class="space-y-6 md:mt-24 md:w-1/2">
+                        <div
+                            class="group rounded-2xl border border-gray-200 bg-white/25 p-6 backdrop-blur-sm transition duration-200 ease-out hover:border-orange-300 dark:border-gray-700/75 dark:bg-gray-800/25 dark:hover:border-orange-700/75 xl:p-8">
+                            <div class="relative m-2 mb-6 inline-flex h-10 w-10 items-center justify-center">
+                                <div
+                                    class="absolute inset-0 -m-2 rotate-6 transform rounded-3xl bg-orange-300 transition duration-200 ease-out group-hover:-rotate-3 group-hover:scale-105">
+                                </div>
+                                <div
+                                    class="absolute inset-0 -rotate-6 transform rounded-2xl bg-orange-700 bg-opacity-75 shadow-inner transition duration-200 ease-out group-hover:rotate-2 group-hover:scale-105">
+                                </div>
+                                <svg class="hi-outline hi-adjustments-vertical relative inline-block h-6 w-6 text-white transition duration-200 ease-out group-hover:scale-110"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M6 13.5V3.75m0 9.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 9.75V10.5" />
+                                </svg>
+                            </div>
+                            <h4 class="mb-2 text-lg font-bold">Premium Solution</h4>
+                            <p class="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
+                                Transform your environment with our top-notch cleaning services.
+                                Enjoy a pristine, welcoming space that reflects the highest
+                                standards of cleanliness and hygiene.
+                            </p>
+                        </div>
+                        <div
+                            class="group rounded-2xl border border-gray-200 bg-white/25 p-6 backdrop-blur-sm transition duration-200 ease-out hover:border-rose-300 dark:border-gray-700/75 dark:bg-gray-800/25 dark:hover:border-rose-700/75 xl:p-8">
+                            <div class="relative m-2 mb-6 inline-flex h-10 w-10 items-center justify-center">
+                                <div
+                                    class="absolute inset-0 -m-2 rotate-6 transform rounded-3xl bg-rose-300 transition duration-200 ease-out group-hover:-rotate-3 group-hover:scale-105">
+                                </div>
+                                <div
+                                    class="absolute inset-0 -rotate-6 transform rounded-2xl bg-rose-700 bg-opacity-75 shadow-inner transition duration-200 ease-out group-hover:rotate-2 group-hover:scale-105">
+                                </div>
+                                <svg class="hi-outline hi-chart-pie relative inline-block h-6 w-6 text-white transition duration-200 ease-out group-hover:scale-110"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z" />
+                                </svg>
+                            </div>
+                            <h4 class="mb-2 text-lg font-bold">Bilingual</h4>
+                            <p class="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
+                                Our services extend through the tri-county area, ensuring coverage of the SoFlo area. Additionally, our firm can serve customers in both English & Spanish.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="space-y-6 md:w-1/2">
+                        <div
+                            class="group rounded-2xl border border-gray-200 bg-white/25 p-6 backdrop-blur-sm transition duration-200 ease-out hover:border-emerald-300 dark:border-gray-700/75 dark:bg-gray-800/25 dark:hover:border-emerald-700/75 xl:p-8">
+                            <div class="relative m-2 mb-6 inline-flex h-10 w-10 items-center justify-center">
+                                <div
+                                    class="absolute inset-0 -m-2 rotate-6 transform rounded-3xl bg-emerald-300 transition duration-200 ease-out group-hover:-rotate-3 group-hover:scale-105">
+                                </div>
+                                <div
+                                    class="absolute inset-0 -rotate-6 transform rounded-2xl bg-emerald-700 bg-opacity-75 shadow-inner transition duration-200 ease-out group-hover:rotate-2 group-hover:scale-105">
+                                </div>
+                                <svg class="hi-outline hi-globe-alt relative inline-block h-6 w-6 text-white transition duration-200 ease-out group-hover:scale-110"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
+                                </svg>
+                            </div>
+                            <h4 class="mb-2 text-lg font-bold">Family-Owned</h4>
+                            <p class="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
+                                We are a small & tight-knit operated so our customers can enjoy a highly personal & premium service.
+                            </p>
+                        </div>
+                        <div
+                            class="group rounded-2xl border border-gray-200 bg-white/25 p-6 backdrop-blur-sm transition duration-200 ease-out hover:border-purple-300 dark:border-gray-700/75 dark:bg-gray-800/25 dark:hover:border-purple-700/75 xl:p-8">
+                            <div class="relative m-2 mb-6 inline-flex h-10 w-10 items-center justify-center">
+                                <div
+                                    class="absolute inset-0 -m-2 rotate-6 transform rounded-3xl bg-purple-300 transition duration-200 ease-out group-hover:-rotate-3 group-hover:scale-105">
+                                </div>
+                                <div
+                                    class="absolute inset-0 -rotate-6 transform rounded-2xl bg-purple-700 bg-opacity-75 shadow-inner transition duration-200 ease-out group-hover:rotate-2 group-hover:scale-105">
+                                </div>
+                                <svg class="hi-outline hi-puzzle-piece relative inline-block h-6 w-6 text-white transition duration-200 ease-out group-hover:scale-110"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M14.25 6.087c0-.355.186-.676.401-.959.221-.29.349-.634.349-1.003 0-1.036-1.007-1.875-2.25-1.875s-2.25.84-2.25 1.875c0 .369.128.713.349 1.003.215.283.401.604.401.959v0a.64.64 0 01-.657.643 48.39 48.39 0 01-4.163-.3c.186 1.613.293 3.25.315 4.907a.656.656 0 01-.658.663v0c-.355 0-.676-.186-.959-.401a1.647 1.647 0 00-1.003-.349c-1.036 0-1.875 1.007-1.875 2.25s.84 2.25 1.875 2.25c.369 0 .713-.128 1.003-.349.283-.215.604-.401.959-.401v0c.31 0 .555.26.532.57a48.039 48.039 0 01-.642 5.056c1.518.19 3.058.309 4.616.354a.64.64 0 00.657-.643v0c0-.355-.186-.676-.401-.959a1.647 1.647 0 01-.349-1.003c0-1.035 1.008-1.875 2.25-1.875 1.243 0 2.25.84 2.25 1.875 0 .369-.128.713-.349 1.003-.215.283-.4.604-.4.959v0c0 .333.277.599.61.58a48.1 48.1 0 005.427-.63 48.05 48.05 0 00.582-4.717.532.532 0 00-.533-.57v0c-.355 0-.676.186-.959.401-.29.221-.634.349-1.003.349-1.035 0-1.875-1.007-1.875-2.25s.84-2.25 1.875-2.25c.37 0 .713.128 1.003.349.283.215.604.401.96.401v0a.656.656 0 00.658-.663 48.422 48.422 0 00-.37-5.36c-1.886.342-3.81.574-5.766.689a.578.578 0 01-.61-.58v0z" />
+                                </svg>
+                            </div>
+                            <h4 class="mb-2 text-lg font-bold">Comprehensive Cleaning</h4>
+                            <p class="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
+                                Our solutions run the gamut of all possible cleaning services so you can have your home and/or office pristinely cleaned from top to bottom.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END Features in Cards -->
+        </div>
+    </div>
+</div>
+<!-- END Features Section: Vertical Cards -->
+
+<!-- FAQ Section: In Grid -->
+<div class="bg-white dark:bg-gray-900 dark:text-gray-100">
+    <div class="container mx-auto space-y-16 px-4 py-16 lg:px-8 lg:py-32 xl:max-w-7xl">
+        <!-- Heading -->
+        <div class="text-center">
+            <div class="mb-1 text-sm font-bold uppercase tracking-wider text-blue-600 dark:text-blue-500">
+                We Answer
+            </div>
+            <h2 class="text-4xl font-black text-black dark:text-white">
+                Frequently Asked Questions
+            </h2>
+        </div>
+        <!-- END Heading -->
+
+        <!-- FAQ -->
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+            <div class="space-y-4">
+                <div class="rounded-lg bg-gray-100 p-5 hover:bg-gray-200/75 dark:bg-gray-800 dark:hover:bg-gray-700/50">
+                    <h4 class="mb-2 font-semibold">
+                        Do I get access to the community?
+                    </h4>
+                    <p class="leading-relaxed text-gray-600 dark:text-gray-400">
+                        Sed tincidunt scelerisque ligula, et facilisis nulla hendrerit
+                        non. Suspendisse potenti. Pellentesque non accumsan orci.
+                        Praesent at lacinia dolor.
+                    </p>
+                </div>
+                <div class="rounded-lg bg-gray-100 p-5 hover:bg-gray-200/75 dark:bg-gray-800 dark:hover:bg-gray-700/50">
+                    <h4 class="mb-2 font-semibold">
+                        Can I get a refund just in case?
+                    </h4>
+                    <p class="leading-relaxed text-gray-600 dark:text-gray-400">
+                        Pellentesque non accumsan orci. Praesent at lacinia dolor.
+                    </p>
+                </div>
+                <div class="rounded-lg bg-gray-100 p-5 hover:bg-gray-200/75 dark:bg-gray-800 dark:hover:bg-gray-700/50">
+                    <h4 class="mb-2 font-semibold">What features are included?</h4>
+                    <p class="leading-relaxed text-gray-600 dark:text-gray-400">
+                        Sed tincidunt scelerisque ligula, et facilisis nulla hendrerit
+                        non. Suspendisse potenti.
+                    </p>
+                </div>
+                <div class="rounded-lg bg-gray-100 p-5 hover:bg-gray-200/75 dark:bg-gray-800 dark:hover:bg-gray-700/50">
+                    <h4 class="mb-2 font-semibold">Can I use PayPal to pay you?</h4>
+                    <p class="leading-relaxed text-gray-600 dark:text-gray-400">
+                        Sed tincidunt scelerisque ligula, et facilisis nulla hendrerit
+                        non. Suspendisse potenti. Sed tincidunt scelerisque ligula, et
+                        facilisis nulla hendrerit non. Suspendisse potenti.
+                    </p>
+                </div>
+                <div class="rounded-lg bg-gray-100 p-5 hover:bg-gray-200/75 dark:bg-gray-800 dark:hover:bg-gray-700/50">
+                    <h4 class="mb-2 font-semibold">Can I use PayPal to pay you?</h4>
+                    <p class="leading-relaxed text-gray-600 dark:text-gray-400">
+                        Etiam egestas fringilla enim, id convallis lectus laoreet at.
+                    </p>
+                </div>
+            </div>
+            <div class="space-y-4">
+                <div class="rounded-lg bg-gray-100 p-5 hover:bg-gray-200/75 dark:bg-gray-800 dark:hover:bg-gray-700/50">
+                    <h4 class="mb-2 font-semibold">What features are included?</h4>
+                    <p class="leading-relaxed text-gray-600 dark:text-gray-400">
+                        Fusce purus nisi, gravida sed consectetur ut, interdum quis
+                        nisi.
+                    </p>
+                </div>
+                <div class="rounded-lg bg-gray-100 p-5 hover:bg-gray-200/75 dark:bg-gray-800 dark:hover:bg-gray-700/50">
+                    <h4 class="mb-2 font-semibold">Can I use PayPal to pay you?</h4>
+                    <p class="leading-relaxed text-gray-600 dark:text-gray-400">
+                        Etiam egestas fringilla enim, id convallis lectus laoreet at.
+                    </p>
+                </div>
+                <div class="rounded-lg bg-gray-100 p-5 hover:bg-gray-200/75 dark:bg-gray-800 dark:hover:bg-gray-700/50">
+                    <h4 class="mb-2 font-semibold">Do you offer email support?</h4>
+                    <p class="leading-relaxed text-gray-600 dark:text-gray-400">
+                        Quisque egestas nisl id lectus facilisis scelerisque.
+                    </p>
+                </div>
+                <div class="rounded-lg bg-gray-100 p-5 hover:bg-gray-200/75 dark:bg-gray-800 dark:hover:bg-gray-700/50">
+                    <h4 class="mb-2 font-semibold">Are the updates free for life?</h4>
+                    <p class="leading-relaxed text-gray-600 dark:text-gray-400">
+                        Sed at mi velit. Ut egestas tempor est, in cursus enim venenatis
+                        eget! Nulla quis ligula ipsum. Donec vitae ultrices dolor.
+                    </p>
+                </div>
+                <div class="rounded-lg bg-gray-100 p-5 hover:bg-gray-200/75 dark:bg-gray-800 dark:hover:bg-gray-700/50">
+                    <h4 class="mb-2 font-semibold">
+                        Do I get access to the community?
+                    </h4>
+                    <p class="leading-relaxed text-gray-600 dark:text-gray-400">
+                        Aliquam tincidunt sollicitudin sem nec ultrices. Sed at mi
+                        velit. Ut egestas tempor est, in cursus enim venenatis eget!
+                        Nulla quis ligula ipsum. Donec vitae ultrices dolor.
+                    </p>
+                </div>
+                <div class="rounded-lg bg-gray-100 p-5 hover:bg-gray-200/75 dark:bg-gray-800 dark:hover:bg-gray-700/50">
+                    <h4 class="mb-2 font-semibold">Is there a free version?</h4>
+                    <p class="leading-relaxed text-gray-600 dark:text-gray-400">
+                        Etiam egestas fringilla enim, id convallis lectus laoreet at.
+                    </p>
+                </div>
+            </div>
+            <div class="space-y-4">
+                <div class="rounded-lg bg-gray-100 p-5 hover:bg-gray-200/75 dark:bg-gray-800 dark:hover:bg-gray-700/50">
+                    <h4 class="mb-2 font-semibold">
+                        Can I get a refund just in case?
+                    </h4>
+                    <p class="leading-relaxed text-gray-600 dark:text-gray-400">
+                        Etiam egestas fringilla enim, id convallis lectus laoreet at.
+                        Fusce purus nisi, gravida sed consectetur ut, interdum quis
+                        nisi.
+                    </p>
+                </div>
+                <div class="rounded-lg bg-gray-100 p-5 hover:bg-gray-200/75 dark:bg-gray-800 dark:hover:bg-gray-700/50">
+                    <h4 class="mb-2 font-semibold">Do you offer email support?</h4>
+                    <p class="leading-relaxed text-gray-600 dark:text-gray-400">
+                        Quisque egestas nisl id lectus facilisis scelerisque.
+                    </p>
+                </div>
+                <div class="rounded-lg bg-gray-100 p-5 hover:bg-gray-200/75 dark:bg-gray-800 dark:hover:bg-gray-700/50">
+                    <h4 class="mb-2 font-semibold">Are the updates free for life?</h4>
+                    <p class="leading-relaxed text-gray-600 dark:text-gray-400">
+                        Fusce purus nisi, gravida sed consectetur ut, interdum quis
+                        nisi. Quisque egestas nisl id lectus facilisis scelerisque.
+                    </p>
+                </div>
+                <div class="rounded-lg bg-gray-100 p-5 hover:bg-gray-200/75 dark:bg-gray-800 dark:hover:bg-gray-700/50">
+                    <h4 class="mb-2 font-semibold">
+                        Can I get a refund just in case?
+                    </h4>
+                    <p class="leading-relaxed text-gray-600 dark:text-gray-400">
+                        Etiam egestas fringilla enim, id convallis lectus laoreet at.
+                    </p>
+                </div>
+                <div class="rounded-lg bg-gray-100 p-5 hover:bg-gray-200/75 dark:bg-gray-800 dark:hover:bg-gray-700/50">
+                    <h4 class="mb-2 font-semibold">What features are included?</h4>
+                    <p class="leading-relaxed text-gray-600 dark:text-gray-400">
+                        Gravida sed consectetur ut, interdum quis nisi. Quisque egestas
+                        nisl id lectus facilisis scelerisque.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- END FAQ -->
+
+        <!-- Link -->
+        <div class="text-center">
+            <a href="javascript:void(0)"
+                class="inline-flex items-center justify-center space-x-2 rounded-lg border border-gray-200 bg-white px-4 py-2 font-semibold leading-6 text-gray-800 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600 dark:focus:ring-opacity-40 dark:active:border-gray-700">
+                <svg class="hi-mini hi-arrow-top-right-on-square inline-block h-5 w-5 opacity-50"
+                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd"
+                        d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z"
+                        clip-rule="evenodd" />
+                    <path fill-rule="evenodd"
+                        d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z"
+                        clip-rule="evenodd" />
+                </svg>
+                <span>Go to support center</span>
+            </a>
+        </div>
+        <!-- END Link -->
+    </div>
+</div>
+<!-- END FAQ Section: In Grid -->
+
+<!-- CTA Section: Simple -->
+<div class="bg-gray-100 dark:bg-gray-800 dark:text-gray-100">
+    <div class="container mx-auto space-y-8 px-4 py-16 lg:px-8 lg:py-32 xl:max-w-7xl">
+        <!-- Heading -->
+        <div class="text-center">
+            <h2 class="mb-4 text-4xl font-black text-black dark:text-white">
+                Are you ready to start creating?
+                <span class="text-blue-600 dark:text-blue-500">Let’s do it!</span>
+            </h2>
+            <h3 class="mx-auto text-xl font-medium leading-relaxed text-gray-700 dark:text-gray-300 lg:w-2/3">
+                Inspiring results from day one without the pain. Get your own custom
+                dashboard and start building amazing services.
+            </h3>
+        </div>
+        <!-- END Heading -->
+
+        <!-- Actions -->
+        <div class="flex flex-col space-y-4 sm:flex-row sm:items-center sm:justify-center sm:space-x-3 sm:space-y-0">
+            <a href="javascript:void(0)"
+                class="inline-flex items-center justify-center space-x-2 rounded-lg border border-blue-700 bg-blue-700 px-6 py-3 font-semibold leading-6 text-white hover:border-blue-600 hover:bg-blue-600 hover:text-white focus:ring focus:ring-blue-400 focus:ring-opacity-50 active:border-blue-700 active:bg-blue-700 dark:focus:ring-blue-400 dark:focus:ring-opacity-90">
+                <span>Get Started</span>
+            </a>
+            <a href="javascript:void(0)"
+                class="inline-flex items-center justify-center space-x-2 rounded-lg border border-gray-200 bg-white px-6 py-3 font-semibold leading-6 text-gray-800 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600 dark:focus:ring-opacity-40 dark:active:border-gray-700">
+                <span>Learn More</span>
+                <svg class="hi-mini hi-arrow-right inline-block h-5 w-5 opacity-50" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd"
+                        d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                        clip-rule="evenodd" />
+                </svg>
+            </a>
+        </div>
+        <!-- END Actions -->
+    </div>
+</div>
+<!-- END CTA Section: Simple -->
 {% endblock %}

@@ -66,7 +66,7 @@
                 <tr>
                     <th
                         class="bg-gray-100/75 px-3 py-4 text-center font-semibold text-gray-900 dark:bg-gray-700/25 dark:text-gray-50">
-                        Photo
+                        Notes
                     </th>
                     <th
                         class="bg-gray-100/75 px-3 py-4 text-left font-semibold text-gray-900 dark:bg-gray-700/25 dark:text-gray-50">
@@ -94,14 +94,31 @@
                 <tr class="hover:bg-gray-50 dark:hover:bg-gray-900/50">
                     <td class="p-3 text-center">
                         <div>
-                            <div
-                                class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-gray-100 text-gray-300 dark:bg-gray-700 dark:text-gray-500">
-                                <svg class="hi-solid hi-user inline-block h-6 w-6" fill="currentColor"
-                                    viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                                        clip-rule="evenodd" />
-                                </svg>
+                            <!-- Popover on Top -->
+                            <div class="group relative inline-block">
+                                <button type="button"
+                                    class="inline-flex w-24 items-center justify-center space-x-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-semibold leading-5 text-gray-800 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600 dark:focus:ring-opacity-40 dark:active:border-gray-700">
+                                    <span>View</span>
+                                </button>
+                                <div
+                                    class="duration-50 invisible absolute bottom-full left-1/2 z-1 -ml-24 flex w-48 origin-bottom translate-y-2 scale-75 flex-col items-center justify-center pb-0.5 opacity-75 transition ease-out will-change-auto group-hover:visible group-hover:translate-y-0 group-hover:scale-100 group-hover:opacity-100">
+                                    <div
+                                        class="overflow-hidden rounded-lg border bg-white text-left text-sm dark:border-gray-700 dark:bg-gray-800">
+                                        <h4
+                                            class="border-b border-b-gray-100 bg-gray-50 px-3 py-2.5 font-medium dark:border-gray-700/75 dark:bg-gray-700/25">
+                                            Message
+                                        </h4>
+                                        <p class="p-3 text-gray-500 dark:text-gray-400">
+                                            {{ lead.message }}
+                                        </p>
+                                    </div>
+                                    <div class="relative z-1 -mt-px h-0 w-0 flex-none border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-white dark:border-t-gray-800"
+                                        aria-hidden="true"></div>
+                                    <div class="relative z-0 -mt-[7px] h-0 w-0 flex-none border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-gray-300 dark:border-t-gray-600"
+                                        aria-hidden="true"></div>
+                                </div>
                             </div>
+                            <!-- END Popover on Top -->
                         </div>
                     </td>
                     <td class="p-3">
