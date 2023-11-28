@@ -204,35 +204,29 @@
         <!-- Heading -->
         <div class="text-center">
             <h2 class="mb-4 text-4xl font-black text-black dark:text-white">
-                Are you ready to start creating?
+                Ready to fall in love with your space again?
                 <span class="text-blue-600 dark:text-blue-500">Let’s do it!</span>
             </h2>
             <h3 class="mx-auto text-xl font-medium leading-relaxed text-gray-700 dark:text-gray-300 lg:w-2/3">
-                Inspiring results from day one without the pain. Get your own custom
-                dashboard and start building amazing services.
+                We're small, tight-knit family-owned business ready to wow you with our cleaning!
             </h3>
         </div>
         <!-- END Heading -->
 
         <!-- Actions -->
         <div class="flex flex-col space-y-4 sm:flex-row sm:items-center sm:justify-center sm:space-x-3 sm:space-y-0">
-            <a href="javascript:void(0)"
+            <button id="bottom-cta-button"
                 class="inline-flex items-center justify-center space-x-2 rounded-lg border border-blue-700 bg-blue-700 px-6 py-3 font-semibold leading-6 text-white hover:border-blue-600 hover:bg-blue-600 hover:text-white focus:ring focus:ring-blue-400 focus:ring-opacity-50 active:border-blue-700 active:bg-blue-700 dark:focus:ring-blue-400 dark:focus:ring-opacity-90">
-                <span>Get Started</span>
-            </a>
-            <a href="javascript:void(0)"
-                class="inline-flex items-center justify-center space-x-2 rounded-lg border border-gray-200 bg-white px-6 py-3 font-semibold leading-6 text-gray-800 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600 dark:focus:ring-opacity-40 dark:active:border-gray-700">
-                <span>Learn More</span>
-                <svg class="hi-mini hi-arrow-right inline-block h-5 w-5 opacity-50" xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                    <path fill-rule="evenodd"
-                        d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
-                        clip-rule="evenodd" />
-                </svg>
-            </a>
+                <span>Get Your Quote</span>
+        </button>
         </div>
         <!-- END Actions -->
     </div>
 </div>
 <!-- END CTA Section: Simple -->
+
+{% include "blog/pop_up_modal.html" %}
+
+<script src="{% static 'blog/quote-pop-up.js' %}"></script>
+<script src="{% static 'blog/lp.js' %}"></script>
 {% endblock %}
