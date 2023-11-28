@@ -53,6 +53,9 @@ class HomeView(MyBaseView):
 
 class ServicesView(HomeView):
     template_name = 'blog/services.html'
+
+class PrivacyPolicyView(HomeView):
+    template_name = 'blog/privacy_policy.html'
     
 class Login(MyBaseView):
     template_name = 'blog/login.html'
