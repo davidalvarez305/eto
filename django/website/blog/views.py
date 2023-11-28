@@ -50,6 +50,9 @@ class HomeView(MyBaseView):
         context['page_path'] = request.build_absolute_uri()
         context['page_title'] = str(os.environ.get('SITE_NAME'))
         return render(request, self.template_name, context=context)
+
+class ServicesView(HomeView):
+    template_name = 'blog/services.html'
     
 class Login(MyBaseView):
     template_name = 'blog/login.html'
