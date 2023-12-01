@@ -12,7 +12,7 @@ services:
     volumes:
     - data:/vol/django
     ports:
-      - "8000:8000"
+      - "8080:8000"
   postgres:
     build: ./postgres
     restart: always
@@ -22,7 +22,7 @@ services:
     volumes:
     - data:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "5433:5432"
 
 volumes:
   data:
