@@ -4,6 +4,7 @@
 node_modules
 deploy.sh
 replicate.sh
+dupe.sh
 uwsgi_params
 test.sh
 output.json

@@ -10,7 +10,7 @@ function showModal() {
    setTimeout(function () {
     modalOverlay.style.display = 'none';
     alreadyPoppedUp = true;
-}, 1500);
+}, 3000);
 }
 
 // Hide the modal when clicking outside the modal content
