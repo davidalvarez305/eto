@@ -185,8 +185,9 @@ class PPCLandingPageView(MyBaseView):
         context['page_title'] = 'Pressure Washing in Miami, FL - ' + str(os.environ.get('SITE_NAME'))
         return render(request, self.template_name, context=context)
 
-class LeadsView(MyBaseView):
+class LeadsView(LoginRequiredMixin, MyBaseView):
     template_name = 'blog/leads.html'
+    login_url="/login"
 
     def get(self, request, *args, **kwargs):
         context = self.context
