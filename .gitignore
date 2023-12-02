@@ -1,12 +1,16 @@
 *.env
 *.conf
 *.sql
+*.png
+site.webmanifest
+*.ico
 node_modules
 deploy.sh
 replicate.sh
 dupe.sh
 uwsgi_params
 test.sh
+env.sh
 output.json
 google.json
 kw.sh
