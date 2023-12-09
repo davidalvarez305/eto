@@ -6,8 +6,7 @@ from oauth2client.client import OAuth2Credentials
 
 
 def get_auth():
-    project_dir = Path(__file__).resolve().parent.parent
-    google_secrets_file = f"{project_dir.parent.parent.parent}/{os.environ.get('GOOGLE_JSON_PATH')}"
+    google_secrets_file = f"./{os.environ.get('GOOGLE_JSON_PATH')}"
     f = open(google_secrets_file)
     data = json.load(f)
 
