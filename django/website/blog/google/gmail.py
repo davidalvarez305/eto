@@ -39,5 +39,5 @@ def send_mail(contact_form):
         (service.users().messages().send
                         (userId="me", body=create_message).execute())
 
-    except HttpError as error:
-        print(F'An error occurred: {error}')
+    except Exception as e:
+        print(F'An error occurred: {e}')
