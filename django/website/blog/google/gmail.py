@@ -18,7 +18,7 @@ def send_mail(contact_form):
         message.set_content(f'''
         Nombre: {contact_form['first_name']} {contact_form['last_name']}
         \n
-        Mensage:
+        Mensaje:
         \n
         {contact_form['message']}
         \n
