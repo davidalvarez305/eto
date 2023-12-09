@@ -40,4 +40,4 @@ def send_mail(contact_form):
                         (userId="me", body=create_message).execute())
 
     except Exception as e:
-        print(F'An error occurred: {e}')
+        raise Exception(F'An error occurred: {e}')
