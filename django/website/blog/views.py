@@ -3,6 +3,8 @@ import json
 import mimetypes
 import os
 import uuid
+
+from .landing_pages import LANDING_PAGES
 from .forms import QuoteForm
 import httpagentparser
 from django.shortcuts import render
@@ -31,7 +33,7 @@ class MyBaseView(View):
         'current_year': current_year,
         'google_analytics_id': google_analytics_id,
         'google_analytics_src': "https://www.googletagmanager.com/gtag/js?id=" + google_analytics_id,
-        'meta_description': 'Get reviews for all things sports, fitness, outdoors, and everything in between!',
+        'meta_description': 'Fumero Cleaning Services is a family-owned business servicing the entire South Florida area with high quality cleaning solutions from pressure washing, concrete, post-construction, and office cleaning!',
         'page_title': str(os.environ.get('SITE_NAME')),
         'site_name': str(os.environ.get('SITE_NAME')),
         'phone_number': '({}) - {} {}'.format(phone_number[:3], phone_number[3:6], phone_number[6:]),
@@ -177,12 +179,20 @@ class QuoteView(MyBaseView):
             return JsonResponse({ "data": "Form was not submitted successfully." }, status=400)
 
 class PPCLandingPageView(MyBaseView):
-    template_name = 'blog/pressure_washing.html'
+    template_name = 'blog/ppc.html'
 
     def get(self, request, *args, **kwargs):
         context = self.context
+        service = self.kwargs.get('slug')
+        ppc_context = LANDING_PAGES.get(service)
+
+        if ppc_context is None:
+            return HttpResponseBadRequest("Page not found.")
+
+        context['page_title'] = ppc_context.get('title') + " - " + str(os.environ.get('SITE_NAME'))
+        context['h1'] = ppc_context.get('h1')
+
         context['page_path'] = request.build_absolute_uri()
-        context['page_title'] = 'Pressure Washing in Miami, FL - ' + str(os.environ.get('SITE_NAME'))
         return render(request, self.template_name, context=context)
 
 class LeadsView(LoginRequiredMixin, MyBaseView):
