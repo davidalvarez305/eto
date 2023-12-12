@@ -11,6 +11,7 @@ dupe.sh
 uwsgi_params
 test.sh
 env.sh
+nginx.sh
 output.json
 google.json
 kw.sh
