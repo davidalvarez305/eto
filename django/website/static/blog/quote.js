@@ -34,9 +34,15 @@ getAQuoteForm.addEventListener("submit", function (e) {
         let service = services.filter((service => service.id === parseInt(body['service'])))[0];
         let location = locations.filter((location => location.id === parseInt(body['location'])))[0];
 
+        // Google Analytics
         window.gtag('event', 'quote', {
           'service': service.name,
           'location': location.name
+        });
+
+        // Google Ads
+        window.gtag('event', 'conversion', {
+          'send_to': 'AW-626941279/wOKxCI-S6_4YEN-6-aoC'
         });
       }
     })
