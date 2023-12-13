@@ -30,7 +30,6 @@ getAQuoteForm.addEventListener("submit", function (e) {
         // Send successful lead creation to Google Analytics
         const services = JSON.parse(document.getElementById('services').textContent);
         const locations = JSON.parse(document.getElementById('locations').textContent);
-        const google_ads_conv_str = JSON.parse(document.getElementById('google-ads-conv-str').textContent);
 
         let service = services.filter((service => service.id === parseInt(body['service'])))[0];
         let location = locations.filter((location => location.id === parseInt(body['location'])))[0];
@@ -39,11 +38,6 @@ getAQuoteForm.addEventListener("submit", function (e) {
         window.gtag('event', 'quote', {
           'service': service.name,
           'location': location.name
-        });
-
-        // Google Ads
-        window.gtag('event', 'conversion', {
-          'send_to': google_ads_conv_str
         });
       }
     })
