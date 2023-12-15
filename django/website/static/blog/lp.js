@@ -32,7 +32,7 @@ function getLeadChannel() {
   if (document.referrer.length === 0) return "direct";
 
   // If we get to this point, it means that document.referrer is not empty
-  if (qs.entries.length === 0) {
+  if (qs.size === 0) {
 
     const host = getHostFromURL();
 
