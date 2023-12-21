@@ -129,6 +129,8 @@ class QuoteView(MyBaseView):
                 location = Location.objects.get(id=data['location'])
                 service = Service.objects.get(id=data['service'])
 
+                messaging = data.pop('messaging', 'off')
+
                 with transaction.atomic():
                     lead = Lead.objects.create(
                         first_name=form.cleaned_data['first_name'],
@@ -165,11 +167,12 @@ class QuoteView(MyBaseView):
 
                     marketing.save()
 
-                    # Send client text message letting them know they can upload pictures.
-                    send_message_with_twilio(message=f"""
-                        Hey! Thank you for requesting a quote from Fumero Cleaning Services, LLC.
-                        This is a text message to let you know that you can send pictures through here & we'll attach them to your account!
-                    """, to_phone_number=form.cleaned_data['phone_number'])
+                    if messaging == 'on':
+                        # Send client text message letting them know they can upload pictures.
+                        send_message_with_twilio(message=f"""
+                            Hey! Thank you for requesting a quote from Fumero Cleaning Services, LLC.
+                            This is a text message to let you know that you can send pictures through here & we'll attach them to your account!
+                        """, to_phone_number=form.cleaned_data['phone_number'])
 
                 return JsonResponse({ "data": "Contact form received successfully." }, status=201)
             except Exception as e:
