@@ -62,6 +62,9 @@ class PrivacyPolicyView(HomeView):
 class Login(MyBaseView):
     template_name = 'blog/login.html'
 
+    def get_success_url(self):
+        return '/leads'
+
     def get(self, request, *args, **kwargs):
         context = self.context
         context['page_path'] = request.build_absolute_uri()
@@ -77,9 +80,6 @@ class Login(MyBaseView):
             return JsonResponse({ 'data': 'Success.'}, status=200)
         else:
             return JsonResponse({ 'data': 'Authentication failed.'}, status=400)
-
-    def get_success_url(self):
-        return '/leads'
         
 class Logout(MyBaseView):
     def post(self, request, *args, **kwargs):
