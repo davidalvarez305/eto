@@ -2,8 +2,6 @@
 <html class="dark" xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
 {% load static %}
 {{ google_analytics_id|json_script:"google-analytics-id" }}
-{{ google_ads_tag_id|json_script:"google-ads-tag-id" }}
-{{ google_ads_conv_str|json_script:"google-ads-conv-str" }}
 
 <head>
   <!-- Google tag (gtag.js) -->
@@ -11,13 +9,11 @@
   <script async src="{{ google_ads_src }}"></script>
   <script>
     var googleAnalyticsId = JSON.parse(document.getElementById('google-analytics-id').textContent);
-    var googleAdsTagId = JSON.parse(document.getElementById('google-ads-tag-id').textContent);
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
 
     gtag('config', googleAnalyticsId);
-    gtag('config', googleAdsTagId);
   </script>
   <!-- End Google tag -->
 
