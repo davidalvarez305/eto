@@ -1,5 +1,8 @@
 const getAQuoteForm = document.getElementById("get-a-quote-form");
 const budget = document.getElementById("budget");
+const alertModal = document.getElementById('alertModal');
+const closeModalButton = document.getElementById('closeModal');
+closeModalButton.addEventListener('click', () => alertModal.style.display = 'none');
 
 getAQuoteForm.addEventListener("submit", function (e) {
   e.preventDefault();
@@ -39,6 +42,9 @@ getAQuoteForm.addEventListener("submit", function (e) {
           'service': service.name,
           'location': location.name
         });
+
+        alertModal.style.display = '';
+        getAQuoteForm.reset();
       }
     })
     .catch(console.error);
