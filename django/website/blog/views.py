@@ -122,9 +122,13 @@ class QuoteView(MyBaseView):
         if form.is_valid():
             try:
                 user_ip = get_client_ip(request)
-                device_data = httpagentparser.detect(data.get('userAgent'))
-                user_os = device_data['os']['name']
+                device_data = httpagentparser.detect(data.get('userAgent'), '')
                 device_type = get_device_type(device_data)
+
+                user_os = ''
+                device_os = device_data.get('os', None)
+                if device_os is not None:
+                    user_os = device_os.get('name', '')
                 
                 location = Location.objects.get(id=data['location'])
                 service = Service.objects.get(id=data['service'])
