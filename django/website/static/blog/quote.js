@@ -1,8 +1,8 @@
 const getAQuoteForm = document.getElementById("get-a-quote-form");
 const budget = document.getElementById("budget");
-const alertModal = document.getElementById('alertModal');
-const closeModalButton = document.getElementById('closeModal');
-closeModalButton.addEventListener('click', () => alertModal.style.display = 'none');
+const alertModal = document.getElementById("alertModal");
+const closeModalButton = document.getElementById("closeModal");
+closeModalButton.addEventListener("click", () => (alertModal.style.display = "none"));
 
 getAQuoteForm.addEventListener("submit", function (e) {
   e.preventDefault();
@@ -10,7 +10,9 @@ getAQuoteForm.addEventListener("submit", function (e) {
 
   if (!isValid) return;
 
-  const marketing = Object.fromEntries(new URLSearchParams(window.location.search));
+  const marketing = Object.fromEntries(
+    new URLSearchParams(window.location.search)
+  );
   const data = Object.fromEntries(new FormData(e.target).entries());
 
   const body = {
@@ -21,31 +23,34 @@ getAQuoteForm.addEventListener("submit", function (e) {
   fetch("/quote", {
     headers: {
       "Content-Type": "application/json",
-      'X-CSRFToken': data.csrfmiddlewaretoken,
+      "X-CSRFToken": data.csrfmiddlewaretoken,
     },
     method: "POST",
     credentials: "include",
     body: JSON.stringify(body),
   })
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.data) {
-        // Send successful lead creation to Google Analytics
-        const services = JSON.parse(document.getElementById('services').textContent);
-        const locations = JSON.parse(document.getElementById('locations').textContent);
-
-        let service = services.filter((service => service.id === parseInt(body['service'])))[0];
-        let location = locations.filter((location => location.id === parseInt(body['location'])))[0];
-
-        // Google Analytics
-        window.gtag('event', 'quote', {
-          'service': service.name,
-          'location': location.name
-        });
-
-        alertModal.style.display = '';
-        getAQuoteForm.reset();
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error("Error: " + response.statusText);
       }
+    })
+    .then(() => {
+      const services = JSON.parse(document.getElementById("services").textContent);
+      const locations = JSON.parse(document.getElementById("locations").textContent);
+
+      let service = services.filter((service) => service.id === parseInt(body["service"]))[0];
+      let location = locations.filter((location) => location.id === parseInt(body["location"]))[0];
+
+      // Google Analytics
+      window.gtag("event", "quote", {
+        service: service.name,
+        location: location.name,
+      });
+
+      alertModal.style.display = "";
+      getAQuoteForm.reset();
     })
     .catch(console.error);
 });
@@ -67,43 +72,43 @@ function validateForm() {
   let isValid = true;
 
   // Validate first name
-  const firstNameInput = document.getElementById('first_name');
+  const firstNameInput = document.getElementById("first_name");
   if (!firstNameInput.value.trim()) {
-      isValid = false;
+    isValid = false;
   }
 
   // Validate last name
-  const lastNameInput = document.getElementById('last_name');
+  const lastNameInput = document.getElementById("last_name");
   if (!lastNameInput.value.trim()) {
-      isValid = false;
+    isValid = false;
   }
 
   // Validate phone number
-  const phoneNumberInput = document.getElementById('phone_number');
+  const phoneNumberInput = document.getElementById("phone_number");
   if (!validatePhoneNumber(phoneNumberInput)) {
-      isValid = false;
+    isValid = false;
   }
 
   // Validate service
-  const serviceSelect = document.getElementById('service');
-  if (serviceSelect.value === '') {
-      isValid = false;
+  const serviceSelect = document.getElementById("service");
+  if (serviceSelect.value === "") {
+    isValid = false;
   }
 
   // Validate location
-  const locationSelect = document.getElementById('location');
-  if (locationSelect.value === '') {
-      isValid = false;
+  const locationSelect = document.getElementById("location");
+  if (locationSelect.value === "") {
+    isValid = false;
   }
 
   // Validate message
-  const messageInput = document.getElementById('message');
+  const messageInput = document.getElementById("message");
   if (!messageInput.value.trim()) {
-      isValid = false;
+    isValid = false;
   }
 
   if (!isValid) {
-    alert('Missing fields on form.');
+    alert("Missing fields on form.");
   }
 
   return isValid;
