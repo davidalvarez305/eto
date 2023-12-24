@@ -9,6 +9,7 @@ urlpatterns = [
     path('privacy-policy', views.PrivacyPolicyView.as_view(), name='privacy_policy'),
     path('services', views.ServicesView.as_view(), name='services'),
     path('twillio/images', views.handle_incoming_message, name='twillio_mms'),
+    path('twillio/calls', views.handle_incoming_call, name='twillio_calls'),
     path('leads', views.LeadsView.as_view(), name='leads'),
     path('<slug:slug>', views.PPCLandingPageView.as_view(), name='ppc')
 ]

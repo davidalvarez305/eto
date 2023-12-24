@@ -4,6 +4,8 @@ import mimetypes
 import os
 import uuid
 
+from .google.google_analytics import track_conversion
+
 from .landing_pages import LANDING_PAGES
 from .forms import QuoteForm
 import httpagentparser
@@ -21,6 +23,7 @@ from django.utils import timezone
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_exempt
 from twilio.twiml.messaging_response import MessagingResponse
+from twilio.twiml.voice_response import VoiceResponse
 
 class MyBaseView(View):
     domain = str(os.environ.get('DJANGO_DOMAIN'))
@@ -255,7 +258,23 @@ class LeadsView(LoginRequiredMixin, MyBaseView):
         context['photos_dict'] = photos_dict
         context['bucket_url'] = "https://" + os.environ.get('AWS_STORAGE_BUCKET_NAME') + ".s3.amazonaws.com/images/" # I can change this later to pull from CUSTOM DOMAIN
         return render(request, self.template_name, context=context)
-    
+
+@csrf_exempt
+def handle_incoming_call(request):
+    try:
+        twilio_phone_number = os.environ.get('TWILIO_PHONE_NUMBER')
+        destination_phone_number = os.environ.get('TO_PHONE_NUMBER')
+
+        # Create a TwiML response to forward the call
+        response = VoiceResponse()
+        dial = response.dial(caller_id=twilio_phone_number)
+        dial.number(destination_phone_number)
+
+        track_conversion()
+        return HttpResponse(str(response), content_type='application/xml')
+    except BaseException as e:
+        print(f'Error handling incoming phone call: {e}')
+
 @csrf_exempt
 def handle_incoming_message(request):
     try:
