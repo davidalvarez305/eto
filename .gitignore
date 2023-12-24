@@ -4,6 +4,9 @@
 *.png
 site.webmanifest
 *.ico
+*.log
+*.gz
+*.1
 node_modules
 deploy.sh
 replicate.sh
