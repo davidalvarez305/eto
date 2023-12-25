@@ -262,12 +262,15 @@ class LeadsView(LoginRequiredMixin, MyBaseView):
 @csrf_exempt
 def handle_incoming_call(request):
     try:
-        twilio_phone_number = os.environ.get('TWILIO_PHONE_NUMBER')
+        msg_body = request.POST.dict()
         destination_phone_number = os.environ.get('TO_PHONE_NUMBER')
+        caller_id = msg_body.get('Caller', None)
 
-        # Create a TwiML response to forward the call
+        if caller_id is None:
+            return HttpResponseBadRequest('Invalid caller ID.')
+
         response = VoiceResponse()
-        dial = response.dial(caller_id=twilio_phone_number)
+        dial = response.dial(caller_id=caller_id)
         dial.number(destination_phone_number)
 
         track_conversion()
