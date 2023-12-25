@@ -30,8 +30,8 @@ class Service(models.Model):
         db_table = "service"
 
 class Lead(models.Model):
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
+    first_name = models.TextField()
+    last_name = models.TextField()
     phone_number = models.CharField(max_length=15, unique=True, db_index=True)
     message = models.TextField()
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
@@ -58,19 +58,19 @@ class LeadImage(models.Model):
 
 class Marketing(models.Model):
     lead = models.ForeignKey(Lead, on_delete=models.SET_NULL, null=True)
-    landing_page = models.CharField(max_length=45)
-    referrer = models.CharField(max_length=255, blank=True, null=True)
-    keyword = models.CharField(max_length=45, blank=True, null=True)
+    landing_page = models.TextField(blank=True, null=True)
+    referrer = models.TextField(blank=True, null=True)
+    keyword = models.TextField(blank=True, null=True)
     channel = models.CharField(max_length=45, blank=True, null=True)
     source = models.CharField(max_length=45, blank=True, null=True)
     medium = models.CharField(max_length=45, blank=True, null=True)
-    ad_campaign = models.CharField(max_length=45, blank=True, null=True)
-    ad_group = models.CharField(max_length=45, blank=True, null=True)
+    ad_campaign = models.TextField(blank=True, null=True)
+    ad_group = models.TextField(blank=True, null=True)
     ad_headline = models.CharField(max_length=45, blank=True, null=True)
-    gclid = models.CharField(max_length=50, blank=True, null=True)
+    gclid = models.TextField(blank=True, null=True, unique=True)
     language = models.CharField(max_length=15, blank=True, null=True)
     os = models.CharField(max_length=25, blank=True, null=True)
-    user_agent = models.CharField(max_length=255, blank=True, null=True)
+    user_agent = models.TextField(blank=True, null=True)
     button_clicked = models.CharField(max_length=30, blank=True, null=True)
     lead_channel = models.CharField(max_length=15, blank=True, null=True)
     device_type = models.CharField(max_length=15, blank=True, null=True)

@@ -183,7 +183,7 @@ class QuoteView(MyBaseView):
 
                 return JsonResponse({ "data": "Contact form received successfully." }, status=201)
             except Exception as e:
-                print("Error:", str(e))
+                print("Error:", e)
                 return JsonResponse({ "data": "Failed to create lead." }, status=500)
         else:
             return JsonResponse({ "data": "Form was not submitted successfully." }, status=400)
