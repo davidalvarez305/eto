@@ -233,7 +233,7 @@ class LeadsView(LoginRequiredMixin, MyBaseView):
             end_date = datetime.strptime(end_date_str, "%Y-%m-%d")
             params['date_created__range'] = [start_date, end_date]
 
-        leads = Lead.objects.select_related('marketing_set').filter(**params).order_by('-date_created')
+        leads = Lead.objects.prefetch_related('marketing_set').filter(**params).order_by('-date_created')
         services = Service.objects.all()
         locations = Location.objects.all()
 
