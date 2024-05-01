@@ -38,7 +38,11 @@ pagination.addEventListener("click", function (e) {
                 indexOfCurrentlySelectedElement += 1;
             }
 
-            pageValue = parseInt(pageElements[indexOfCurrentlySelectedElement].textContent.trim());
+            const indexedElement = pageElements[indexOfCurrentlySelectedElement];
+
+            if (!indexedElement) return;
+
+            pageValue = parseInt(indexedElement.textContent.trim());
         }
 
         // Get the base URL
