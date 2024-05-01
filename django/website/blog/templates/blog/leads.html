@@ -126,7 +126,7 @@
                         <p class="text-gray-500 dark:text-gray-400">{{ lead.location.name }}</p>
                     </td>
                     <td class="phoneNumber p-3 text-gray-500 dark:text-gray-400">
-                        {{ lead.phone_number }}
+                        <a href="tel:{{ lead.phone_number }}">{{ lead.phone_number }}</a>
                     </td>
                     <td class="p-3">
                         <div
