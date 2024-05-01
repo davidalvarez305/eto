@@ -30,7 +30,7 @@ DOMAIN = os.environ.get('DJANGO_DOMAIN')
 NGROK_PORT = os.environ.get('NGROK_PORT')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = str(os.environ.get('PRODUCTION')) != "1"
+DEBUG = str(os.environ.get('PRODUCTION')) != "0"
 
 ALLOWED_HOSTS = [SERVER_IP, DOMAIN, NGROK_PORT]
 
