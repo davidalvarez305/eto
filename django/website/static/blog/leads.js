@@ -10,9 +10,6 @@ clearButton.addEventListener('click', () => {
 // Get all page elements
 const pageElements = pagination.querySelectorAll("a");
 
-// Get the maximum number of pages
-const maxPages = parseInt(document.getElementById('max-pages').textContent);
-
 // Initialize the index of the currently selected element
 let indexOfCurrentlySelectedElement = 0;
 
@@ -36,6 +33,7 @@ pagination.addEventListener("click", function (e) {
                 if (indexOfCurrentlySelectedElement === 0) return;
                 indexOfCurrentlySelectedElement -= 1;
             } else if (chevronValue === "right_chevron") {
+                const maxPages = parseInt(JSON.parse(document.getElementById('max-pages').textContent));
                 if (indexOfCurrentlySelectedElement === maxPages - 1) return;
                 indexOfCurrentlySelectedElement += 1;
             }
@@ -47,7 +45,7 @@ pagination.addEventListener("click", function (e) {
         const baseUrl = window.location.href;
 
         // Set the "page" parameter in the URLSearchParams object
-        filters.set("page", pageValue);
+        if (pageValue) filters.set("page", pageValue);
 
         // Construct the final URL with search parameters
         const finalUrl = new URL(baseUrl);

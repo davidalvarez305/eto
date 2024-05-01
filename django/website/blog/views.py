@@ -250,7 +250,7 @@ class LeadsView(LoginRequiredMixin, MyBaseView):
         context['leads'] = data
         context['max_pages'] = max_pages
         context['min_page'] = page
-        context['num_pages'] = [x for x in range(page + 1, page + 5) if x <= max_pages]
+        context['num_pages'] = [x for x in range(page, page + 5) if x <= max_pages]
         context['services'] = services
         context['locations'] = locations
         context['page_path'] = request.build_absolute_uri()
