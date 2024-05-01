@@ -125,7 +125,7 @@
                         <p class="font-medium">{{ lead.first_name }} {{ lead.last_name }}</p>
                         <p class="text-gray-500 dark:text-gray-400">{{ lead.location.name }}</p>
                     </td>
-                    <td class="p-3 text-gray-500 dark:text-gray-400">
+                    <td class="phoneNumber p-3 text-gray-500 dark:text-gray-400">
                         {{ lead.phone_number }}
                     </td>
                     <td class="p-3">
@@ -238,6 +238,18 @@
         flatpickr("#date_filter", {
             dateFormat: "Y-m-d",
             mode: "range"
+        });
+    </script>
+
+    <script>
+        function formatPhoneNumber(phoneNumber) {
+            phoneNumber = phoneNumber.replace(/\D/g, '');
+            return '(' + phoneNumber.substring(0, 3) + ') - ' + phoneNumber.substring(3, 6) + ' ' + phoneNumber.substring(6);
+        }
+        
+        var phoneNumbers = document.querySelectorAll('.phoneNumber');
+        phoneNumbers.forEach(function(element) {
+            element.textContent = formatPhoneNumber(element.textContent);
         });
     </script>
 
