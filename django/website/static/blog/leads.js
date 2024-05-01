@@ -3,45 +3,59 @@ const filters = new URLSearchParams();
 
 const clearButton = document.getElementById('clearButton');
 
-clearButton.addEventListener('click', () => window.location.replace("/leads"));
+clearButton.addEventListener('click', () => {
+    window.location.replace("/leads");
+});
 
-// Currently selected element
-const pageValues = pagination.getElementsByTagName("a");
+// Get all page elements
+const pageElements = pagination.querySelectorAll("a");
+
+// Get the maximum number of pages
+const maxPages = parseInt(document.getElementById('max-pages').textContent);
+
+// Initialize the index of the currently selected element
 let indexOfCurrentlySelectedElement = 0;
-let pageValue = "";
 
 pagination.addEventListener("click", function (e) {
-  const target = e.target;
-  // Handle clicking on number
-  if (target.tagName === "A") {
-    pageValue = target.textContent.trim();
-  }
+    const target = e.target;
 
-  // Handle clicking on left/right chevron
-  if (target.tagName === "DIV" || target.tagName === "svg") {
-    const chevronValue = target.getAttribute('data-chevron-value');
+    // Handle clicking on number or chevron
+    if (target.tagName === "A" || target.tagName === "DIV" || target.tagName === "svg") {
+        let pageValue;
 
-    if (chevronValue === "left_chevron") {
-        if (indexOfCurrentlySelectedElement === 0) return;
-        indexOfCurrentlySelectedElement -= 1;
-    };
+        // If clicking on number
+        if (target.tagName === "A") {
+            pageValue = parseInt(target.textContent.trim());
+        }
 
-    if (chevronValue === "right_chevron") {
-        let maxPagesNum = parseInt(JSON.parse(document.getElementById('max-pages').textContent));
+        // If clicking on chevron
+        if (target.tagName === "DIV" || target.tagName === "svg") {
+            const chevronValue = target.getAttribute('data-chevron-value');
 
-        const isMaxNumPages = parseInt(pageValues.item(indexOfCurrentlySelectedElement).textContent) === maxPagesNum
-        if (isMaxNumPages) return;
+            if (chevronValue === "left_chevron") {
+                if (indexOfCurrentlySelectedElement === 0) return;
+                indexOfCurrentlySelectedElement -= 1;
+            } else if (chevronValue === "right_chevron") {
+                if (indexOfCurrentlySelectedElement === maxPages - 1) return;
+                indexOfCurrentlySelectedElement += 1;
+            }
 
-        indexOfCurrentlySelectedElement += 1;
-    };
+            pageValue = parseInt(pageElements[indexOfCurrentlySelectedElement].textContent.trim());
+        }
 
-    const el = pageValues.item(indexOfCurrentlySelectedElement);
-    pageValue = el.textContent.trim();
-  }
+        // Get the base URL
+        const baseUrl = window.location.href;
 
-  // Perform GET request
-  filters.set("page", pageValue);
-  window.location.replace("/leads?" + filters.toString());
+        // Set the "page" parameter in the URLSearchParams object
+        filters.set("page", pageValue);
+
+        // Construct the final URL with search parameters
+        const finalUrl = new URL(baseUrl);
+        finalUrl.search = filters.toString();
+
+        // Redirect to the final URL
+        window.location.replace(finalUrl.toString());
+    }
 });
 
 // Filtering logic
