@@ -88,6 +88,10 @@
                         class="bg-gray-100/75 px-3 py-4 text-center font-semibold text-gray-900 dark:bg-gray-700/25 dark:text-gray-50">
                         Date Created
                     </th>
+                    <th
+                        class="bg-gray-100/75 px-3 py-4 text-center font-semibold text-gray-900 dark:bg-gray-700/25 dark:text-gray-50">
+                        Language
+                    </th>
                 </tr>
             </thead>
             <!-- END Table Header -->
@@ -144,8 +148,11 @@
                             View
                         </button>
                     </td>
-                    <td class="phoneNumber p-3 text-gray-500 dark:text-gray-400">
+                    <td class="p-3 text-gray-500 dark:text-gray-400">
                         {{ lead.date_created|date:"m/d/Y" }}
+                    </td>
+                    <td class="p-3 text-gray-500 dark:text-gray-400">
+                        {{ lead.marketing.language }}
                     </td>
                 </tr>
                 {% endfor %}
