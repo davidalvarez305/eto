@@ -4,7 +4,8 @@ const filters = new URLSearchParams();
 const clearButton = document.getElementById('clearButton');
 
 clearButton.addEventListener('click', () => {
-    window.location.replace("/leads");
+  var urlWithoutQueryString = window.location.origin + window.location.pathname;
+  window.location.replace(urlWithoutQueryString);
 });
 
 // Get all page elements
