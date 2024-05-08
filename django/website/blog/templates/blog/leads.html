@@ -260,10 +260,15 @@
             phoneNumber = phoneNumber.replace(/\D/g, '');
             return '(' + phoneNumber.substring(0, 3) + ') - ' + phoneNumber.substring(3, 6) + ' ' + phoneNumber.substring(6);
         }
-        
+
         var phoneNumbers = document.querySelectorAll('.phoneNumber');
         phoneNumbers.forEach(function(element) {
-            element.textContent = formatPhoneNumber(element.textContent);
+            var formattedNumber = formatPhoneNumber(element.textContent);
+            var telLink = document.createElement('a');
+            telLink.href = 'tel:' + element.textContent;
+            telLink.textContent = formattedNumber;
+            element.innerHTML = '';
+            element.appendChild(telLink);
         });
     </script>
 
