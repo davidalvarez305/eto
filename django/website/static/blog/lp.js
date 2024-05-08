@@ -1,6 +1,4 @@
-const startButton = document.getElementById("get-started-button");
-const bottomCTAButton = document.getElementById("bottom-cta-button");
-const popUpModalButton = document.getElementById("pop-up-modal-button");
+const quoteButtons = document.getElementsByClassName("quoteButtons");
 
 const qs = new URLSearchParams(window.location.search);
 let latitude = 0.0;
@@ -98,6 +96,6 @@ function handleCTAClick(e) {
   window.location.replace(currentDomain.href + "quote?" + qs.toString());
 };
 
-startButton.addEventListener("click", handleCTAClick);
-bottomCTAButton.addEventListener("click", handleCTAClick);
-popUpModalButton.addEventListener("click", handleCTAClick);
+Array.from(quoteButtons).forEach(button => {
+    button.addEventListener("click", handleCTAClick);
+});
