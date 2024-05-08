@@ -79,14 +79,14 @@ function getUserDeviceInfo() {
 function handleCTAClick(e) {
   const { userAgent, language } = getUserDeviceInfo();
 
-  const clickedButtonId = e.target.id;
+  const buttonName = e.target.name;
   // This set method must be first in order for the getLeadChannel logic to work correctly
   // Because it checks that all qs.entries are of length 0 ('meaning organic traffic')
   // It also checks document.referrer to differentiate direct vs organic
   qs.set('channel', getLeadChannel());
   qs.set('referrer', document.referrer);
   qs.set('landing_page', window.location.href);
-  qs.set('button_clicked', clickedButtonId);
+  qs.set('button_clicked', buttonName);
   qs.set('longitude', longitude);
   qs.set('latitude', latitude);
   qs.set('userAgent', userAgent);
