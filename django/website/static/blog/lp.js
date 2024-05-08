@@ -71,7 +71,8 @@ function getUserLocation() {
 }
 
 function getUserDeviceInfo() {
-  const { userAgent, language } = navigator;
+  const language = navigator.language || navigator.userLanguage;
+  const userAgent = navigator.userAgent;
   return { userAgent, language };
 }
 
@@ -96,6 +97,8 @@ function handleCTAClick(e) {
   window.location.replace(currentDomain.href + "quote?" + qs.toString());
 };
 
-Array.from(quoteButtons).forEach(button => {
-    button.addEventListener("click", handleCTAClick);
-});
+for (let i = 0; i < quoteButtons.length; i++) {
+  const button = quoteButtons[i];
+
+  button.addEventListener("click", handleCTAClick);
+}
