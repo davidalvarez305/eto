@@ -97,8 +97,6 @@ function handleCTAClick(e) {
   window.location.replace(currentDomain.href + "quote?" + qs.toString());
 };
 
-for (let i = 0; i < quoteButtons.length; i++) {
-  const button = quoteButtons[i];
-
-  button.addEventListener("click", handleCTAClick);
-}
+Array.from(quoteButtons).forEach(button => {
+    button.addEventListener("click", handleCTAClick);
+});
