@@ -1,4 +1,4 @@
-const quoteButtons = document.getElementsByClassName("quoteButtons");
+const quoteButtons = document.querySelectorAll(".quoteButtons");
 
 const qs = new URLSearchParams(window.location.search);
 let latitude = 0.0;
@@ -97,6 +97,6 @@ function handleCTAClick(e) {
   window.location.replace(currentDomain.href + "quote?" + qs.toString());
 };
 
-Array.from(quoteButtons).forEach(button => {
+quoteButtons.forEach(button => {
     button.addEventListener("click", handleCTAClick);
 });
