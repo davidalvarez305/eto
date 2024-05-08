@@ -1,4 +1,4 @@
-const quoteButtons = document.querySelectorAll(".quoteButtons");
+const quoteButtons = document.querySelectorAll(".quoteButton");
 
 const qs = new URLSearchParams(window.location.search);
 let latitude = 0.0;
