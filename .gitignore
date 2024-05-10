@@ -20,3 +20,4 @@ google.json
 kw.sh
 request_token.py
 logs.sh
+prod.sh

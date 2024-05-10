@@ -6,7 +6,6 @@ from io import BytesIO
 import pyclamd
 import boto3
 from botocore.exceptions import NoCredentialsError
-from twilio.rest import Client
 
 def get_client_ip(request):
     ip = ''

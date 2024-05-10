@@ -1,4 +1,4 @@
-#!/home/david/code/review_poster/django/env/bin/python
+#!/home/david/code/eto/django/env/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
