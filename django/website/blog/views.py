@@ -12,7 +12,7 @@ import httpagentparser
 from django.shortcuts import render
 from django.views import View
 
-from .utils import download_image, get_client_ip, get_device_type, get_exif_data, remove_files_in_directory, resolve_uploads_dir_path, scan_for_viruses, send_message_with_twilio, upload_to_s3
+from .utils import download_image, get_client_ip, get_device_type, get_exif_data, remove_files_in_directory, resolve_uploads_dir_path, scan_for_viruses, upload_to_s3
 from .google.gmail import send_mail
 from .models import *
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -136,8 +136,6 @@ class QuoteView(MyBaseView):
                 location = Location.objects.get(id=data['location'])
                 service = Service.objects.get(id=data['service'])
 
-                messaging = data.pop('messaging', 'off')
-
                 with transaction.atomic():
                     lead = Lead.objects.create(
                         first_name=form.cleaned_data['first_name'],
@@ -173,13 +171,6 @@ class QuoteView(MyBaseView):
                     )
 
                     marketing.save()
-
-                    if messaging == 'on':
-                        # Send client text message letting them know they can upload pictures.
-                        send_message_with_twilio(message=f"""
-                            Hey! Thank you for requesting a quote from Fumero Cleaning Services, LLC.
-                            This is a text message to let you know that you can send pictures through here & we'll attach them to your account!
-                        """, to_phone_number=form.cleaned_data['phone_number'])
 
                 return JsonResponse({ "data": "Contact form received successfully." }, status=201)
             except Exception as e:
@@ -322,9 +313,6 @@ def handle_incoming_message(request):
                     src=str(img_file_name) + ext
                 )
                 print("Image successfully added to DB.")
-
-                send_message_with_twilio(message='Your {} images have been successfully uploaded!'.format(num_media), to_phone_number=client_phone_number)
-                print("Client received response.")
         
         return HttpResponse("", content_type='application/xml')
     except Exception as err:
