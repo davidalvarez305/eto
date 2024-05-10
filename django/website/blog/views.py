@@ -206,7 +206,7 @@ class LeadsView(LoginRequiredMixin, MyBaseView):
 
         # Remove page from querystring
         page = params.pop('page', None)
-        limit_value = 10
+        limit_value = 6
 
         if page is None:
             page = 1
@@ -229,19 +229,28 @@ class LeadsView(LoginRequiredMixin, MyBaseView):
         locations = Location.objects.all()
 
         paginator = Paginator(leads, limit_value)
-        max_pages = paginator.num_pages
         data = paginator.get_page(page)
+
+        current_page = data.number
+        min_page = max(current_page - 2, data.paginator.page_range[0])
+        max_page = min(current_page + 2, data.paginator.page_range[-1])
 
         photos_dict = {}
         for lead in leads:
             if (lead.images.count() > 0):
                 photos_dict[lead.id] = [image.src for image in lead.images.all()]
+
+        active_hover = "paginationAnchor hover:cursor-pointer -mr-px inline-flex items-center justify-center space-x-2 border border-gray-200 bg-gray-100 px-4 py-2 font-semibold leading-6 text-gray-800 hover:z-1 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:z-1 focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:z-1 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-gray-700/75 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600 dark:focus:ring-opacity-40 dark:active:border-gray-700"
+        non_active_hover = "paginationAnchor hover:cursor-pointer -mr-px inline-flex items-center justify-center space-x-2 border border-gray-200 bg-white px-4 py-2 font-semibold leading-6 text-gray-800 hover:z-1 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:z-1 focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:z-1 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600 dark:focus:ring-opacity-40 dark:active:border-gray-700"
         
         context['is_leads'] = True
         context['leads'] = data
-        context['max_pages'] = max_pages
-        context['min_page'] = page
-        context['num_pages'] = [x for x in range(page + 1, page + 5) if x <= max_pages]
+        context['active_hover'] = active_hover
+        context['non_active_hover'] = non_active_hover
+        context['current_page'] = current_page
+        context['max_pages'] = max_page
+        context['min_page'] = min_page
+        context['num_pages'] = [x for x in range(min_page, page + 5) if x <= max_page]
         context['services'] = services
         context['locations'] = locations
         context['page_path'] = request.build_absolute_uri()

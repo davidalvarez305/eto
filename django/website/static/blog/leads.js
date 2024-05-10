@@ -145,3 +145,28 @@ userLanguage.forEach(lang => {
   if (lang.textContent.trim() === "es-US") lang.textContent = "Español";
   if (lang.textContent.trim() === "en-US") lang.textContent = "English";
 });
+
+// Preserve querystring during pagination
+var paginationAnchor = document.querySelectorAll('.paginationAnchor');
+paginationAnchor.forEach(link => {
+    link.addEventListener('click', event => {
+        event.preventDefault();
+
+        var clickedPage = event.target.textContent;
+
+        console.log(clickedPage);
+
+        qs = new URLSearchParams(window.location.search);
+
+        qs.set('page', clickedPage);
+
+        console.log(qs.toString());
+
+        const { origin, pathname } = window.location;
+
+        const redirPage = new URL(origin + pathname);
+        redirPage.search = qs.toString();
+
+        window.location.replace(redirPage.href);
+    });
+});
