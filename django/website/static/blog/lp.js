@@ -13,15 +13,15 @@ function toTitleCase(str) {
 }
 
 function getHostFromURL() {
-  try {
-    const parsedURL = new URL(document.referrer);
+  const referrer = document.referrer;
 
-    const host = parsedURL.host;
+  if (referrer.length === 0) return referrer;
 
-    return host;
-  } catch (error) {
-    return "";
-  }
+  const parsedURL = new URL(document.referrer);
+
+  const host = parsedURL.hostname.split('.')[1];;
+
+  return host;
 }
 
 function getLeadChannel() {
@@ -41,7 +41,7 @@ function getLeadChannel() {
   }
 
   // Google Ads
-  if (qs.get("gclid") !== null) return "paid";
+  if (qs.has("gclid") || qs.has("msclkid")) return "paid";
 
   return "other";
 };
@@ -80,7 +80,6 @@ function handleCTAClick(e) {
   const { userAgent, language } = getUserDeviceInfo();
 
   const buttonName = e.target.getAttribute('name');
-  console.log(buttonName);
   // This set method must be first in order for the getLeadChannel logic to work correctly
   // Because it checks that all qs.entries are of length 0 ('meaning organic traffic')
   // It also checks document.referrer to differentiate direct vs organic

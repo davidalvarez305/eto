@@ -2,32 +2,35 @@ const getAQuoteForm = document.getElementById("get-a-quote-form");
 const budget = document.getElementById("budget");
 const alertModal = document.getElementById("alertModal");
 const closeModalButton = document.getElementById("closeModal");
+const fileInput = document.getElementById("file_upload");
+
 closeModalButton.addEventListener("click", () => (alertModal.style.display = "none"));
 
-getAQuoteForm.addEventListener("submit", function (e) {
+getAQuoteForm.addEventListener("submit", e => {
   e.preventDefault();
   const isValid = validateForm();
 
   if (!isValid) return;
 
-  const marketing = Object.fromEntries(
-    new URLSearchParams(window.location.search)
-  );
-  const data = Object.fromEntries(new FormData(e.target).entries());
+  // Data inputs
+  const marketing = Object.fromEntries(new URLSearchParams(window.location.search));
+  const body = new FormData(e.target);
 
-  const body = {
-    ...marketing,
-    ...data,
-  };
+  for (let i = 0; i < fileInput.files.length; i++) {
+    body.append('files', fileInput.files[i]);
+  }
+  
+  for (const key in marketing) {
+    body.append(key, marketing[key]);
+  }
 
   fetch("/quote", {
     headers: {
-      "Content-Type": "application/json",
-      "X-CSRFToken": data.csrfmiddlewaretoken,
+      "X-CSRFToken": body.get('csrfmiddlewaretoken'),
     },
     method: "POST",
     credentials: "include",
-    body: JSON.stringify(body),
+    body: body,
   })
     .then((response) => {
       if (response.ok) {
@@ -37,16 +40,18 @@ getAQuoteForm.addEventListener("submit", function (e) {
       }
     })
     .then(() => {
+      const clientId = uuidv4();
       const services = JSON.parse(document.getElementById("services").textContent);
       const locations = JSON.parse(document.getElementById("locations").textContent);
 
-      let service = services.filter((service) => service.id === parseInt(body["service"]))[0];
-      let location = locations.filter((location) => location.id === parseInt(body["location"]))[0];
+      let service = services.find(service => service.id === parseInt(body["service"]));
+      let location = locations.find(location => location.id === parseInt(body["location"]));
 
       // Google Analytics
       window.gtag("event", "quote", {
         service: service.name,
         location: location.name,
+        event_id: clientId
       });
 
       alertModal.style.display = "";

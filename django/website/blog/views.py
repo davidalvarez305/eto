@@ -2,6 +2,8 @@ from datetime import date, datetime
 import json
 import mimetypes
 import os
+from pathlib import Path
+import tempfile
 import uuid
 
 from .google.google_analytics import track_conversion
@@ -24,6 +26,7 @@ from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_exempt
 from twilio.twiml.messaging_response import MessagingResponse
 from twilio.twiml.voice_response import VoiceResponse
+import boto3
 
 class MyBaseView(View):
     domain = str(os.environ.get('DJANGO_DOMAIN'))
@@ -120,8 +123,8 @@ class QuoteView(MyBaseView):
         return render(request, self.template_name, context=context)
 
     def post(self, request, *args, **kwargs):
-        data = json.loads(request.body.decode('utf-8'))
-        form = QuoteForm(data)
+        data = request.POST.dict()
+        form = QuoteForm(request.POST, request.FILES)
         if form.is_valid():
             try:
                 user_ip = get_client_ip(request)
@@ -133,8 +136,8 @@ class QuoteView(MyBaseView):
                 if device_os is not None:
                     user_os = device_os.get('name', '')
                 
-                location = Location.objects.get(id=data['location'])
-                service = Service.objects.get(id=data['service'])
+                location = Location.objects.get(id=data.get('location'))
+                service = Service.objects.get(id=data.get('service'))
 
                 with transaction.atomic():
                     lead = Lead.objects.create(
@@ -169,6 +172,33 @@ class QuoteView(MyBaseView):
                         device_type = device_type,
                         ip = user_ip
                     )
+                
+                    for file_field_name in request.FILES:
+                        file_to_upload = request.FILES[file_field_name]
+
+                        # Upload Image to S3
+                        ext = Path(file_to_upload.name).suffix
+                        img_file_name = str(img_file_name) + ext
+                        s3_upload_path = f'images/{img_file_name}'
+                        s3 = boto3.client('s3')
+
+                        # Create a temporary file to save the uploaded image
+                        with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+                            for chunk in file_to_upload.chunks():
+                                temp_file.write(chunk)
+
+                            temp_file.close()
+
+                            s3.upload_file(temp_file.name, os.environ.get('AWS_STORAGE_BUCKET_NAME'), s3_upload_path)
+
+                            os.unlink(temp_file.name)
+
+                            # Save Image to DB
+                            LeadImage.objects.create(
+                                lead=lead,
+                                src=img_file_name
+                            )
+                            print("Image successfully added to DB.")
 
                     marketing.save()
 
