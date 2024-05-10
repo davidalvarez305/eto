@@ -135,6 +135,6 @@ sliderPrevious.addEventListener("click", () => $('#imagesSlider').slick('slickPr
 const userLanguage = document.querySelectorAll(".userLanguage");
 
 userLanguage.forEach(lang => {
-  if (lang.textContent === "es-US") lang.textContent = "Español";
-  if (lang.textContent === "en-US") lang.textContent = "English";
+  if (lang.textContent.trim() === "es-US") lang.textContent = "Español";
+  if (lang.textContent.trim() === "en-US") lang.textContent = "English";
 });
