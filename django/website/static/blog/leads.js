@@ -74,7 +74,14 @@ filtersForm.addEventListener("submit", function(e) {
     }
 
     const qs = new URLSearchParams(values);
-    window.location.replace("/leads?" + qs.toString());
+
+    const { origin, pathname } = window.location;
+  
+    const url = new URL(origin + pathname);
+
+    url.search = qs.toString();
+
+    window.location.replace(url.href);
 });
 
 const buttons = document.querySelectorAll('button[data-lead-id]');
@@ -85,7 +92,7 @@ buttons.forEach(button => {
 
   if (parseInt(photosCount) === 0) {
     button.disabled = true
-    button.textContent = "";
+    button.textContent = "N/A";
   }
 
   const imagesSlider = document.getElementById('imagesSlider');

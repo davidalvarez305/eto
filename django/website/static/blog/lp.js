@@ -80,6 +80,7 @@ function handleCTAClick(e) {
   const { userAgent, language } = getUserDeviceInfo();
 
   const buttonName = e.target.getAttribute('name');
+  console.log(buttonName);
   // This set method must be first in order for the getLeadChannel logic to work correctly
   // Because it checks that all qs.entries are of length 0 ('meaning organic traffic')
   // It also checks document.referrer to differentiate direct vs organic
@@ -92,15 +93,18 @@ function handleCTAClick(e) {
   qs.set('userAgent', userAgent);
   qs.set('language', language);
 
-  const currentDomain = new URL(window.location.protocol + "//" + window.location.host);
+  const currentDomain = new URL(window.location.origin + "/quote");
 
-  // window.location.replace(currentDomain.href + "quote?" + qs.toString());
+  currentDomain.search = qs.toString();
+
+  window.location.replace(currentDomain.href);
 };
 
 quoteButtons.forEach(button => {
   let children = button.children;
+  console.log(button.name);
   Array.from(children).forEach(child => {
-      child.setAttribute("name", button.id);
+      child.setAttribute("name", button.name);
   });
 
   button.addEventListener("click", handleCTAClick);
