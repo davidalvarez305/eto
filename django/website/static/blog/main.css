@@ -814,6 +814,11 @@ select{
   margin-bottom: 1.5rem;
 }
 
+.my-4{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
 .-mb-2{
   margin-bottom: -0.5rem;
 }
@@ -908,10 +913,6 @@ select{
 
 .mb-6{
   margin-bottom: 1.5rem;
-}
-
-.ml-4{
-  margin-left: 1rem;
 }
 
 .ml-8{
@@ -3209,15 +3210,6 @@ select{
 
 :is(.dark .dark\:ring-offset-gray-900){
   --tw-ring-offset-color: #111827;
-}
-
-:is(.dark .dark\:checked\:border-transparent:checked){
-  border-color: transparent;
-}
-
-:is(.dark .dark\:checked\:bg-blue-500:checked){
-  --tw-bg-opacity: 1;
-  background-color: rgb(59 130 246 / var(--tw-bg-opacity));
 }
 
 :is(.dark .dark\:hover\:border-emerald-700\/75:hover){

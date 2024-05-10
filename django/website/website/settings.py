@@ -152,7 +152,7 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 if DEBUG:
     STATICFILES_DIRS = [BASE_DIR / 'static/']
-    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage' # UNCOMMENT FOR COLLECTING STATIC
+    # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage' # UNCOMMENT FOR COLLECTING STATIC
 else:
     STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
 
