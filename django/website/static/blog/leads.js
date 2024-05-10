@@ -129,3 +129,12 @@ const sliderNext = document.getElementById('sliderNext');
 
 sliderNext.addEventListener("click", () => $('#imagesSlider').slick('slickNext'));
 sliderPrevious.addEventListener("click", () => $('#imagesSlider').slick('slickPrev'));
+
+
+// User language modifier
+const userLanguage = document.querySelectorAll(".userLanguage");
+
+userLanguage.forEach(lang => {
+  if (lang.textContent === "es-US") lang.textContent = "Español";
+  if (lang.textContent === "en-US") lang.textContent = "English";
+});
