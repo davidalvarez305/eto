@@ -130,18 +130,3 @@ def upload_to_s3(local_file_path, bucket_name, s3_file_name):
         print("Credentials not available")
     except Exception as err:
         print(f"ERROR: {err}")
-
-def send_message_with_twilio(message, to_phone_number):
-    try:
-        account_sid = os.environ.get('TWILIO_ACCOUNT_SID')
-        auth_token = os.environ.get('TWILIO_AUTH_TOKEN')
-        twilio_phone_number = os.environ.get('TWILIO_PHONE_NUMBER')
-        client = Client(account_sid, auth_token)
-
-        message = client.messages.create(
-                            body=message,
-                            from_=twilio_phone_number,
-                            to=to_phone_number
-                            )
-    except Exception as err:
-        print(f'ERROR SENDING MESSAGE WITH TWILIO: {err}')
