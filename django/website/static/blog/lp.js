@@ -98,5 +98,10 @@ function handleCTAClick(e) {
 };
 
 quoteButtons.forEach(button => {
-    button.addEventListener("click", handleCTAClick);
+  let children = button.children;
+  Array.from(children).forEach(child => {
+      child.setAttribute("name", button.id);
+  });
+
+  button.addEventListener("click", handleCTAClick);
 });
