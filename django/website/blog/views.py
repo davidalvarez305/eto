@@ -206,7 +206,7 @@ class LeadsView(LoginRequiredMixin, MyBaseView):
 
         # Remove page from querystring
         page = params.pop('page', None)
-        limit_value = 6
+        limit_value = 2
 
         if page is None:
             page = 1

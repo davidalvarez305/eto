@@ -9,56 +9,36 @@ clearButton.addEventListener('click', () => {
 });
 
 // Get all page elements
-const pageElements = pagination.querySelectorAll("a");
+const pageElements = pagination.querySelectorAll(".paginationChevron");
 
-// Initialize the index of the currently selected element
-let indexOfCurrentlySelectedElement = 0;
+pageElements.forEach(chevron => {
+  chevron.addEventListener('click', event => {
+    const chevronType = chevron.getAttribute('data-chevron-value');
+    const maxPages = JSON.parse(document.getElementById('max-pages').textContent);
 
-pagination.addEventListener("click", function (e) {
-    const target = e.target;
-
-    // Handle clicking on number or chevron
-    if (target.tagName === "A" || target.tagName === "DIV" || target.tagName === "svg") {
-        let pageValue;
-
-        // If clicking on number
-        if (target.tagName === "A") {
-            pageValue = parseInt(target.textContent.trim());
-        }
-
-        // If clicking on chevron
-        if (target.tagName === "DIV" || target.tagName === "svg") {
-            const chevronValue = target.getAttribute('data-chevron-value');
-
-            if (chevronValue === "left_chevron") {
-                if (indexOfCurrentlySelectedElement === 0) return;
-                indexOfCurrentlySelectedElement -= 1;
-            } else if (chevronValue === "right_chevron") {
-                const maxPages = parseInt(JSON.parse(document.getElementById('max-pages').textContent));
-                if (indexOfCurrentlySelectedElement === maxPages - 1) return;
-                indexOfCurrentlySelectedElement += 1;
-            }
-
-            const indexedElement = pageElements[indexOfCurrentlySelectedElement];
-
-            if (!indexedElement) return;
-
-            pageValue = parseInt(indexedElement.textContent.trim());
-        }
-
-        // Get the base URL
-        const baseUrl = window.location.href;
-
-        // Set the "page" parameter in the URLSearchParams object
-        if (pageValue) filters.set("page", pageValue);
-
-        // Construct the final URL with search parameters
-        const finalUrl = new URL(baseUrl);
-        finalUrl.search = filters.toString();
-
-        // Redirect to the final URL
-        window.location.replace(finalUrl.toString());
+    const options = {
+      left_chevron: -1,
+      right_chevron: 1
     }
+
+    if (!chevronType) return;
+
+    const currentPage = parseInt(new URLSearchParams(window.location.search).get('page')) || 1;
+
+    // handle left chevron & value of 1:
+    if (chevronType === "left_chevron" && currentPage === 1) return;
+
+    // handle right chevron & max value:
+    if (chevronType === "right_chevron" && currentPage === maxPages) return;
+
+    const qs = new URLSearchParams(window.location.search);
+    qs.set('page', currentPage + options[chevronType]);
+
+    const url = buildURL();
+    url.search = qs.toString();
+
+    window.location.replace(url.href);
+  });
 });
 
 // Filtering logic
@@ -154,19 +134,20 @@ paginationAnchor.forEach(link => {
 
         var clickedPage = event.target.textContent;
 
-        console.log(clickedPage);
-
         qs = new URLSearchParams(window.location.search);
 
         qs.set('page', clickedPage);
 
-        console.log(qs.toString());
+        const url = buildURL();
 
-        const { origin, pathname } = window.location;
+        url.search = qs.toString();
 
-        const redirPage = new URL(origin + pathname);
-        redirPage.search = qs.toString();
-
-        window.location.replace(redirPage.href);
+        window.location.replace(url.href);
     });
 });
+
+function buildURL() {
+  const { origin, pathname } = window.location;
+
+  return new URL(origin + pathname);
+}
