@@ -172,7 +172,7 @@ class QuoteView(MyBaseView):
                         device_type = device_type,
                         ip = user_ip
                     )
-                
+
                     for file_field_name in request.FILES:
                         file_to_upload = request.FILES[file_field_name]
 

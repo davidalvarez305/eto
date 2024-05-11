@@ -15,10 +15,6 @@ getAQuoteForm.addEventListener("submit", e => {
   // Data inputs
   const marketing = Object.fromEntries(new URLSearchParams(window.location.search));
   const body = new FormData(e.target);
-
-  for (let i = 0; i < fileInput.files.length; i++) {
-    body.append('files', fileInput.files[i]);
-  }
   
   for (const key in marketing) {
     body.append(key, marketing[key]);
