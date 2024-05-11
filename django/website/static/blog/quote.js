@@ -36,7 +36,7 @@ getAQuoteForm.addEventListener("submit", e => {
       }
     })
     .then(() => {
-      const clientId = uuidv4();
+      const clientId = UUID.generate();
       const services = JSON.parse(document.getElementById("services").textContent);
       const locations = JSON.parse(document.getElementById("locations").textContent);
 
