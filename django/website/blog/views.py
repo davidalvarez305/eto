@@ -125,8 +125,6 @@ class QuoteView(MyBaseView):
     def post(self, request, *args, **kwargs):
         data = request.POST.dict()
         form = QuoteForm(request.POST, request.FILES)
-        print(data)
-        print(form)
         if form.is_valid():
             try:
                 user_ip = get_client_ip(request)
@@ -180,7 +178,7 @@ class QuoteView(MyBaseView):
 
                         # Upload Image to S3
                         ext = Path(file_to_upload.name).suffix
-                        img_file_name = str(img_file_name) + ext
+                        img_file_name = str(uuid.uuid4()) + ext
                         s3_upload_path = f'images/{img_file_name}'
                         s3 = boto3.client('s3')
 
