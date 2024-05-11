@@ -36,12 +36,12 @@ getAQuoteForm.addEventListener("submit", e => {
       }
     })
     .then(() => {
-      const clientId = UUID.generate();
+      const clientId = uuidv4();
       const services = JSON.parse(document.getElementById("services").textContent);
       const locations = JSON.parse(document.getElementById("locations").textContent);
 
-      let service = services.find(service => service.id === parseInt(body["service"]));
-      let location = locations.find(location => location.id === parseInt(body["location"]));
+      let service = services.find(service => service.id === parseInt(body.get('service')));
+      let location = locations.find(location => location.id === parseInt(body.get('location')));
 
       // Google Analytics
       window.gtag("event", "quote", {
