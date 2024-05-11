@@ -125,6 +125,8 @@ class QuoteView(MyBaseView):
     def post(self, request, *args, **kwargs):
         data = request.POST.dict()
         form = QuoteForm(request.POST, request.FILES)
+        print(data)
+        print(form)
         if form.is_valid():
             try:
                 user_ip = get_client_ip(request)
