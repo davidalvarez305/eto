@@ -15,7 +15,7 @@ from django.shortcuts import render
 from django.views import View
 
 from .utils import download_image, get_client_ip, get_device_type, get_exif_data, remove_files_in_directory, resolve_uploads_dir_path, scan_for_viruses, upload_to_s3
-from .google.gmail import send_mail
+from .google.gmail import EmailService
 from .models import *
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseBadRequest, JsonResponse, HttpResponse
@@ -101,7 +101,8 @@ class ContactView(MyBaseView):
     def post(self, request, *args, **kwargs):
         try:
             data = json.loads(request.body.decode('utf-8'))
-            send_mail(data)
+            email_service = EmailService()
+            email_service.send_mail(data)
             return JsonResponse({ "data": "Contact form received successfully." })
         except Exception as e:
             print("Error:", str(e))
@@ -125,6 +126,7 @@ class QuoteView(MyBaseView):
     def post(self, request, *args, **kwargs):
         data = request.POST.dict()
         form = QuoteForm(request.POST, request.FILES)
+        email_service = EmailService()
         if form.is_valid():
             try:
                 user_ip = get_client_ip(request)
@@ -198,9 +200,14 @@ class QuoteView(MyBaseView):
                                 lead=lead,
                                 src=img_file_name
                             )
-                            print("Image successfully added to DB.")
 
                     marketing.save()
+
+                    qs = LeadImage.objects.filter(lead_id=lead.id)
+                    lead_images = list(qs)
+
+                    # Send Email Notification
+                    email_service.lead_notification(lead, lead_images)
 
                 return JsonResponse({ "data": "Contact form received successfully." }, status=201)
             except Exception as e:
