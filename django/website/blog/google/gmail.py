@@ -33,8 +33,10 @@ class EmailService():
                 message_content += f'''
             Localizacion exacta: <a href="https://www.google.com/maps?q={lead.latitude},{lead.longitude}">Localizacion</a><br>
             '''
-            for img in lead_images:
+            if len(lead_images) > 0:
                 message_content += f'''<h2>Imagenes:</h2>'''
+
+            for img in lead_images:
                 message_content += f'''<img src="https://{os.environ.get('AWS_S3_CUSTOM_DOMAIN')}/images/{img.src}" />'''
                 
             message_content += '''

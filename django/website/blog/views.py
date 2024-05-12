@@ -175,9 +175,7 @@ class QuoteView(MyBaseView):
                         ip = user_ip
                     )
 
-                    for file_field_name in request.FILES:
-                        file_to_upload = request.FILES[file_field_name]
-
+                    for file_to_upload in request.FILES.getlist('file_upload'):
                         # Upload Image to S3
                         ext = Path(file_to_upload.name).suffix
                         img_file_name = str(uuid.uuid4()) + ext
