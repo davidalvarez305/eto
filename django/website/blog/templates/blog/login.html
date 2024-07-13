@@ -19,7 +19,7 @@
             <div
                 class="flex flex-col rounded-lg shadow-sm bg-white overflow-hidden dark:text-gray-100 dark:bg-gray-800">
                 <div class="p-5 md:px-16 md:py-12 grow">
-                    <form class="space-y-6" id="login-form">
+                    <form class="space-y-6" onsubmit="handleSubmitLoginForm(event)">
                         {% csrf_token %}
                         <div class="space-y-1">
                             <label for="username" class="text-sm font-medium">Username</label>
@@ -47,7 +47,7 @@
                 </div>
             </div>
 
-            <div id="login-error" style="display: none;">
+            <div id="errorNotice" style="display: none;">
                 <!-- Alerts: Danger -->
                 <div
                     class="p-4 md:p-5 rounded text-red-700 bg-red-100 dark:text-red-100 dark:bg-red-900 dark:bg-opacity-75">
@@ -81,5 +81,23 @@
 
 
 
-<script src="{% static 'blog/login.js' %}"></script>
+<script>
+    const errorNotice = document.getElementById("errorNotice");
+
+    function handleSubmitLoginForm(event) {
+        event.preventDefault();
+        const data = new FormData(event.target);
+        fetch("/login", {
+            headers: { "X-CSRFToken": data.get("csrfmiddlewaretoken") },
+            method: "POST",
+            body: data,
+            credentials: "include",
+        })
+        .then(response => response.json())
+        .then(({ data }) => {
+            data == "Authentication failed." ? errorNotice.style.display = "" : window.location.replace("/leads");
+        })
+        .catch(console.error);
+    }
+</script>
 {% endblock %}
