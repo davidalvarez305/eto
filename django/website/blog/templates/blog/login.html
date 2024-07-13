@@ -86,17 +86,13 @@
 
     function handleSubmitLoginForm(event) {
         event.preventDefault();
-        const data = new FormData(event.target);
         fetch("/login", {
-            headers: { "X-CSRFToken": data.get("csrfmiddlewaretoken") },
             method: "POST",
-            body: data,
+            body: new FormData(event.target),
             credentials: "include",
         })
-        .then(response => response.json())
-        .then(({ data }) => {
-            data == "Authentication failed." ? errorNotice.style.display = "" : window.location.replace("/leads");
-        })
+        .then(res => res.json())
+        .then(({ data }) => data == "Authentication failed." ? errorNotice.style.display = "" : window.location.replace("/leads"))
         .catch(console.error);
     }
 </script>

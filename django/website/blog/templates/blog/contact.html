@@ -18,7 +18,7 @@
         <!-- Contact Form -->
         <div
             class="mx-auto flex w-3/4 max-w-xl flex-col overflow-hidden rounded-lg bg-white shadow-sm dark:bg-gray-800 dark:text-gray-100">
-            <form id="contact-form" class="space-y-6 p-5 md:p-10">
+            <form onsubmit="handleSubmitContactForm(event)" class="space-y-6 p-5 md:p-10">
                 {% csrf_token %}
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
                     <div class="space-y-1">
@@ -98,31 +98,23 @@
 <!-- Modal -->
 
 <script>
-    var contactForm = document.getElementById("contact-form");
     var alertModal = document.getElementById('alertModal');
     var closeModalButton = document.getElementById('closeModal');
 
-    contactForm.addEventListener("submit", function (e) {
+    function handleSubmitContactForm(e) {
         e.preventDefault();
-
-        var { csrfmiddlewaretoken, ...body } = Object.fromEntries(new FormData(e.target).entries());
-
         fetch('/contact', {
-            headers: {
-                "Content-Type": "application/json",
-                'X-CSRFToken': csrfmiddlewaretoken,
-            },
             method: "POST",
             credentials: "include",
-            body: JSON.stringify(body),
+            body: new FormData(e.target),
         })
-            .then((response) => response.json())
-            .then((_) => {
-                alertModal.style.display = '';
-                contactForm.reset();
-            })
-            .catch(console.error);
-    });
+        .then(res => res.json())
+        .then(() => {
+            alertModal.style.display = '';
+            e.target.reset();
+        })
+        .catch(console.error);
+    }
 
     closeModalButton.addEventListener('click', () => alertModal.style.display = 'none');
 </script>
