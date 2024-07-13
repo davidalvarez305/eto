@@ -95,9 +95,9 @@ class ContactView(MyBaseView):
 
     def post(self, request, *args, **kwargs):
         try:
-            data = json.loads(request.body.decode('utf-8'))
+            form = request.POST.dict()
             email_service = EmailService()
-            email_service.send_mail(data)
+            email_service.send_mail(form)
             return JsonResponse({ "data": "Contact form received successfully." })
         except Exception as e:
             print("Error:", str(e))

@@ -61,21 +61,21 @@ class EmailService():
         except Exception as e:
             raise Exception(F'An error occurred: {e}')
 
-    def send_mail(self, contact_form):
+    def send_mail(self, form):
         try:
             message = EmailMessage()
 
             message.set_content(f'''
-            Nombre: {contact_form['first_name']} {contact_form['last_name']}
+            Nombre: {form.get('first_name')} {form.get('last_name')}
             \n
             Mensaje:
             \n
-            {contact_form['message']}
+            {form.get('message')}
             \n
             ''')
 
             message['To'] = self.eto
-            message['From'] = contact_form['email']
+            message['From'] = form.get('email')
             message['Subject'] = "Mensaje De Contacto"
 
             encoded_message = base64.urlsafe_b64encode(message.as_bytes()).decode()
