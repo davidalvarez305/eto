@@ -83,11 +83,6 @@ class Login(MyBaseView):
             return JsonResponse({ 'data': 'Success.'}, status=200)
         else:
             return JsonResponse({ 'data': 'Authentication failed.'}, status=400)
-        
-class Logout(MyBaseView):
-    def post(self, request, *args, **kwargs):
-        logout(request)
-        return JsonResponse({ 'data': 'Logged out.'}, status=200)
 
 class ContactView(MyBaseView):
     template_name = 'blog/contact.html'
