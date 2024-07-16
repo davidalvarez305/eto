@@ -1,29 +1,37 @@
-const getAQuoteForm = document.getElementById("get-a-quote-form");
+const form = document.getElementById("get-a-quote-form");
 const budget = document.getElementById("budget");
 const alertModal = document.getElementById("alertModal");
 const closeModalButton = document.getElementById("closeModal");
 const fileInput = document.getElementById("file_upload");
 
-closeModalButton.addEventListener("click", () => (alertModal.style.display = "none"));
+function getUserIdFromLocalStorage() {
+  const userId = localStorage.getItem("userId");
+  if (!userId) {
+    const randomUserId = generateRandomUserId();
 
-getAQuoteForm.addEventListener("submit", e => {
-  e.preventDefault();
+    localStorage.setItem("userId", randomUserId);
+  } else {
+    return userId;
+  }
+}
+
+function handleSubmitQuote(event) {
+  event.preventDefault();
   const isValid = validateForm();
 
   if (!isValid) return;
 
   // Data inputs
-  const marketing = Object.fromEntries(new URLSearchParams(window.location.search));
-  const body = new FormData(e.target);
-  
+  const marketing = Object.fromEntries(
+    new URLSearchParams(window.location.search)
+  );
+  const body = new FormData(event.target);
+
   for (const key in marketing) {
     body.append(key, marketing[key]);
   }
 
   fetch("/quote", {
-    headers: {
-      "X-CSRFToken": body.get('csrfmiddlewaretoken'),
-    },
     method: "POST",
     credentials: "include",
     body: body,
@@ -36,81 +44,29 @@ getAQuoteForm.addEventListener("submit", e => {
       }
     })
     .then(() => {
-      const clientId = uuidv4();
-      const services = JSON.parse(document.getElementById("services").textContent);
-      const locations = JSON.parse(document.getElementById("locations").textContent);
+      const userId = getUserIdFromLocalStorage();
 
-      let service = services.find(service => service.id === parseInt(body.get('service')));
-      let location = locations.find(location => location.id === parseInt(body.get('location')));
+      let opts = { userId };
+
+      let user = localStorage.getItem("user");
+
+      if (user) {
+        var data = JSON.parse(localStorage.getItem("user"));
+
+        opts["landingPage"] = data.landingPage;
+      }
 
       // Google Analytics
-      window.gtag("event", "quote", {
-        service: service.name,
-        location: location.name,
-        event_id: clientId
-      });
+      window.gtag("event", "quote", { ...opts });
 
       alertModal.style.display = "";
-      getAQuoteForm.reset();
+      form.reset();
     })
     .catch(console.error);
-});
-
-function validatePhoneNumber(phoneNumberInput) {
-  let isValid = true;
-  const phoneNumber = phoneNumberInput.value.trim();
-
-  const phonePattern = /^[0-9]{10}$/;
-
-  if (!phonePattern.test(phoneNumber)) {
-    isValid = false;
-  }
-
-  return isValid;
 }
 
-function validateForm() {
-  let isValid = true;
-
-  // Validate first name
-  const firstNameInput = document.getElementById("first_name");
-  if (!firstNameInput.value.trim()) {
-    isValid = false;
-  }
-
-  // Validate last name
-  const lastNameInput = document.getElementById("last_name");
-  if (!lastNameInput.value.trim()) {
-    isValid = false;
-  }
-
-  // Validate phone number
-  const phoneNumberInput = document.getElementById("phone_number");
-  if (!validatePhoneNumber(phoneNumberInput)) {
-    isValid = false;
-  }
-
-  // Validate service
-  const serviceSelect = document.getElementById("service");
-  if (serviceSelect.value === "") {
-    isValid = false;
-  }
-
-  // Validate location
-  const locationSelect = document.getElementById("location");
-  if (locationSelect.value === "") {
-    isValid = false;
-  }
-
-  // Validate message
-  const messageInput = document.getElementById("message");
-  if (!messageInput.value.trim()) {
-    isValid = false;
-  }
-
-  if (!isValid) {
-    alert("Missing fields on form.");
-  }
-
-  return isValid;
-}
+closeModalButton.addEventListener(
+  "click",
+  () => (alertModal.style.display = "none")
+);
+form.addEventListener("submit", handleSubmitQuote);
