@@ -269,10 +269,6 @@ class LeadsView(LoginRequiredMixin, MyBaseView):
         paginator = Paginator(leads, LIMIT_VALUE)
         data = paginator.get_page(page)
 
-        current_page = data.number
-        min_page = max(current_page - 2, data.paginator.page_range[0])
-        max_page = min(current_page + 2, data.paginator.page_range[-1])
-
         photos_dict = {}
         for lead in leads:
             if (lead.images.count() > 0):
@@ -280,9 +276,8 @@ class LeadsView(LoginRequiredMixin, MyBaseView):
 
         context['is_leads'] = True
         context['leads'] = data
-        context['current_page'] = current_page
-        context['max_pages'] = max_page
-        context['min_page'] = min_page
+        context['current_page'] = data.number
+        context['max_page'] = data.paginator.num_pages
         context['services'] = services
         context['locations'] = locations
         context['page_path'] = request.build_absolute_uri()
