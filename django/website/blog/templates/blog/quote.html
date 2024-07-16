@@ -122,13 +122,5 @@
     </div>
 </div>
 <!-- Modal -->
-<script type="module">
-    import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
-    window.uuidv4 = uuidv4;
-  </script>
-<script src="{% static 'blog/quote.js' %}"></script>
-
-{{ services|json_script:"services" }}
-{{ locations|json_script:"locations" }}
 
 {% endblock %}
