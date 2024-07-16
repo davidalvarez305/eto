@@ -26,6 +26,7 @@ class EmailService():
                     <p>Ciudad: {lead.location.name}</p>
                     <p>Mensaje del Cliente:</p>
                     <p>{lead.message}</p>
+                    <p>Link: <a href="https://fumerocleaningservices.com/leads/{lead.id}">https://fumerocleaningservices.com/leads/{lead.id}</a></p>
                 '''
 
             # Check if latitude and longitude are greater than 0
