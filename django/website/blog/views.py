@@ -233,32 +233,44 @@ class LeadsView(LoginRequiredMixin, MyBaseView):
     def get(self, request, *args, **kwargs):
         context = self.context
         params = request.GET.dict()
+        filters = {}
+        LIMIT_VALUE = 5
 
-        # Remove page from querystring
-        page = params.pop('page', None)
-        limit_value = 5
+        # Handle page
+        page_qs = params.pop('page', '1')
+        page = int(page_qs)
 
-        if page is None:
-            page = 1
-        else:
-            # Transform querystring to int
-            page = int(page)
+        # Handle date
+        dates = params.pop('date_filter', '')
 
-        # Remove date from querystring
-        dates = params.pop('date_filter', None)
-
-        if dates is not None:
+        if len(dates) > 0:
             start_date_str, end_date_str = dates.split(" to ")
 
             start_date = datetime.strptime(start_date_str, "%Y-%m-%d")
             end_date = datetime.strptime(end_date_str, "%Y-%m-%d")
-            params['date_created__range'] = [start_date, end_date]
+            filters['date_created__range'] = [start_date, end_date]
 
-        leads = Lead.objects.prefetch_related('marketing_set').filter(**params).order_by('-date_created')
+        # Handle phone number
+        phone_number = params.pop('phone_number', '')
+        if len(phone_number) > 0:
+            filters['phone_number'] = phone_number
+        
+        # Handle location
+        location_id = params.pop('location_id', '')
+        if len(location_id) > 0:
+            filters['location_id'] = location_id
+        
+        # Handle service
+        service_id = params.pop('service_id', '')
+        if len(service_id) > 0:
+            filters['service_id'] = service_id
+
+        print(filters)
+        leads = Lead.objects.prefetch_related('marketing_set').filter(**filters).order_by('-date_created')
         services = Service.objects.all()
         locations = Location.objects.all()
 
-        paginator = Paginator(leads, limit_value)
+        paginator = Paginator(leads, LIMIT_VALUE)
         data = paginator.get_page(page)
 
         current_page = data.number

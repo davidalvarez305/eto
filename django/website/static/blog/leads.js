@@ -1,15 +1,4 @@
-const pagination = document.getElementById("page_navigation");
-const filters = new URLSearchParams();
-
-const clearButton = document.getElementById('clearButton');
-
-clearButton.addEventListener('click', () => {
-  var urlWithoutQueryString = window.location.origin + window.location.pathname;
-  window.location.replace(urlWithoutQueryString);
-});
-
-// Get all page elements
-const pageElements = pagination.querySelectorAll(".paginationChevron");
+const pageElements = document.querySelectorAll(".paginationChevron");
 
 pageElements.forEach(chevron => {
   chevron.addEventListener('click', event => {
@@ -39,29 +28,6 @@ pageElements.forEach(chevron => {
 
     window.location.replace(url.href);
   });
-});
-
-// Filtering logic
-const filtersForm = document.getElementById("filters_form");
-
-filtersForm.addEventListener("submit", function(e) {
-    e.preventDefault();
-
-    let values = {};
-    const entry = Object.fromEntries(new FormData(e.target));
-    for (const [key, value] of Object.entries(entry)) {
-        if (value.length > 0) values[key] = value;
-    }
-
-    const qs = new URLSearchParams(values);
-
-    const { origin, pathname } = window.location;
-  
-    const url = new URL(origin + pathname);
-
-    url.search = qs.toString();
-
-    window.location.replace(url.href);
 });
 
 const buttons = document.querySelectorAll('button[data-lead-id]');
@@ -117,33 +83,12 @@ const sliderNext = document.getElementById('sliderNext');
 sliderNext.addEventListener("click", () => $('#imagesSlider').slick('slickNext'));
 sliderPrevious.addEventListener("click", () => $('#imagesSlider').slick('slickPrev'));
 
-
 // User language modifier
 const userLanguage = document.querySelectorAll(".userLanguage");
 
 userLanguage.forEach(lang => {
   if (lang.textContent.trim() === "es-US") lang.textContent = "Español";
   if (lang.textContent.trim() === "en-US") lang.textContent = "English";
-});
-
-// Preserve querystring during pagination
-var paginationAnchor = document.querySelectorAll('.paginationAnchor');
-paginationAnchor.forEach(link => {
-    link.addEventListener('click', event => {
-        event.preventDefault();
-
-        var clickedPage = event.target.textContent;
-
-        qs = new URLSearchParams(window.location.search);
-
-        qs.set('page', clickedPage);
-
-        const url = buildURL();
-
-        url.search = qs.toString();
-
-        window.location.replace(url.href);
-    });
 });
 
 function buildURL() {

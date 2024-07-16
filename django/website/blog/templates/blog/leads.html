@@ -8,15 +8,11 @@
         <div class="text-center dark:text-gray-100">
             <div class="hidden sm:flex sm:items-center sm:justify-between">
                 <div></div>
-                <form id="filters_form" class="inline-flex gap-2 my-2">
+                <form id="filters_form" action="/leads" class="inline-flex gap-2 my-2">
                     <div class="flex flex-row items-end gap-2 h-16 w-1/4">
                         <button id="filterButton" type="submit"
                             class="inline-flex items-center justify-center w-full space-x-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-semibold leading-5 text-gray-800 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600 dark:focus:ring-opacity-40 dark:active:border-gray-700">
                             <span>Filter</span>
-                        </button>
-                        <button id="clearButton"
-                            class="inline-flex items-center justify-center w-full  space-x-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-semibold leading-5 text-gray-800 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600 dark:focus:ring-opacity-40 dark:active:border-gray-700">
-                            <span>Clear</span>
                         </button>
                     </div>
                     <!-- Select Box -->
@@ -164,41 +160,32 @@
         <div class="grow border-t border-gray-200 px-5 py-4 dark:border-gray-700">
             <div class="text-center dark:text-gray-100">
                 <div class="hidden sm:flex sm:items-center sm:justify-between">
+                    <div data-chevron-value="left_chevron"
+                        class="paginationChevron hover:cursor-pointer -mr-px inline-flex items-center justify-center space-x-2 rounded-l-lg border border-gray-200 bg-white px-4 py-2 font-semibold leading-6 text-gray-800 hover:z-1 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:z-1 focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:z-1 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600 dark:focus:ring-opacity-40 dark:active:border-gray-700">
+                        <svg
+                            class="hi-mini hi-chevron-left -mx-1.5 inline-block h-5 w-5"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                            aria-hidden="true">
+                            <path fill-rule="evenodd"
+                                d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </div>
                     <div>
                         Page <span class="font-semibold">{{ min_page }}</span> of
                         <span class="font-semibold">{{ max_pages }}</span>
                     </div>
-                    <nav id="page_navigation" class="inline-flex">
-                        <div data-chevron-value="left_chevron"
-                            class="paginationChevron hover:cursor-pointer -mr-px inline-flex items-center justify-center space-x-2 rounded-l-lg border border-gray-200 bg-white px-4 py-2 font-semibold leading-6 text-gray-800 hover:z-1 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:z-1 focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:z-1 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600 dark:focus:ring-opacity-40 dark:active:border-gray-700">
-                            <svg
-                                class="hi-mini hi-chevron-left -mx-1.5 inline-block h-5 w-5"
-                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                                aria-hidden="true">
-                                <path fill-rule="evenodd"
-                                    d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                        </div>
-                        {% for page in num_pages %}
-                            {% if current_page == page %}
-                                <a class="{{ active_hover }}">{{ page }}</a>
-                            {% else %}
-                                <a class="{{ non_active_hover }}">{{ page }}</a>
-                            {% endif %}
-                        {% endfor %}
-                        <div data-chevron-value="right_chevron"
+                    <div data-chevron-value="right_chevron"
                             class="paginationChevron hover:cursor-pointer inline-flex items-center justify-center space-x-2 rounded-r-lg border border-gray-200 bg-white px-4 py-2 font-semibold leading-6 text-gray-800 hover:z-1 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:z-1 focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:z-1 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600 dark:focus:ring-opacity-40 dark:active:border-gray-700">
-                            <svg
-                                class="hi-mini hi-chevron-right -mx-1.5 inline-block h-5 w-5"
-                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                                aria-hidden="true">
-                                <path fill-rule="evenodd"
-                                    d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                        </div>
-                    </nav>
+                        <svg
+                            class="hi-mini hi-chevron-right -mx-1.5 inline-block h-5 w-5"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                            aria-hidden="true">
+                            <path fill-rule="evenodd"
+                                d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </div>
                 </div>
             </div>
         </div>
