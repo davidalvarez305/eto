@@ -9,5 +9,6 @@ urlpatterns = [
     path('privacy-policy', views.PrivacyPolicyView.as_view(), name='privacy_policy'),
     path('services', views.ServicesView.as_view(), name='services'),
     path('leads', views.LeadsView.as_view(), name='leads'),
+    path('leads/<int:id>', views.LeadDetailView.as_view(), name='lead-detail'),
     path('<slug:slug>', views.PPCLandingPageView.as_view(), name='ppc')
 ]

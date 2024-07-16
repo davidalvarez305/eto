@@ -11,21 +11,18 @@ from .google.google_analytics import track_conversion
 from .landing_pages import LANDING_PAGES
 from .forms import QuoteForm
 import httpagentparser
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views import View
 
 from .utils import download_image, get_client_ip, get_device_type, get_exif_data, remove_files_in_directory, resolve_uploads_dir_path, scan_for_viruses, upload_to_s3
 from .google.gmail import EmailService
 from .models import *
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseBadRequest, JsonResponse, HttpResponse
+from django.http import HttpResponseBadRequest, JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from django.db import transaction
 from django.utils import timezone
 from django.core.paginator import Paginator
-from django.views.decorators.csrf import csrf_exempt
-from twilio.twiml.messaging_response import MessagingResponse
-from twilio.twiml.voice_response import VoiceResponse
 import boto3
 
 class MyBaseView(View):
@@ -265,7 +262,6 @@ class LeadsView(LoginRequiredMixin, MyBaseView):
         if len(service_id) > 0:
             filters['service_id'] = service_id
 
-        print(filters)
         leads = Lead.objects.prefetch_related('marketing_set').filter(**filters).order_by('-date_created')
         services = Service.objects.all()
         locations = Location.objects.all()
@@ -282,17 +278,33 @@ class LeadsView(LoginRequiredMixin, MyBaseView):
             if (lead.images.count() > 0):
                 photos_dict[lead.id] = [image.src for image in lead.images.all()]
 
-        active_hover = "paginationAnchor hover:cursor-pointer -mr-px inline-flex items-center justify-center space-x-2 border border-gray-200 bg-gray-100 px-4 py-2 font-semibold leading-6 text-gray-800 hover:z-1 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:z-1 focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:z-1 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-gray-700/75 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600 dark:focus:ring-opacity-40 dark:active:border-gray-700"
-        non_active_hover = "paginationAnchor hover:cursor-pointer -mr-px inline-flex items-center justify-center space-x-2 border border-gray-200 bg-white px-4 py-2 font-semibold leading-6 text-gray-800 hover:z-1 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:z-1 focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:z-1 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600 dark:focus:ring-opacity-40 dark:active:border-gray-700"
-        
         context['is_leads'] = True
         context['leads'] = data
-        context['active_hover'] = active_hover
-        context['non_active_hover'] = non_active_hover
         context['current_page'] = current_page
         context['max_pages'] = max_page
         context['min_page'] = min_page
-        context['num_pages'] = [x for x in range(min_page, page + 5) if x <= max_page]
+        context['services'] = services
+        context['locations'] = locations
+        context['page_path'] = request.build_absolute_uri()
+        context['page_title'] = str(os.environ.get('SITE_NAME'))
+        context['photos_dict'] = photos_dict
+        context['bucket_url'] = "https://" + os.environ.get('AWS_STORAGE_BUCKET_NAME') + ".s3.amazonaws.com/images/" # I can change this later to pull from CUSTOM DOMAIN
+        return render(request, self.template_name, context=context)
+
+class LeadDetailView(LoginRequiredMixin, MyBaseView):
+    template_name = 'blog/lead_detail.html'
+    login_url="/login"
+
+    def get(self, request, *args, **kwargs):
+        context = self.context
+        id = kwargs.get('id')
+        lead = get_object_or_404(Lead.objects.prefetch_related('marketing_set'), id=id)
+        services = Service.objects.all()
+        locations = Location.objects.all()
+
+        photos_dict = [image.src for image in lead.images.all()]
+
+        context['lead'] = lead
         context['services'] = services
         context['locations'] = locations
         context['page_path'] = request.build_absolute_uri()
