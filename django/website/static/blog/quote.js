@@ -4,17 +4,6 @@ const alertModal = document.getElementById("alertModal");
 const closeModalButton = document.getElementById("closeModal");
 const fileInput = document.getElementById("file_upload");
 
-function getUserIdFromLocalStorage() {
-  const userId = localStorage.getItem("userId");
-  if (!userId) {
-    const randomUserId = generateRandomUserId();
-
-    localStorage.setItem("userId", randomUserId);
-  } else {
-    return userId;
-  }
-}
-
 function handleSubmitQuote(event) {
   event.preventDefault();
   const isValid = validateForm();
@@ -44,20 +33,15 @@ function handleSubmitQuote(event) {
       }
     })
     .then(() => {
-      const userId = getUserIdFromLocalStorage();
-
-      let opts = { userId };
-
-      let user = localStorage.getItem("user");
-
-      if (user) {
-        var data = JSON.parse(localStorage.getItem("user"));
-
-        opts["landingPage"] = data.landingPage;
-      }
-
-      // Google Analytics
-      window.gtag("event", "quote", { ...opts });
+      const userId = localStorage.getItem("userId");
+			const user = JSON.parse(localStorage.getItem("user")) || {};
+			
+			const opts = {
+	        userId,
+	        landingPage: user.landingPage
+	    };
+	
+	    window.gtag("event", "quote", { ...opts });
 
       alertModal.style.display = "";
       form.reset();

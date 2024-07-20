@@ -12,13 +12,22 @@ function generateRandomUserId() {
 }
 
 function setUserIdToLocalStorage() {
-  const userId = localStorage.getItem("userId");
-
-  if (userId !== null) return;
-
-  const randomUserId = generateRandomUserId();
-
-  localStorage.setItem("userId", randomUserId);
+  localStorage.getItem("userId") ?? localStorage.setItem("userId", generateRandomUserId());
 }
 
-document.addEventListener("DOMContentLoaded", () => setUserIdToLocalStorage());
+function setUser() {
+  const user = {
+    landingPage: window.location.href,
+    referrer: document.referrer,
+  };
+
+  localStorage.setItem("user", JSON.stringify(user));
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  // Set User ID
+  setUserIdToLocalStorage();
+
+  // Set User
+  localStorage.getItem("user") ?? setUser();
+});

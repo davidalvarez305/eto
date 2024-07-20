@@ -8,6 +8,8 @@ let longitude = 0.0;
 document.addEventListener("DOMContentLoaded", getUserLocation());
 
 function getHost(urlString) {
+  if (!urlString) return '';
+
     let url;
     try {
         url = new URL(urlString);
@@ -57,6 +59,8 @@ function checkClickId() {
 }
 
 function getMedium(referrer) {
+  if (!referrer) return '';
+
   // No referrer means the user accessed the website directly
   if (referrer.length === 0) return "direct";
 
@@ -94,6 +98,8 @@ function getUserLocation() {
 }
 
 function getChannel(referrerUrl) {
+    if (!referrerUrl) return '';
+
     const searchEngines = [
         { domain: "google.", path: "/search" },
         { domain: "bing.", path: "/search" },
@@ -190,12 +196,6 @@ function handleCTAClick(e) {
 
   // Get user variables from browser
   var user = JSON.parse(localStorage.getItem("user")) || {};
-
-  if (Object.keys(data).length === 0) {
-    user.landingPage = window.location.href;
-    user.referrer = document.referrer;
-    localStorage.setItem("user", JSON.stringify(user));
-  }
 
   qs.set("landing_page", user.landingPage);
   qs.set("referrer", user.referrer);
