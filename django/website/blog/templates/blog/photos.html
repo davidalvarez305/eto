@@ -1,0 +1,103 @@
+<!-- Images Slider -->
+<div id="imagesModalContainer" style="display: none;">
+    <div
+        class="flex items-center justify-center rounded-lg border-2 border-dashed border-gray-300 py-48 dark:border-gray-700">
+    </div>
+    <div tabindex="-1" role="dialog"
+        class="fixed inset-0 z-90 overflow-y-auto overflow-x-hidden bg-gray-900 bg-opacity-75 p-4 backdrop-blur-sm lg:p-8">
+        <div role="document"
+            class="mx-auto flex w-full max-w-md flex-col overflow-hidden rounded-lg bg-white shadow-sm dark:bg-gray-800 dark:text-gray-100">
+            <div class="flex items-center justify-between bg-gray-50 px-5 py-4 dark:bg-gray-700/50">
+                <div class="flex items-center space-x-2 font-medium"></div>
+                <div class="-my-4">
+                    <button id="closeModal" type="button"
+                        class="inline-flex items-center justify-center space-x-2 rounded-lg border border-transparent px-3 py-2 text-sm font-semibold leading-5 text-gray-800 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:border-gray-200 active:shadow-none dark:border-transparent dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600 dark:focus:ring-opacity-40 dark:active:border-gray-700">
+                        <svg class="hi-solid hi-x -mx-1 inline-block h-4 w-4" fill="currentColor"
+                            viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div id="imagesSlider" class="grow p-5"></div>
+            <div class="space-x-1 bg-gray-50 px-5 py-4 text-right dark:bg-gray-700/50">
+                <button id="sliderPrevious" type="button"
+                    class="inline-flex items-center justify-center space-x-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-semibold leading-5 text-gray-800 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600 dark:focus:ring-opacity-40 dark:active:border-gray-700">
+                    Previous
+                </button>
+                <button id="sliderNext" type="button"
+                    class="inline-flex items-center justify-center space-x-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-semibold leading-5 text-gray-800 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:ring focus:ring-gray-300 focus:ring-opacity-25 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600 dark:focus:ring-opacity-40 dark:active:border-gray-700">
+                    Next
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Images Slider -->
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+    flatpickr("#date_filter", {
+        dateFormat: "Y-m-d",
+        mode: "range"
+    });
+</script>
+<script>
+    const buttons = document.querySelectorAll('.photosButton');
+
+    buttons.forEach(button => {
+      const leadId = button.getAttribute('data-lead-id');
+      const photosCount = button.getAttribute('data-lead-photos');
+
+      if (parseInt(photosCount) === 0 || !photosCount) {
+        button.disabled = true
+        button.textContent = "N/A";
+        return;
+      }
+    
+      const imagesSlider = document.getElementById('imagesSlider');
+      const imagesModalContainer = document.getElementById('imagesModalContainer');
+      
+      button.addEventListener('click', function() {
+        const lead_images = JSON.parse(document.getElementById('lead_images').textContent);
+        const bucket_url = JSON.parse(document.getElementById('bucket_url').textContent);
+    
+        imagesModalContainer.style.display = "";
+        
+        lead_images.forEach(image => {
+          const containerDiv = document.createElement('div');
+          const imgElement = document.createElement('img');
+    
+          imgElement.src = bucket_url + image;
+    
+          containerDiv.appendChild(imgElement);
+          imagesSlider.appendChild(containerDiv);
+        });
+    
+        $('#imagesSlider').slick({
+          infinite: true,
+          speed: 300,
+          slidesToShow: 1,
+          adaptiveHeight: true,
+        });
+      });
+    });
+    
+    const closeModal = document.getElementById('closeModal');
+    
+    closeModal.addEventListener("click", e => {
+      $('#imagesSlider').slick('unslick');
+      imagesModalContainer.style.display = "none";
+    });
+    
+    const sliderPrevious = document.getElementById('sliderPrevious');
+    const sliderNext = document.getElementById('sliderNext');
+    
+    sliderNext.addEventListener("click", () => $('#imagesSlider').slick('slickNext'));
+    sliderPrevious.addEventListener("click", () => $('#imagesSlider').slick('slickPrev'));
+</script>
+
+{{ lead_images|json_script:"lead_images" }}
+{{ bucket_url|json_script:"bucket_url" }}

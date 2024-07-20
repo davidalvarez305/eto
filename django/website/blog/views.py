@@ -297,6 +297,7 @@ class LeadDetailView(LoginRequiredMixin, MyBaseView):
         services = Service.objects.all()
         locations = Location.objects.all()
 
+        context['is_leads'] = True
         context['lead'] = lead
         context['services'] = services
         context['locations'] = locations
