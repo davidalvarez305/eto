@@ -10,5 +10,6 @@ urlpatterns = [
     path('services', views.ServicesView.as_view(), name='services'),
     path('leads', views.LeadsView.as_view(), name='leads'),
     path('leads/<int:id>', views.LeadDetailView.as_view(), name='lead-detail'),
+    path('leads/<int:id>/images', views.LeadImagesList.as_view(), name='lead-images'),
     path('<slug:slug>', views.PPCLandingPageView.as_view(), name='ppc')
 ]

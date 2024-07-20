@@ -18,7 +18,7 @@ from .utils import download_image, get_client_ip, get_device_type, get_exif_data
 from .google.gmail import EmailService
 from .models import *
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseBadRequest, JsonResponse
+from django.http import HttpResponseBadRequest, JsonResponse, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.db import transaction
 from django.utils import timezone
@@ -282,8 +282,6 @@ class LeadsView(LoginRequiredMixin, MyBaseView):
         context['locations'] = locations
         context['page_path'] = request.build_absolute_uri()
         context['page_title'] = str(os.environ.get('SITE_NAME'))
-        context['photos_dict'] = photos_dict
-        context['bucket_url'] = "https://" + os.environ.get('AWS_STORAGE_BUCKET_NAME') + ".s3.amazonaws.com/images/"
         return render(request, self.template_name, context=context)
 
 class LeadDetailView(LoginRequiredMixin, MyBaseView):
@@ -304,5 +302,26 @@ class LeadDetailView(LoginRequiredMixin, MyBaseView):
         context['page_path'] = request.build_absolute_uri()
         context['page_title'] = str(os.environ.get('SITE_NAME'))
         context['lead_images'] = [image.src for image in lead.images.all()]
-        context['bucket_url'] = "https://" + os.environ.get('AWS_STORAGE_BUCKET_NAME') + ".s3.amazonaws.com/images/"
         return render(request, self.template_name, context=context)
+
+class LeadImagesList(View):
+    template_name = 'blog/photos.html'
+
+    def get(self, request, *args, **kwargs):
+        id = kwargs.get('id')
+
+        if not id:
+            return HttpResponseBadRequest("No lead_id provided.")
+
+        try:
+            lead_images = LeadImage.objects.filter(lead_id=id)
+        except LeadImage.DoesNotExist:
+            lead_images = []
+        
+        bucket_url = "https://" + os.environ.get('AWS_STORAGE_BUCKET_NAME') + ".s3.amazonaws.com/images/"
+
+        html_content = ''
+        for image in lead_images:
+            html_content += f'<div><img src="{bucket_url}{image.src}" /></div>'
+
+        return HttpResponse(html_content)
