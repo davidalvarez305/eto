@@ -1,25 +1,20 @@
 from datetime import date, datetime
-import json
-import mimetypes
 import os
 from pathlib import Path
 import tempfile
 import uuid
 
-from .google.google_analytics import track_conversion
-
 from .landing_pages import LANDING_PAGES
 from .forms import QuoteForm
-import httpagentparser
 from django.shortcuts import render, get_object_or_404
 from django.views import View
 
-from .utils import download_image, get_client_ip, get_device_type, get_exif_data, remove_files_in_directory, resolve_uploads_dir_path, scan_for_viruses, upload_to_s3
+from .utils import get_client_ip
 from .google.gmail import EmailService
 from .models import *
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseBadRequest, JsonResponse, HttpResponse
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login
 from django.db import transaction
 from django.utils import timezone
 from django.core.paginator import Paginator
