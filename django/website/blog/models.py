@@ -69,11 +69,9 @@ class Marketing(models.Model):
     ad_headline = models.CharField(max_length=45, blank=True, null=True)
     gclid = models.TextField(blank=True, null=True, unique=True)
     language = models.CharField(max_length=15, blank=True, null=True)
-    os = models.CharField(max_length=25, blank=True, null=True)
     user_agent = models.TextField(blank=True, null=True)
     button_clicked = models.CharField(max_length=30, blank=True, null=True)
     lead_channel = models.CharField(max_length=15, blank=True, null=True)
-    device_type = models.CharField(max_length=15, blank=True, null=True)
     ip = models.GenericIPAddressField(blank=True, null=True)
 
     class Meta:

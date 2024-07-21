@@ -122,13 +122,6 @@ class QuoteView(MyBaseView):
         if form.is_valid():
             try:
                 user_ip = get_client_ip(request)
-                device_data = httpagentparser.detect(data.get('userAgent'), '')
-                device_type = get_device_type(device_data)
-
-                user_os = ''
-                device_os = device_data.get('os', None)
-                if device_os is not None:
-                    user_os = device_os.get('name', '')
                 
                 location = Location.objects.get(id=data.get('location'))
                 service = Service.objects.get(id=data.get('service'))
@@ -159,11 +152,9 @@ class QuoteView(MyBaseView):
                         ad_headline = data.get('ad_headline'),
                         gclid = data.get('gclid'),
                         language = data.get('language'),
-                        os = user_os,
                         user_agent = data.get('userAgent'),
                         button_clicked = data.get('button_clicked'),
                         lead_channel = data.get('lead_channel'),
-                        device_type = device_type,
                         ip = user_ip
                     )
 
