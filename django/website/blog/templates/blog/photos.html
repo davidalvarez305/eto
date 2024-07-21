@@ -70,15 +70,15 @@
                 .then(html => {
                     imagesModalContainer.style.display = "";
                     imagesSlider.innerHTML = html;
+
+                    $('#imagesSlider').slick({
+                        infinite: true,
+                        speed: 300,
+                        slidesToShow: 1,
+                        adaptiveHeight: true,
+                    });
                 })
                 .catch(console.error);
-        });
-
-        $('#imagesSlider').slick({
-            infinite: true,
-            speed: 300,
-            slidesToShow: 1,
-            adaptiveHeight: true,
         });
     });
 
