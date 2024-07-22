@@ -44,6 +44,7 @@
                     <label for="service" class="font-medium">Service</label>
                     <select id="service" name="service" required
                         class="block w-full rounded-lg border border-gray-200 px-5 py-3 leading-6 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 dark:border-gray-600 dark:bg-gray-800 dark:focus:border-blue-500">
+                        <option value=""></option>
                         {% for service in services %}
                         <option value="{{ service.id }}">{{ service.name }}</option>
                         {% endfor %}
@@ -53,6 +54,7 @@
                     <label for="location" class="font-medium">City</label>
                     <select id="location" name="location" required
                         class="block w-full rounded-lg border border-gray-200 px-5 py-3 leading-6 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 dark:border-gray-600 dark:bg-gray-800 dark:focus:border-blue-500">
+                        <option value=""></option>
                         {% for location in locations %}
                         <option value="{{ location.id }}">{{ location.name }}</option>
                         {% endfor %}
