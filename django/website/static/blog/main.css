@@ -905,6 +905,14 @@ select{
   margin-right: 0.75rem;
 }
 
+.ml-2{
+  margin-left: 0.5rem;
+}
+
+.ml-6{
+  margin-left: 1.5rem;
+}
+
 .block{
   display: block;
 }
@@ -3106,6 +3114,10 @@ select{
 
 :is(.dark .dark\:ring-offset-gray-900){
   --tw-ring-offset-color: #111827;
+}
+
+:is(.dark .dark\:checked\:border-transparent:checked){
+  border-color: transparent;
 }
 
 :is(.dark .dark\:hover\:border-emerald-700\/75:hover){

@@ -39,6 +39,11 @@ class Lead(models.Model):
     latitude = models.FloatField(null=True)
     longitude = models.FloatField(null=True)
     date_created = models.DateTimeField()
+    bathrooms = models.IntegerField(null=True)
+    total_rooms = models.IntegerField(null=True)
+    square_feet = models.FloatField(null=True)
+    pets = models.IntegerField(null=True)
+    is_house = models.BooleanField(null=True)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} - {self.service.name}"

@@ -6,9 +6,6 @@ const fileInput = document.getElementById("file_upload");
 
 function handleSubmitQuote(event) {
   event.preventDefault();
-  const isValid = validateForm();
-
-  if (!isValid) return;
 
   // Data inputs
   const marketing = Object.fromEntries(
@@ -53,4 +50,3 @@ closeModalButton.addEventListener(
   "click",
   () => (alertModal.style.display = "none")
 );
-form.addEventListener("submit", handleSubmitQuote);

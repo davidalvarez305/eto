@@ -47,6 +47,7 @@ class HomeView(MyBaseView):
 
     def get(self, request, *args, **kwargs):
         context = self.context
+        context['is_leads'] = 'leads' in request.path
         context['page_path'] = request.build_absolute_uri()
         context['page_title'] = str(os.environ.get('SITE_NAME'))
         return render(request, self.template_name, context=context)
@@ -62,6 +63,7 @@ class Login(MyBaseView):
 
     def get(self, request, *args, **kwargs):
         context = self.context
+        context['is_leads'] = 'leads' in request.path
         context['page_path'] = request.build_absolute_uri()
         context['page_title'] = str(os.environ.get('SITE_NAME'))
         return render(request, self.template_name, context=context)
@@ -81,6 +83,7 @@ class ContactView(MyBaseView):
 
     def get(self, request, *args, **kwargs):
         context = self.context
+        context['is_leads'] = 'leads' in request.path
         context['page_path'] = request.build_absolute_uri()
         context['page_title'] = str(os.environ.get('SITE_NAME'))
         return render(request, self.template_name, context=context)
@@ -104,6 +107,7 @@ class QuoteView(MyBaseView):
         services = Service.objects.all()
         locations = Location.objects.all()
 
+        context['is_leads'] = 'leads' in request.path
         context['page_path'] = request.build_absolute_uri()
         context['page_title'] = str(os.environ.get('SITE_NAME'))
         context['services'] = list(services.values())
@@ -127,10 +131,15 @@ class QuoteView(MyBaseView):
                         last_name=form.cleaned_data['last_name'],
                         phone_number=form.cleaned_data['phone_number'],
                         message=form.cleaned_data['message'],
+                        bathrooms=form.cleaned_data['bathrooms'],
+                        total_rooms=form.cleaned_data['total_rooms'],
+                        pets=form.cleaned_data['pets'],
+                        square_feet=form.cleaned_data['square_feet'],
+                        is_house=form.cleaned_data['is_house'],
                         location=location,
                         service=service,
-                        latitude=float(data.get('latitude')),
-                        longitude=float(data.get('longitude')),
+                        latitude=float(data.get('latitude', 0)),
+                        longitude=float(data.get('longitude', 0)),
                         date_created=timezone.now()
                     )
 
@@ -190,6 +199,7 @@ class QuoteView(MyBaseView):
                 print("Error:", e)
                 return JsonResponse({ "data": "Failed to create lead." }, status=500)
         else:
+            print(form.errors)
             return JsonResponse({ "data": "Form was not submitted successfully." }, status=400)
 
 class PPCLandingPageView(MyBaseView):
@@ -203,6 +213,7 @@ class PPCLandingPageView(MyBaseView):
         if ppc_context is None:
             return HttpResponseBadRequest("Page not found.")
 
+        context['is_leads'] = 'leads' in request.path
         context['page_title'] = ppc_context.get('title') + " - " + str(os.environ.get('SITE_NAME'))
         context['h1'] = ppc_context.get('h1')
 
@@ -260,7 +271,7 @@ class LeadsView(LoginRequiredMixin, MyBaseView):
             if (lead.images.count() > 0):
                 photos_dict[lead.id] = [image.src for image in lead.images.all()]
 
-        context['is_leads'] = True
+        context['is_leads'] = 'leads' in request.path
         context['leads'] = data
         context['current_page'] = data.number
         context['max_page'] = data.paginator.num_pages
@@ -281,7 +292,7 @@ class LeadDetailView(LoginRequiredMixin, MyBaseView):
         services = Service.objects.all()
         locations = Location.objects.all()
 
-        context['is_leads'] = True
+        context['is_leads'] = 'leads' in request.path
         context['lead'] = lead
         context['services'] = services
         context['locations'] = locations
