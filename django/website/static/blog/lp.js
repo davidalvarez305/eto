@@ -98,95 +98,95 @@ function getUserLocation() {
 }
 
 function getChannel(referrerUrl) {
-    if (!referrerUrl) return '';
+  if (!referrerUrl) return '';
 
-    const searchEngines = [
-        { domain: "google.", path: "/search" },
-        { domain: "bing.", path: "/search" },
-        { domain: "yahoo.", path: "/search" },
-        { domain: "ecosia.", path: "/search" },
-        { domain: "duckduckgo.com", path: "" },
-        { domain: "yandex." },
-        { domain: "baidu." },
-        { domain: "naver." },
-        { domain: "ask.com" },
-        { domain: "adsensecustomsearchads" },
-        { domain: "aol." },
-        { domain: "brave." }
-    ];
+  const searchEngines = [
+      { domain: "google" },
+      { domain: "bing" },
+      { domain: "yahoo" },
+      { domain: "ecosia" },
+      { domain: "duckduckgo.com" },
+      { domain: "yandex" },
+      { domain: "baidu" },
+      { domain: "naver" },
+      { domain: "ask.com" },
+      { domain: "adsensecustomsearchads" },
+      { domain: "aol" },
+      { domain: "brave" }
+  ];
 
-    const majorSocialNetworks = [
-        "facebook",
-        "instagram",
-        "twitter",
-        "linkedin",
-        "pinterest",
-        "snapchat",
-        "reddit",
-        "whatsapp",
-        "wechat",
-        "telegram",
-        "discord",
-        "vkontakte",
-        "weibo",
-        "line",
-        "kakaotalk",
-        "qq",
-        "viber",
-        "telegram",
-        "tumblr",
-        "flickr",
-        "meetup",
-        "tagged",
-        "badoo",
-        "myspace"
-    ];
+  const majorSocialNetworks = [
+      "facebook",
+      "instagram",
+      "twitter",
+      "linkedin",
+      "pinterest",
+      "snapchat",
+      "reddit",
+      "whatsapp",
+      "wechat",
+      "telegram",
+      "discord",
+      "vkontakte",
+      "weibo",
+      "line",
+      "kakaotalk",
+      "qq",
+      "viber",
+      "telegram",
+      "tumblr",
+      "flickr",
+      "meetup",
+      "tagged",
+      "badoo",
+      "myspace"
+  ];
 
-    const majorVideoPlatforms = [
-        "youtube",
-        "tiktok",
-        "vimeo",
-        "dailymotion",
-        "twitch",
-        "bilibili",
-        "youku",
-        "rutube",
-        "vine",
-        "peertube",
-        "ig tv",
-        "veoh",
-        "metacafe",
-        "vudu",
-        "vidyard",
-        "rumble",
-        "bit chute",
-        "brightcove",
-        "viddler",
-        "vzaar"
-    ];
+  const majorVideoPlatforms = [
+      "youtube",
+      "tiktok",
+      "vimeo",
+      "dailymotion",
+      "twitch",
+      "bilibili",
+      "youku",
+      "rutube",
+      "vine",
+      "peertube",
+      "ig tv",
+      "veoh",
+      "metacafe",
+      "vudu",
+      "vidyard",
+      "rumble",
+      "bit chute",
+      "brightcove",
+      "viddler",
+      "vzaar"
+  ];
 
-    // Check search engines
-    for (let engine of searchEngines) {
-        if (referrerUrl.includes(engine.domain) && (engine.path === "" || referrerUrl.includes(engine.path))) {
-            return "search";
-        }
-    }
+  // Check search engines
+  for (let engine of searchEngines) {
+      if (referrerUrl.includes(engine.domain)) {
+          return "search";
+      }
+  }
 
-    // Check social networks
-    for (let network of majorSocialNetworks) {
-        if (referrerUrl.includes(network)) {
-            return "social";
-        }
-    }
+  // Check social networks
+  for (let network of majorSocialNetworks) {
+      if (referrerUrl.includes(network)) {
+          return "social";
+      }
+  }
 
-    // Check video platforms
-    for (let platform of majorVideoPlatforms) {
-        if (referrerUrl.includes(platform)) {
-            return "video";
-        }
-    }
+  // Check video platforms
+  for (let platform of majorVideoPlatforms) {
+      if (referrerUrl.includes(platform)) {
+          return "video";
+      }
+  }
 
-    return "other";
+  return "other";
 }
 
 function handleCTAClick(e) {
@@ -197,11 +197,11 @@ function handleCTAClick(e) {
   // Get user variables from browser
   var user = JSON.parse(localStorage.getItem("user")) || {};
 
+	qs.set("medium", qs.get('medium') ?? getMedium(user.referrer)); // organic || paid || direct
+	qs.set("source", qs.get('source') ?? getHost(user.referrer)); // google.com || facebook.com || youtube.com
+  qs.set("channel", qs.get('channel') ?? getChannel(user.referrer)); // search || social || video
   qs.set("landing_page", user.landingPage);
   qs.set("referrer", user.referrer);
-  qs.set("source", qs.get('source') ?? getHost(user.referrer)); // google.com || facebook.com || youtube.com
-  qs.set("medium", qs.get('medium') ?? getMedium(user.referrer)); // organic || paid || direct
-  qs.set("channel", qs.get('channel') ?? getChannel(user.referrer)); // search || social || video
   qs.set("button_clicked", buttonName);
   qs.set("longitude", longitude);
   qs.set("latitude", latitude);
