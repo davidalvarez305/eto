@@ -26,13 +26,13 @@ load_dotenv(ENV_FILE)
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 SERVER_IP = os.environ.get('SERVER_IP')
-DOMAIN = os.environ.get('DJANGO_DOMAIN')
+HOST_DOMAIN = os.environ.get('HOST_DOMAIN')
 NGROK_PORT = os.environ.get('NGROK_PORT')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = str(os.environ.get('PRODUCTION')) != "1"
 
-ALLOWED_HOSTS = [SERVER_IP, DOMAIN, NGROK_PORT]
+ALLOWED_HOSTS = [SERVER_IP, HOST_DOMAIN, NGROK_PORT]
 
 
 # Application definition
