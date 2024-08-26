@@ -202,9 +202,14 @@ class PPCLandingPageView(MyBaseView):
         if ppc_context is None:
             return HttpResponseBadRequest("Page not found.")
 
+        services = Service.objects.all()
+        locations = Location.objects.all()
+
         context['is_leads'] = 'leads' in request.path
         context['page_title'] = ppc_context.get('title') + " - " + str(os.environ.get('SITE_NAME'))
         context['h1'] = ppc_context.get('h1')
+        context['services'] = list(services.values())
+        context['locations'] = list(locations.values())
 
         context['page_path'] = request.build_absolute_uri()
         return render(request, self.template_name, context=context)
