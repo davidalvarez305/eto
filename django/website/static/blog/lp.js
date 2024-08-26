@@ -1,66 +1,68 @@
+const clickIdKeys = ["gclid", "gbraid", "wbraid", "msclkid", "fbclid"];
+const form = document.getElementById("get-a-quote-form");
+const closeModalButton = document.getElementById("closeModal");
 const quoteButtons = document.querySelectorAll(".quoteButton");
 
-const qs = new URLSearchParams(window.location.search);
-const clickIdKeys = ["gclid", "gbraid", "wbraid", "msclkid", "fbclid"];
 let latitude = 0.0;
 let longitude = 0.0;
 
 document.addEventListener("DOMContentLoaded", getUserLocation());
 
 function getHost(urlString) {
-  if (!urlString) return '';
+  let url;
+  try {
+    url = new URL(urlString);
+  } catch (error) {
+    return "";
+  }
 
-    let url;
-    try {
-        url = new URL(urlString);
-    } catch (error) {
-        return '';
+  let host = url.hostname.toLowerCase();
+
+  if (host.startsWith("www.")) {
+    host = host.slice(4);
+  }
+
+  const parts = host.split(".");
+
+  // Handle cases like ftp.google.com or ads.google.com
+  if (
+    parts.length > 2 &&
+    !["com", "net", "org", "edu", "gov", "mil", "int"].includes(
+      parts[parts.length - 2]
+    )
+  ) {
+    host = parts.slice(-3).join(".");
+  } else if (parts.length > 1) {
+    // Check if the last part is a two-letter country code
+    const lastPart = parts[parts.length - 1];
+    if (lastPart.length === 2 && lastPart !== "co") {
+      // 'co' is a special case like .co.uk, .co.in, etc.
+      host = parts.slice(-3).join(".");
+    } else {
+      host = parts.slice(-2).join(".");
     }
+  }
 
-    let host = url.hostname.toLowerCase();
-
-    if (host.startsWith('www.')) {
-        host = host.slice(4);
-    }
-
-    const parts = host.split('.');
-
-    // Handle cases like ftp.google.com or ads.google.com
-    if (parts.length > 2 && !['com', 'net', 'org', 'edu', 'gov', 'mil', 'int'].includes(parts[parts.length - 2])) {
-        host = parts.slice(-3).join('.');
-    } else if (parts.length > 1) {
-        // Check if the last part is a two-letter country code
-        const lastPart = parts[parts.length - 1];
-        if (lastPart.length === 2 && lastPart !== 'co') { // 'co' is a special case like .co.uk, .co.in, etc.
-            host = parts.slice(-3).join('.');
-        } else {
-            host = parts.slice(-2).join('.');
-        }
-    }
-
-    return host;
+  return host;
 }
 
-function getClickId() {
+function getClickId(qs) {
   for (const key of clickIdKeys) {
     if (qs.has(key)) return qs.get(key);
   }
 }
 
-function checkClickId() {
+function isPaid(qs) {
   for (const key of clickIdKeys) {
     if (qs.has(key)) {
-      qs.delete(key);
-      break;
+      return true;
     }
   }
 
-  return qs.has("click_id");
+  return false;
 }
 
-function getMedium(referrer) {
-  if (!referrer) return '';
-
+function getMedium(referrer, qs) {
   // No referrer means the user accessed the website directly
   if (referrer.length === 0) return "direct";
 
@@ -68,7 +70,7 @@ function getMedium(referrer) {
   if (qs.size === 0) return "organic";
 
   // Paid ads
-  if (checkClickId()) return "paid";
+  if (isPaid(qs)) return "paid";
 
   // Querystring + non-empty referrer and no click id === referral
   return "referral";
@@ -98,129 +100,175 @@ function getUserLocation() {
 }
 
 function getChannel(referrerUrl) {
-  if (!referrerUrl) return '';
-
   const searchEngines = [
-      { domain: "google" },
-      { domain: "bing" },
-      { domain: "yahoo" },
-      { domain: "ecosia" },
-      { domain: "duckduckgo.com" },
-      { domain: "yandex" },
-      { domain: "baidu" },
-      { domain: "naver" },
-      { domain: "ask.com" },
-      { domain: "adsensecustomsearchads" },
-      { domain: "aol" },
-      { domain: "brave" }
+    { domain: "google" },
+    { domain: "bing" },
+    { domain: "yahoo" },
+    { domain: "ecosia" },
+    { domain: "duckduckgo" },
+    { domain: "yandex" },
+    { domain: "baidu" },
+    { domain: "naver" },
+    { domain: "ask.com" },
+    { domain: "adsensecustomsearchads" },
+    { domain: "aol" },
+    { domain: "brave" },
   ];
 
   const majorSocialNetworks = [
-      "facebook",
-      "instagram",
-      "twitter",
-      "linkedin",
-      "pinterest",
-      "snapchat",
-      "reddit",
-      "whatsapp",
-      "wechat",
-      "telegram",
-      "discord",
-      "vkontakte",
-      "weibo",
-      "line",
-      "kakaotalk",
-      "qq",
-      "viber",
-      "telegram",
-      "tumblr",
-      "flickr",
-      "meetup",
-      "tagged",
-      "badoo",
-      "myspace"
+    "facebook",
+    "instagram",
+    "twitter",
+    "linkedin",
+    "pinterest",
+    "snapchat",
+    "reddit",
+    "whatsapp",
+    "wechat",
+    "telegram",
+    "discord",
+    "vkontakte",
+    "weibo",
+    "line",
+    "kakaotalk",
+    "qq",
+    "viber",
+    "telegram",
+    "tumblr",
+    "flickr",
+    "meetup",
+    "tagged",
+    "badoo",
+    "myspace",
   ];
 
   const majorVideoPlatforms = [
-      "youtube",
-      "tiktok",
-      "vimeo",
-      "dailymotion",
-      "twitch",
-      "bilibili",
-      "youku",
-      "rutube",
-      "vine",
-      "peertube",
-      "ig tv",
-      "veoh",
-      "metacafe",
-      "vudu",
-      "vidyard",
-      "rumble",
-      "bit chute",
-      "brightcove",
-      "viddler",
-      "vzaar"
+    "youtube",
+    "tiktok",
+    "vimeo",
+    "dailymotion",
+    "twitch",
+    "bilibili",
+    "youku",
+    "rutube",
+    "vine",
+    "peertube",
+    "ig tv",
+    "veoh",
+    "metacafe",
+    "vudu",
+    "vidyard",
+    "rumble",
+    "bit chute",
+    "brightcove",
+    "viddler",
+    "vzaar",
   ];
 
   // Check search engines
   for (let engine of searchEngines) {
-      if (referrerUrl.includes(engine.domain)) {
-          return "search";
-      }
+    if (referrerUrl.includes(engine.domain)) {
+      return "search";
+    }
   }
 
   // Check social networks
   for (let network of majorSocialNetworks) {
-      if (referrerUrl.includes(network)) {
-          return "social";
-      }
+    if (referrerUrl.includes(network)) {
+      return "social";
+    }
   }
 
   // Check video platforms
   for (let platform of majorVideoPlatforms) {
-      if (referrerUrl.includes(platform)) {
-          return "video";
-      }
+    if (referrerUrl.includes(platform)) {
+      return "video";
+    }
   }
 
   return "other";
 }
 
-function handleCTAClick(e) {
-  const language = navigator.language || navigator.userLanguage;
-
-  const buttonName = e.target.getAttribute("name");
-
-  // Get user variables from browser
-  var user = JSON.parse(localStorage.getItem("user")) || {};
-
-	qs.set("medium", qs.get('medium') ?? getMedium(user.referrer)); // organic || paid || direct
-	qs.set("source", qs.get('source') ?? getHost(user.referrer)); // google.com || facebook.com || youtube.com
-  qs.set("channel", qs.get('channel') ?? getChannel(user.referrer)); // search || social || video
-  qs.set("landing_page", user.landingPage);
-  qs.set("referrer", user.referrer);
-  qs.set("button_clicked", buttonName);
-  qs.set("longitude", longitude);
-  qs.set("latitude", latitude);
-  qs.set("language", language);
-  if (checkClickId()) qs.set("click_id", getClickId());
-
-  const currentDomain = new URL(window.location.origin + "/quote");
-
-  currentDomain.search = qs.toString();
-
-  window.location.replace(currentDomain.href);
-}
-
 quoteButtons.forEach((button) => {
   let children = button.children;
-  console.log(button.name);
   Array.from(children).forEach((child) => {
     child.setAttribute("name", button.name);
   });
 
-  button.addEventListener("click", handleCTAClick);
+  button.addEventListener("click", function () {
+    form.scrollIntoView({ behavior: "smooth" });
+    form.querySelector("input, textarea, select").focus();
+
+    const modal = document.getElementById("modalOverlay");
+    modal.style.display = "none";
+  });
 });
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const qs = new URLSearchParams(window.location.search);
+
+  const language = navigator.language || navigator.userLanguage;
+
+  const buttonName = e.target.getAttribute("name");
+
+  var user = JSON.parse(localStorage.getItem("user")) || {};
+
+  const marketing = Object.fromEntries(qs);
+  const data = new FormData(e.target);
+
+  if (isPaid(qs)) {
+    data.append("click_id", getClickId(qs));
+  }
+
+  data.append("landing_page", user.landingPage);
+  data.append("referrer", user.referrer);
+  data.append("source", qs.get("source") ?? getHost(user.referrer)); // google.com || facebook.com || youtube.com
+  data.append("medium", qs.get("medium") ?? getMedium(user.referrer, qs)); // organic || paid || direct
+  data.append("channel", qs.get("channel") ?? getChannel(user.referrer)); // search || social || video
+  data.append("button_clicked", buttonName);
+  data.append("longitude", longitude);
+  data.append("latitude", latitude);
+  data.append("language", language);
+
+  for (const [key, value] of Object.entries(marketing)) {
+    data.append(key, value);
+  }
+
+  console.log(data);
+
+  const alertModal = document.getElementById("alertModal");
+
+  fetch("/quote", {
+    method: "POST",
+    credentials: "include",
+    body: data,
+  })
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error("Error: " + response.statusText);
+      }
+    })
+    .then(() => {
+      const userId = localStorage.getItem("userId");
+      const user = JSON.parse(localStorage.getItem("user")) || {};
+
+      const opts = {
+        userId,
+        landingPage: user.landingPage,
+      };
+
+      window.gtag("event", "quote", { ...opts });
+
+      alertModal.style.display = "";
+      form.reset();
+    })
+    .catch(console.error);
+});
+
+closeModalButton.addEventListener(
+  "click",
+  () => (alertModal.style.display = "none")
+);

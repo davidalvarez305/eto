@@ -893,6 +893,14 @@ select{
   margin-bottom: 1.5rem;
 }
 
+.ml-2{
+  margin-left: 0.5rem;
+}
+
+.ml-6{
+  margin-left: 1.5rem;
+}
+
 .ml-8{
   margin-left: 2rem;
 }
@@ -903,14 +911,6 @@ select{
 
 .mr-3{
   margin-right: 0.75rem;
-}
-
-.ml-2{
-  margin-left: 0.5rem;
-}
-
-.ml-6{
-  margin-left: 1.5rem;
 }
 
 .block{

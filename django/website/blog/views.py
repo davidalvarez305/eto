@@ -47,9 +47,15 @@ class HomeView(MyBaseView):
 
     def get(self, request, *args, **kwargs):
         context = self.context
+
+        services = Service.objects.all()
+        locations = Location.objects.all()
+
         context['is_leads'] = 'leads' in request.path
         context['page_path'] = request.build_absolute_uri()
         context['page_title'] = str(os.environ.get('SITE_NAME'))
+        context['services'] = list(services.values())
+        context['locations'] = list(locations.values())
         return render(request, self.template_name, context=context)
 
 class ServicesView(HomeView):
@@ -99,108 +105,91 @@ class ContactView(MyBaseView):
             return JsonResponse({ "data": "Failed to parse request body." }, status=400)
 
 class QuoteView(MyBaseView):
-    template_name = 'blog/quote.html'
-
-    def get(self, request, *args, **kwargs):
-        context = self.context
-
-        services = Service.objects.all()
-        locations = Location.objects.all()
-
-        context['is_leads'] = 'leads' in request.path
-        context['page_path'] = request.build_absolute_uri()
-        context['page_title'] = str(os.environ.get('SITE_NAME'))
-        context['services'] = list(services.values())
-        context['locations'] = list(locations.values())
-        return render(request, self.template_name, context=context)
-
     def post(self, request, *args, **kwargs):
         data = request.POST.dict()
-        form = QuoteForm(request.POST, request.FILES)
         email_service = EmailService()
-        if form.is_valid():
-            try:
-                user_ip = get_client_ip(request)
-                
-                location = Location.objects.get(id=data.get('location'))
-                service = Service.objects.get(id=data.get('service'))
+        try:
+            user_ip = get_client_ip(request)
+            
+            location = Location.objects.get(id=data.get('location'))
+            service = Service.objects.get(id=data.get('service'))
 
-                with transaction.atomic():
-                    lead = Lead.objects.create(
-                        first_name=form.cleaned_data['first_name'],
-                        last_name=form.cleaned_data['last_name'],
-                        phone_number=form.cleaned_data['phone_number'],
-                        message=form.cleaned_data['message'],
-                        bathrooms=form.cleaned_data['bathrooms'],
-                        total_rooms=form.cleaned_data['total_rooms'],
-                        pets=form.cleaned_data['pets'],
-                        square_feet=form.cleaned_data['square_feet'],
-                        is_house=form.cleaned_data['is_house'],
-                        location=location,
-                        service=service,
-                        latitude=float(data.get('latitude', 0)),
-                        longitude=float(data.get('longitude', 0)),
-                        date_created=timezone.now()
-                    )
+            def empty_to_none(value):
+                return value if value != '' else None
 
-                    marketing = Marketing.objects.create(
-                        lead=lead,
-                        landing_page=data.get('landing_page'),
-                        referrer=data.get('referrer'),
-                        keyword = data.get('keyword'),
-                        channel = data.get('channel'),
-                        source = data.get('source'),
-                        medium = data.get('medium'),
-                        ad_campaign = data.get('ad_campaign'),
-                        ad_group = data.get('ad_group'),
-                        ad_headline = data.get('ad_headline'),
-                        gclid = data.get('gclid'),
-                        language = data.get('language'),
-                        user_agent = data.get('userAgent'),
-                        button_clicked = data.get('button_clicked'),
-                        lead_channel = data.get('lead_channel'),
-                        ip = user_ip
-                    )
+            with transaction.atomic():
+                lead = Lead.objects.create(
+                    first_name=empty_to_none(data.get('first_name')),
+                    last_name=empty_to_none(data.get('last_name')),
+                    phone_number=empty_to_none(data.get('phone_number')),
+                    message=empty_to_none(data.get('message')),
+                    bathrooms=empty_to_none(data.get('bathrooms')),
+                    total_rooms=empty_to_none(data.get('total_rooms')),
+                    pets=empty_to_none(data.get('pets')),
+                    square_feet=empty_to_none(data.get('square_feet')),
+                    is_house=empty_to_none(data.get('is_house')),
+                    location=location,
+                    service=service,
+                    latitude=float(data.get('latitude', 0)),
+                    longitude=float(data.get('longitude', 0)),
+                    date_created=timezone.now()
+                )
 
-                    for file_to_upload in request.FILES.getlist('file_upload'):
-                        # Upload Image to S3
-                        ext = Path(file_to_upload.name).suffix
-                        img_file_name = str(uuid.uuid4()) + ext
-                        s3_upload_path = f'images/{img_file_name}'
-                        s3 = boto3.client('s3')
+                marketing = Marketing.objects.create(
+                    lead=lead,
+                    landing_page=empty_to_none(data.get('landing_page')),
+                    referrer=empty_to_none(data.get('referrer')),
+                    keyword=empty_to_none(data.get('keyword')),
+                    channel=empty_to_none(data.get('channel')),
+                    source=empty_to_none(data.get('source')),
+                    medium=empty_to_none(data.get('medium')),
+                    ad_campaign=empty_to_none(data.get('ad_campaign')),
+                    ad_group=empty_to_none(data.get('ad_group')),
+                    ad_headline=empty_to_none(data.get('ad_headline')),
+                    gclid=empty_to_none(data.get('gclid')),
+                    language=empty_to_none(data.get('language')),
+                    user_agent=empty_to_none(data.get('userAgent')),
+                    button_clicked=empty_to_none(data.get('button_clicked')),
+                    lead_channel=empty_to_none(data.get('lead_channel')),
+                    ip=user_ip
+                )
 
-                        # Create a temporary file to save the uploaded image
-                        with tempfile.NamedTemporaryFile(delete=False) as temp_file:
-                            for chunk in file_to_upload.chunks():
-                                temp_file.write(chunk)
+                for file_to_upload in request.FILES.getlist('file_upload'):
+                    # Upload Image to S3
+                    ext = Path(file_to_upload.name).suffix
+                    img_file_name = str(uuid.uuid4()) + ext
+                    s3_upload_path = f'images/{img_file_name}'
+                    s3 = boto3.client('s3')
 
-                            temp_file.close()
+                    # Create a temporary file to save the uploaded image
+                    with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+                        for chunk in file_to_upload.chunks():
+                            temp_file.write(chunk)
 
-                            s3.upload_file(temp_file.name, os.environ.get('AWS_STORAGE_BUCKET_NAME'), s3_upload_path)
+                        temp_file.close()
 
-                            os.unlink(temp_file.name)
+                        s3.upload_file(temp_file.name, os.environ.get('AWS_STORAGE_BUCKET_NAME'), s3_upload_path)
 
-                            # Save Image to DB
-                            LeadImage.objects.create(
-                                lead=lead,
-                                src=img_file_name
-                            )
+                        os.unlink(temp_file.name)
 
-                    marketing.save()
+                        # Save Image to DB
+                        LeadImage.objects.create(
+                            lead=lead,
+                            src=img_file_name
+                        )
 
-                    qs = LeadImage.objects.filter(lead_id=lead.id)
-                    lead_images = list(qs)
+                marketing.save()
 
-                    # Send Email Notification
-                    email_service.lead_notification(lead, lead_images)
+                qs = LeadImage.objects.filter(lead_id=lead.id)
+                lead_images = list(qs)
 
-                return JsonResponse({ "data": "Contact form received successfully." }, status=201)
-            except Exception as e:
-                print("Error:", e)
-                return JsonResponse({ "data": "Failed to create lead." }, status=500)
-        else:
-            print(form.errors)
-            return JsonResponse({ "data": "Form was not submitted successfully." }, status=400)
+                # Send Email Notification
+                email_service.lead_notification(lead, lead_images)
+
+            return JsonResponse({ "data": "Contact form received successfully." }, status=201)
+        except Exception as e:
+            print("Error:", e)
+            return JsonResponse({ "data": "Failed to create lead." }, status=500)
 
 class PPCLandingPageView(MyBaseView):
     template_name = 'blog/ppc.html'
