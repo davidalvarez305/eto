@@ -1065,6 +1065,10 @@ select{
   flex: none;
 }
 
+.flex-grow{
+  flex-grow: 1;
+}
+
 .grow{
   flex-grow: 1;
 }
@@ -1123,6 +1127,10 @@ select{
 
 .justify-between{
   justify-content: space-between;
+}
+
+.gap-12{
+  gap: 3rem;
 }
 
 .gap-16{
@@ -1187,12 +1195,6 @@ select{
   --tw-space-y-reverse: 0;
   margin-top: calc(4rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(4rem * var(--tw-space-y-reverse));
-}
-
-.space-y-2 > :not([hidden]) ~ :not([hidden]){
-  --tw-space-y-reverse: 0;
-  margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
 }
 
 .space-y-20 > :not([hidden]) ~ :not([hidden]){
@@ -1348,6 +1350,11 @@ select{
   border-color: transparent;
 }
 
+.border-red-700{
+  --tw-border-opacity: 1;
+  border-color: rgb(185 28 28 / var(--tw-border-opacity));
+}
+
 .bg-blue-100{
   --tw-bg-opacity: 1;
   background-color: rgb(219 234 254 / var(--tw-bg-opacity));
@@ -1465,6 +1472,11 @@ select{
   background-color: rgb(255 255 255 / 0.25);
 }
 
+.bg-red-700{
+  --tw-bg-opacity: 1;
+  background-color: rgb(185 28 28 / var(--tw-bg-opacity));
+}
+
 .bg-opacity-75{
   --tw-bg-opacity: 0.75;
 }
@@ -1573,11 +1585,6 @@ select{
   padding-right: 1.5rem;
 }
 
-.px-7{
-  padding-left: 1.75rem;
-  padding-right: 1.75rem;
-}
-
 .px-8{
   padding-left: 2rem;
   padding-right: 2rem;
@@ -1613,11 +1620,6 @@ select{
   padding-bottom: 0.75rem;
 }
 
-.py-3\.5{
-  padding-top: 0.875rem;
-  padding-bottom: 0.875rem;
-}
-
 .py-4{
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -1642,20 +1644,12 @@ select{
   padding-bottom: 0.25rem;
 }
 
-.pb-16{
-  padding-bottom: 4rem;
-}
-
 .pb-4{
   padding-bottom: 1rem;
 }
 
 .pt-1{
   padding-top: 0.25rem;
-}
-
-.pt-10{
-  padding-top: 2.5rem;
 }
 
 .pt-4{
@@ -2700,6 +2694,11 @@ select{
   border-color: rgb(253 164 175 / var(--tw-border-opacity));
 }
 
+.hover\:border-red-600:hover{
+  --tw-border-opacity: 1;
+  border-color: rgb(220 38 38 / var(--tw-border-opacity));
+}
+
 .hover\:bg-blue-600:hover{
   --tw-bg-opacity: 1;
   background-color: rgb(37 99 235 / var(--tw-bg-opacity));
@@ -2717,6 +2716,11 @@ select{
 .hover\:bg-gray-50:hover{
   --tw-bg-opacity: 1;
   background-color: rgb(249 250 251 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-red-600:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(220 38 38 / var(--tw-bg-opacity));
 }
 
 .hover\:text-blue-400:hover{
@@ -2800,6 +2804,15 @@ select{
   --tw-ring-color: rgb(209 213 219 / var(--tw-ring-opacity));
 }
 
+.focus\:ring-blue-400\/50:focus{
+  --tw-ring-color: rgb(96 165 250 / 0.5);
+}
+
+.focus\:ring-red-400:focus{
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(248 113 113 / var(--tw-ring-opacity));
+}
+
 .focus\:ring-opacity-25:focus{
   --tw-ring-opacity: 0.25;
 }
@@ -2831,6 +2844,11 @@ select{
   border-color: rgb(229 231 235 / var(--tw-border-opacity));
 }
 
+.active\:border-red-700:active{
+  --tw-border-opacity: 1;
+  border-color: rgb(185 28 28 / var(--tw-border-opacity));
+}
+
 .active\:bg-blue-600:active{
   --tw-bg-opacity: 1;
   background-color: rgb(37 99 235 / var(--tw-bg-opacity));
@@ -2839,6 +2857,11 @@ select{
 .active\:bg-blue-700:active{
   --tw-bg-opacity: 1;
   background-color: rgb(29 78 216 / var(--tw-bg-opacity));
+}
+
+.active\:bg-red-700:active{
+  --tw-bg-opacity: 1;
+  background-color: rgb(185 28 28 / var(--tw-bg-opacity));
 }
 
 .active\:shadow-none:active{
@@ -3120,6 +3143,11 @@ select{
   border-color: transparent;
 }
 
+:is(.dark .dark\:checked\:bg-blue-500:checked){
+  --tw-bg-opacity: 1;
+  background-color: rgb(59 130 246 / var(--tw-bg-opacity));
+}
+
 :is(.dark .dark\:hover\:border-emerald-700\/75:hover){
   border-color: rgb(4 120 87 / 0.75);
 }
@@ -3189,6 +3217,10 @@ select{
   --tw-ring-color: rgb(75 85 99 / var(--tw-ring-opacity));
 }
 
+:is(.dark .dark\:focus\:ring-blue-400\/90:focus){
+  --tw-ring-color: rgb(96 165 250 / 0.9);
+}
+
 :is(.dark .dark\:focus\:ring-opacity-40:focus){
   --tw-ring-opacity: 0.4;
 }
@@ -3241,12 +3273,6 @@ select{
 
   .sm\:gap-3{
     gap: 0.75rem;
-  }
-
-  .sm\:space-x-2 > :not([hidden]) ~ :not([hidden]){
-    --tw-space-x-reverse: 0;
-    margin-right: calc(0.5rem * var(--tw-space-x-reverse));
-    margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
   }
 
   .sm\:space-x-3 > :not([hidden]) ~ :not([hidden]){
@@ -3389,6 +3415,10 @@ select{
     display: flex;
   }
 
+  .lg\:hidden{
+    display: none;
+  }
+
   .lg\:h-72{
     height: 18rem;
   }
@@ -3443,6 +3473,10 @@ select{
 
   .lg\:items-center{
     align-items: center;
+  }
+
+  .lg\:justify-end{
+    justify-content: flex-end;
   }
 
   .lg\:justify-center{
