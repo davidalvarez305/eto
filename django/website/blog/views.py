@@ -21,20 +21,20 @@ from django.core.paginator import Paginator
 import boto3
 
 class MyBaseView(View):
-    domain = str(os.environ.get('DJANGO_DOMAIN'))
-    current_year = date.today().year
     google_analytics_id = str(os.environ.get('GOOGLE_ANALYTICS_ID'))
     phone_number = str(os.environ.get('PHONE_NUMBER'))
 
     context = {
-        'domain': domain,
-        'current_year': current_year,
+        'domain': str(os.environ.get('DJANGO_DOMAIN')),
+        'current_year': date.today().year,
         'google_analytics_id': google_analytics_id,
         'google_analytics_src': "https://www.googletagmanager.com/gtag/js?id=" + google_analytics_id,
         'meta_description': 'Fumero Cleaning Services is a family-owned business servicing the entire South Florida area with high quality cleaning solutions from pressure washing, concrete, post-construction, and office cleaning!',
         'page_title': str(os.environ.get('SITE_NAME')),
         'site_name': str(os.environ.get('SITE_NAME')),
-        'phone_number': '({}) - {} {}'.format(phone_number[:3], phone_number[3:6], phone_number[6:]),
+        'phone_number': '({}) {} - {}'.format(phone_number[:3], phone_number[3:6], phone_number[6:]),
+        'google_ads_tag_id': str(os.environ.get('GOOGLE_ADS_TAG_ID')),
+        'google_ads_call_conversion_label': str(os.environ.get('GOOGLE_ADS_CALL_CONVERSION_LABEL'))
     }
 
     template_name = 'home.html'

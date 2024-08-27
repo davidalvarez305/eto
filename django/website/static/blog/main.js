@@ -1,8 +1,9 @@
-const telephoneButton = document.getElementById("telephone-button");
+const telNumbers = document.querySelectorAll(".phoneNumber");
 
-telephoneButton.addEventListener("click", function () {
-  const phoneNumber = telephoneButton.textContent.trim();
-  window.location.href = "tel:" + phoneNumber;
+telNumbers.forEach((button) => {
+  button.addEventListener("click", function () {
+    window.location.href = "tel:" + button.textContent;
+  });
 });
 
 function generateRandomUserId() {
@@ -12,7 +13,8 @@ function generateRandomUserId() {
 }
 
 function setUserIdToLocalStorage() {
-  localStorage.getItem("userId") ?? localStorage.setItem("userId", generateRandomUserId());
+  localStorage.getItem("userId") ??
+    localStorage.setItem("userId", generateRandomUserId());
 }
 
 function setUser() {
