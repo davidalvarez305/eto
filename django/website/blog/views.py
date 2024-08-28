@@ -127,7 +127,7 @@ class QuoteView(MyBaseView):
                     total_rooms=empty_to_none(data.get('total_rooms')),
                     pets=empty_to_none(data.get('pets')),
                     square_feet=empty_to_none(data.get('square_feet')),
-                    is_house=empty_to_none(data.get('is_house')),
+                    is_house=data.get('is_house', None) == "true",
                     location=location,
                     service=service,
                     latitude=float(data.get('latitude', 0)),

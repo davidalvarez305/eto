@@ -235,8 +235,6 @@ form.addEventListener("submit", (e) => {
     data.append(key, value);
   }
 
-  console.log(data);
-
   const alertModal = document.getElementById("alertModal");
 
   fetch("/quote", {
