@@ -43,3 +43,11 @@ function buildURL() {
 
   return new URL(origin + pathname);
 }
+
+const telNumbers = document.querySelectorAll(".phoneNumber");
+
+telNumbers.forEach((button) => {
+  button.addEventListener("click", function () {
+    window.location.href = "tel:" + button.textContent;
+  });
+});

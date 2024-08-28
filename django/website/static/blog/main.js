@@ -1,11 +1,3 @@
-const telNumbers = document.querySelectorAll(".phoneNumber");
-
-telNumbers.forEach((button) => {
-  button.addEventListener("click", function () {
-    window.location.href = "tel:" + button.textContent;
-  });
-});
-
 function generateRandomUserId() {
   const randomNumber = Math.random().toString(36).substr(2, 9); // Random alphanumeric string
   const timestamp = Date.now().toString().substr(-4); // Last 4 digits of current timestamp
