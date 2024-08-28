@@ -2,25 +2,53 @@
 {% load static %}
 {% block content %}
 
-<!-- CTA -->
-<div class="lg:hidden bg-white dark:bg-gray-900 flex justify-center">
-    <div class="flex-grow p-2 text-center">
-        <button type="button" class="inline-flex items-center justify-center space-x-2 rounded-full border border-red-900 bg-red-900 px-4 py-4 font-semibold leading-6 text-white hover:border-red-600 hover:bg-red-600 hover:text-white focus:ring focus:ring-red-400 focus:ring-opacity-50 active:border-red-700 active:bg-red-700">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="h-5 w-5 hi-micro hi-phone inline-block size-4">
-                <path fill-rule="evenodd" d="m3.855 7.286 1.067-.534a1 1 0 0 0 .542-1.046l-.44-2.858A1 1 0 0 0 4.036 2H3a1 1 0 0 0-1 1v2c0 .709.082 1.4.238 2.062a9.012 9.012 0 0 0 6.7 6.7A9.024 9.024 0 0 0 11 14h2a1 1 0 0 0 1-1v-1.036a1 1 0 0 0-.848-.988l-2.858-.44a1 1 0 0 0-1.046.542l-.534 1.067a7.52 7.52 0 0 1-4.86-4.859Z" clip-rule="evenodd"/>
-              </svg>
-              <span class="phoneNumber">{{ phone_number }}</span>
+<!-- Hero Content -->
+<div class="container relative mx-auto px-4 py-8 lg:px-8 lg:py-8 xl:max-w-7xl">
+    <div class="text-center">
+        <h1 class="mb-4 text-4xl font-black text-black dark:text-white">
+            Need cleaning?<br>
+            <span class="text-blue-600 dark:text-blue-500">We are here to help.</span>
+        </h1>
+        <h2 class="mx-auto text-xl font-medium leading-relaxed text-gray-700 lg:w-2/3 dark:text-gray-300">
+            Let's have a chat.
+        </h2>
+    </div>
+    <div class="flex flex-col gap-2 pb-16 pt-10 sm:flex-row sm:items-center sm:justify-center sm:gap-3">
+        <a href="tel:{{ phone_number }}"
+            class="inline-flex items-center justify-center gap-2 rounded-lg border border-red-900 bg-red-900 px-7 py-3.5 font-semibold leading-6 text-white hover:border-red-600 hover:bg-red-600 hover:text-white focus:ring focus:ring-red-400/50 active:border-red-700 active:bg-red-700 dark:focus:ring-red-400/90">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
+                class="h-5 w-5 hi-micro hi-phone inline-block size-4">
+                <path fill-rule="evenodd"
+                    d="m3.855 7.286 1.067-.534a1 1 0 0 0 .542-1.046l-.44-2.858A1 1 0 0 0 4.036 2H3a1 1 0 0 0-1 1v2c0 .709.082 1.4.238 2.062a9.012 9.012 0 0 0 6.7 6.7A9.024 9.024 0 0 0 11 14h2a1 1 0 0 0 1-1v-1.036a1 1 0 0 0-.848-.988l-2.858-.44a1 1 0 0 0-1.046.542l-.534 1.067a7.52 7.52 0 0 1-4.86-4.859Z"
+                    clip-rule="evenodd" />
+            </svg>
+            <span class="phoneNumber">{{ phone_number }}</span>
+        </a>
+        <button type="button" class="quoteButton inline-flex items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-7 py-3.5 font-semibold leading-6 text-gray-800 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:ring focus:ring-gray-300/25 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-transparent dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600/40 dark:active:border-gray-700">
+            <span>Contact Us</span>
         </button>
     </div>
 </div>
-<!-- END CTA -->
+</div>
+<!-- END Hero -->
 
-<!-- Hero Content -->
-<div
-    class="container relative mx-auto grid grid-cols-1 gap-16 px-4 py-16 text-center lg:grid-cols-2 lg:px-8 lg:py-32 lg:text-left xl:max-w-7xl">
-    <div class="lg:flex lg:items-center">
-        <div>
-            <!-- Quote Form -->
+<!-- Quote Form -->
+<div class="bg-gray-100 dark:bg-gray-900 dark:text-gray-100">
+    <div class="container mx-auto space-y-2 px-4 py-2 lg:px-8 lg:py-4 xl:max-w-7xl">
+        <div class="text-center">
+            <div class="mb-1 text-sm font-bold uppercase tracking-wider text-blue-600 dark:text-blue-500">
+                Large projects? Look no further.
+            </div>
+            <h2 class="mb-4 text-4xl font-black text-black dark:text-white">
+                We're small but mighty.
+            </h2>
+            <h3 class="mx-auto text-xl font-medium leading-relaxed text-gray-700 lg:w-2/3 dark:text-gray-300">
+                Give us some details & we'll be in touch.
+            </h3>
+        </div>
+
+        <div
+            class="mx-auto flex w-full max-w-xl flex-col overflow-hidden rounded-lg bg-white shadow-sm dark:bg-gray-800 dark:text-gray-100">
             <div
                 class="mx-auto flex w-3/4 max-w-xl flex-col overflow-hidden rounded-lg bg-white shadow-sm dark:bg-gray-800 dark:text-gray-100">
                 <form id="get-a-quote-form" class="space-y-6 p-5 md:p-10">
@@ -120,35 +148,10 @@
                     </button>
                 </form>
             </div>
-            <!-- END Quote Form -->
-        </div>
-    </div>
-    <div class="lg:flex lg:items-center lg:justify-center">
-        <div class="relative lg:w-96">
-            <div
-                class="bg-tranparent absolute right-0 top-0 -m-6 h-40 w-40 rounded-full border border-teal-200 dark:border-teal-900 lg:h-96 lg:w-96">
-            </div>
-            <div
-                class="bg-tranparent absolute bottom-0 left-0 -m-6 h-40 w-40 rounded-full border border-indigo-200 dark:border-indigo-900 lg:h-96 lg:w-96">
-            </div>
-            <div
-                class="absolute left-0 top-0 -ml-10 -mt-10 h-36 w-36 rounded-full bg-gradient-to-br from-purple-200 dark:from-purple-800">
-            </div>
-            <div
-                class="absolute bottom-0 right-0 -mb-8 -mr-8 h-24 w-24 rotate-12 rounded-3xl bg-gradient-to-tl from-amber-200 dark:from-orange-900">
-            </div>
-            <div
-                class="absolute right-0 top-0 -mr-8 -mt-10 h-40 w-32 -rotate-6 rounded-3xl bg-gradient-to-bl from-teal-200 dark:from-teal-800">
-            </div>
-            <div
-                class="absolute bottom-0 left-0 -mb-8 -ml-8 h-40 w-32 rotate-12 rounded-3xl bg-gradient-to-tr from-indigo-200 dark:from-indigo-800">
-            </div>
-            <img src="https://cdn.tailkit.com/media/placeholders/photo-MChSQHxGZrQ-800x1000.jpg"
-                class="relative mx-auto rounded-lg shadow-lg" alt="Hero Image" />
         </div>
     </div>
 </div>
-<!-- END Hero Content -->
+<!-- END Quote Form -->
 
 <!-- Features Section: Featured Image Side -->
 <div class="overflow-hidden bg-white dark:bg-gray-900 dark:text-gray-100">
